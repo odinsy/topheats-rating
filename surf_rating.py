@@ -28,7 +28,7 @@ def parse_files() -> Dict[str, Dict]:
         'regions': defaultdict(str),
         'ranks': defaultdict(str),
         'best_place': None,
-        'last_year': 0  # Добавлено новое поле
+        'last_year': 0
     })
 
     for pattern in CONFIG['input_paths']:
@@ -50,7 +50,7 @@ def parse_files() -> Dict[str, Dict]:
                     athletes[name]['regions'][year] = region
                     athletes[name]['ranks'][year] = rank
                     athletes[name]['category'] = row['Категория']
-                    athletes[name]['last_year'] = max(athletes[name]['last_year'], year)  # Обновляем последний год
+                    athletes[name]['last_year'] = max(athletes[name]['last_year'], year)
 
                     if place != 'DNS' and place.isdigit():
                         current_place = int(place)
@@ -64,7 +64,7 @@ def parse_files() -> Dict[str, Dict]:
 
     return athletes
 
-def calculate_points(place: str, year: int) -> int:
+def calculate_base_points(place: str) -> int:
     system = CONFIG['scoring'][CONFIG['scoring_system']]
 
     if place == 'DNS':
@@ -82,15 +82,28 @@ def calculate_points(place: str, year: int) -> int:
             return v
     return 0
 
-def apply_bonuses(score: int, year: int, is_dns: bool) -> int:
+def apply_decay(points: int, year: int) -> int:
     if CONFIG['bonuses']['decay']['enabled']:
         decay = CONFIG['bonuses']['decay']['factor'] ** (CONFIG['current_year'] - year)
-        score = round(score * decay)
+        return round(points * decay)
+    return points
 
+def apply_participation_bonus(points: int, is_dns: bool) -> int:
     if not is_dns and CONFIG['bonuses']['participation']['enabled']:
-        score += CONFIG['bonuses']['participation']['points']
+        return points + CONFIG['bonuses']['participation']['points']
+    return points
 
-    return score
+def apply_rank_bonus(total: int, rank: str) -> int:
+    if CONFIG['bonuses']['rank']['enabled']:
+        return total + CONFIG['bonuses']['rank']['values'].get(rank, 0)
+    return total
+
+def process_year_points(year: int, place: str) -> int:
+    is_dns = (place == 'DNS')
+    points = calculate_base_points(place)
+    points = apply_decay(points, year)
+    points = apply_participation_bonus(points, is_dns)
+    return points
 
 def process_athletes(data: Dict) -> List[Dict]:
     results = []
@@ -102,27 +115,21 @@ def process_athletes(data: Dict) -> List[Dict]:
             'rank': info['rank'],
             'category': info['category'],
             'best_place': info['best_place'] or 9999,
-            'last_year': info['last_year'],  # Добавляем в запись
+            'last_year': info['last_year'],
             'years': defaultdict(int),
             'total': 0
         }
 
         total = 0
         for year, place in info['years'].items():
-            is_dns = (place == 'DNS')
-            points = calculate_points(place, year)
-            points = apply_bonuses(points, year, is_dns)
+            year_points = process_year_points(year, place)
+            entry['years'][year] = year_points
+            total += year_points
 
-            entry['years'][year] = points
-            total += points
-
-        if CONFIG['bonuses']['rank']['enabled']:
-            total += CONFIG['bonuses']['rank']['values'].get(entry['rank'], 0)
-
+        total = apply_rank_bonus(total, entry['rank'])
         entry['total'] = total
         results.append(entry)
 
-    # Новая логика сортировки
     if CONFIG['sorting']['enabled']:
         return sorted(results, key=lambda x: (-x['total'], x['best_place'], -x['last_year']))
     return sorted(results, key=lambda x: -x['total'])
