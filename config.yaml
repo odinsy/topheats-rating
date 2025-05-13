@@ -1,0 +1,68 @@
+# config.yaml
+
+scoring_system: default
+current_year: 2024
+top_n: 100
+years_order: [2017, 2018, 2019, 2021, 2022, 2023, 2024]
+input_paths:
+  - "longboard/*_men.csv"
+
+output:
+  filename: ranking.csv
+  columns: [Rank, Name, Region, Category, Best Place, YearScores, Total Points]
+
+sorting:
+  enabled: true
+
+filtering:
+  enabled: false
+  max_place: 16  # Включать только тех, кто хотя бы раз занял место не хуже указанного
+
+scoring:
+  default:
+    1: 1000
+    2: 900
+    3: 800
+    4: 700
+    5-8: 500
+    9-16: 300
+    17-32: 200
+    DNS: 0
+
+  wsl:
+    1: 10000
+    2: 7800
+    3-4: 6085
+    5-8: 4745
+    9-16: 3320
+    17-32: 1330
+    DNS: 0
+
+  custom_wsl:
+    1: 10000
+    2: 8000
+    3: 6400
+    4: 5120
+    5-8: 4096
+    9-16: 3072
+    17-32: 1024
+    DNS: 0
+
+bonuses:
+  decay:
+    enabled: false
+    factor: 0.90
+
+  rank:
+    enabled: false
+    values:
+      МС: 80
+      КМС: 50
+      "1 разряд": 30
+      "2 разряд": 20
+      "3 разряд": 10
+      "": 0
+
+  participation:
+    enabled: false
+    points: 50
