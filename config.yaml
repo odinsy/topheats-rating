@@ -5,10 +5,10 @@ current_year: 2024
 top_n: 100
 years_order: [2017, 2018, 2019, 2021, 2022, 2023, 2024]
 input_paths:
-  - "longboard/*_men.csv"
+  - "shortboard/*_men_*.csv"
 
 output:
-  filename: ranking.csv
+  filename: ranking_shortboard.csv
   columns: [Rank, Name, Region, Category, Best Place, YearScores, Total Points]
 
 sorting:
