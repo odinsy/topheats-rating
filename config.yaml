@@ -70,10 +70,10 @@ bonuses:
     points: 50
 
 wildcard:
-  # ranking_file: ranking/ranking_shortboard.csv
-  # output_file: wildcard/wildcard_shortboard.csv
-  ranking_file: ranking/ranking_longboard.csv
-  output_file: wildcard/wildcard_longboard.csv
+  ranking_file: ranking/ranking_shortboard.csv
+  output_file: wildcard/wildcard_shortboard.csv
+  # ranking_file: ranking/ranking_longboard.csv
+  # output_file: wildcard/wildcard_longboard.csv
   top_n: 32               # Максимальный ранг для отбора
   min_participations: 2   # Минимальное количество участий
   last_years_period: 3    # За последние N лет
