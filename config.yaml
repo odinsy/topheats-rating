@@ -9,8 +9,8 @@ input_paths:
   # - "longboard/*_longboard_men.csv"
 
 output:
-  # filename: ranking/ranking_shortboard.csv
-  filename: ranking/ranking_longboard.csv
+  filename: ranking/ranking_shortboard.csv
+  # filename: ranking/ranking_longboard.csv
   columns: [Rank, Name, Region, Category, Best Place, YearScores, Total Points]
 
 sorting:
