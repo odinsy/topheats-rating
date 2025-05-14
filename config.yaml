@@ -5,7 +5,8 @@ current_year: 2024
 top_n: 100
 years_order: [2017, 2018, 2019, 2021, 2022, 2023, 2024]
 input_paths:
-  - "shortboard/*_men_*.csv"
+  - "shortboard/*_men_2024.csv"
+  - "shortboard/*_men_2023.csv"
 
 output:
   filename: ranking_shortboard.csv
@@ -66,3 +67,12 @@ bonuses:
   participation:
     enabled: false
     points: 50
+
+wildcard:
+  enabled: true
+  selection_criteria:
+    top_rank_threshold: 16    # Топ-32 по общему рейтингу
+    min_participations: 3      # Участие минимум в 3 чемпионатах
+    best_place_requirement: 8  # Лучший результат не ниже 8 места
+  max_candidates: 4            # Количество выдаваемых wildcard
+  output_file: wildcard.csv

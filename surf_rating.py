@@ -185,11 +185,51 @@ def generate_output(results: List[Dict]):
         ]
         print(','.join(map(str, row)))
 
+def select_wildcard_candidates(results: List[Dict]) -> List[Dict]:
+    if not CONFIG.get('wildcard', {}).get('enabled', False):
+        return []
+
+    criteria = CONFIG['wildcard']['selection_criteria']
+
+    # Фильтрация по базовым критериям
+    candidates = [
+        a for a in results
+        if (a['total'] <= criteria['top_rank_threshold'] and
+            a['best_place'] <= criteria['best_place_requirement'] and
+            len(a['years']) >= criteria['min_participations'])
+    ]
+
+    # Дополнительная сортировка
+    candidates = sorted(candidates, key=lambda x: (x['best_place'], -x['last_year']))
+
+    # Сохранение результатов
+    output_path = Path(CONFIG['wildcard']['output_file'])
+    with open(output_path, 'w', encoding='utf-8', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Name', 'Region', 'Best Place', 'Last Year', 'Total Points'])
+        for athlete in candidates[:CONFIG['wildcard'].get('max_candidates', 4)]:
+            writer.writerow([
+                athlete['name'],
+                athlete['region'],
+                athlete['best_place'],
+                athlete['last_year'],
+                athlete['total']
+            ])
+
+    return candidates[:CONFIG['wildcard'].get('max_candidates', 4)]
+
 if __name__ == '__main__':
     try:
         data = parse_files()
         results = process_athletes(data)
         generate_output(results)
+
+        # Выбор кандидатов на wildcard
+        wildcard = select_wildcard_candidates(results)
+        print("\nWildcard Candidates:")
+        for i, athlete in enumerate(wildcard, 1):
+            print(f"{i}. {athlete['name']} | Best: {athlete['best_place']} | Last: {athlete['last_year']}")
+
     except Exception as e:
         print(f"Ошибка: {str(e)}")
         exit(1)
