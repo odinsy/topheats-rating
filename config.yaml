@@ -84,6 +84,18 @@ wildcard:
   min_best_place: 8       # Лучший результат за карьеру
 
 trends:
-  input_ranking_file: ranking/shortboard_men.csv
-  output_general_file: stats/trends/general_shortboard_men_stats.csv
-  output_detailed_file: stats/trends/detailed_shortboard_men_stats.csv
+  # input_ranking_file: ranking/shortboard_men.csv
+  # output_general_file: stats/trends/general_shortboard_men_stats.csv
+  # output_detailed_file: stats/trends/detailed_shortboard_men_stats.csv
+
+  # input_ranking_file: ranking/longboard_men.csv
+  # output_general_file: stats/trends/general_longboard_men_stats.csv
+  # output_detailed_file: stats/trends/detailed_longboard_men_stats.csv
+
+  # input_ranking_file: ranking/longboard_women.csv
+  # output_general_file: stats/trends/general_longboard_women_stats.csv
+  # output_detailed_file: stats/trends/detailed_longboard_women_stats.csv
+
+  input_ranking_file: ranking/shortboard_women.csv
+  output_general_file: stats/trends/general_shortboard_women_stats.csv
+  output_detailed_file: stats/trends/detailed_shortboard_women_stats.csv
