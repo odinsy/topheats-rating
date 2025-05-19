@@ -25,6 +25,7 @@ def parse_files() -> Dict[str, Dict]:
     athletes = defaultdict(lambda: {
         'years': defaultdict(str),
         'category': '',
+        'birthday': 0,
         'regions': defaultdict(str),
         'ranks': defaultdict(str),
         'best_place': None,
@@ -35,7 +36,7 @@ def parse_files() -> Dict[str, Dict]:
         for file_path in glob.glob(pattern):
             with open(file_path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f)
-                required = ['Год', 'ФИО', 'Регион', 'Разряд', 'Место']
+                required = ['Год', 'ФИО', 'Год рождения', 'Регион', 'Разряд', 'Место']
                 if not all(col in reader.fieldnames for col in required):
                     raise ValueError(f"Invalid columns in {file_path}")
 
@@ -49,6 +50,7 @@ def parse_files() -> Dict[str, Dict]:
                     athletes[name]['years'][year] = place
                     athletes[name]['regions'][year] = region
                     athletes[name]['ranks'][year] = rank
+                    athletes[name]['birthday'] = int(row['Год рождения'])
                     athletes[name]['category'] = row['Категория']
                     athletes[name]['last_year'] = max(athletes[name]['last_year'], year)
 

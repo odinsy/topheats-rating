@@ -82,3 +82,8 @@ wildcard:
   min_participations: 2   # Минимальное количество участий
   last_years_period: 3    # За последние N лет
   min_best_place: 8       # Лучший результат за карьеру
+
+trends:
+  input_ranking_file: ranking/shortboard_men.csv
+  output_general_file: stats/trends/general_shortboard_men_stats.csv
+  output_detailed_file: stats/trends/detailed_shortboard_men_stats.csv
