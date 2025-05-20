@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longboard Ranking</title>
     <style>
-        /* Стили остаются без изменений */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,28 +14,29 @@
 
         body {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 15px;
         }
 
         .table-container {
             max-width: 100%;
             overflow-x: auto;
             background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.08);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 800px;
+            min-width: 750px;
+            font-size: 0.85em;
         }
 
         th, td {
-            padding: 12px 15px;
+            padding: 8px 12px;
             text-align: left;
             border-bottom: 1px solid #e9ecef;
-            font-size: 0.9em;
+            line-height: 1.4;
         }
 
         th {
@@ -44,20 +44,11 @@
             color: #ffffff;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
             white-space: nowrap;
-        }
-
-        th:hover {
-            background: #34495e;
         }
 
         tr:hover {
             background-color: #f8f9fa;
-        }
-
-        td {
-            color: #495057;
         }
 
         .total-points {
@@ -65,17 +56,39 @@
             color: #2c3e50;
         }
 
-        .region {
-            min-width: 180px;
+        .name-td {
+            position: relative;
+            cursor: help;
         }
 
-        .best-place {
-            text-align: center;
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+
+        .name-td:hover .tooltip {
+            opacity: 1;
+        }
+
+        .compact-column {
+            min-width: 60px;
         }
 
         @media (max-width: 768px) {
-            .table-container {
-                border-radius: 0;
+            body {
+                padding: 10px;
             }
         }
     </style>
@@ -85,18 +98,18 @@
         <table id="rankingTable">
             <thead>
                 <tr>
-                    <th>Rank</th>
+                    <th class="compact-column">Rank</th>
                     <th>Name</th>
-                    <th class="region">Region</th>
-                    <th>Best Place</th>
-                    <th>2017</th>
-                    <th>2018</th>
-                    <th>2019</th>
-                    <th>2021</th>
-                    <th>2022</th>
-                    <th>2023</th>
-                    <th>2024</th>
-                    <th>Total Points</th>
+                    <th>Region</th>
+                    <th class="compact-column">Best</th>
+                    <th class="compact-column">2017</th>
+                    <th class="compact-column">2018</th>
+                    <th class="compact-column">2019</th>
+                    <th class="compact-column">2021</th>
+                    <th class="compact-column">2022</th>
+                    <th class="compact-column">2023</th>
+                    <th class="compact-column">2024</th>
+                    <th class="compact-column">Total</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -126,6 +139,7 @@
                     return {
                         Rank: columns[0],
                         Name: columns[1],
+                        Birthday: columns[2],
                         Region: columns[3],
                         BestPlace: columns[5],
                         '2017': columns[6],
@@ -135,7 +149,8 @@
                         '2022': columns[10],
                         '2023': columns[11],
                         '2024': columns[12],
-                        'Total Points': columns[13]
+                        'Total Points': columns[13],
+                        Instagram: `@${columns[1].toLowerCase().replace(/\s+/g, '')}` // Генерация mock Instagram
                     };
                 });
             }
@@ -148,9 +163,14 @@
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${item.Rank}</td>
-                        <td>${item.Name}</td>
+                        <td class="name-td">${item.Name}
+                            <div class="tooltip">
+                                <div>Рождён: ${item.Birthday}</div>
+                                <div>Instagram: ${item.Instagram}</div>
+                            </div>
+                        </td>
                         <td>${item.Region}</td>
-                        <td class="best-place">${item.BestPlace}</td>
+                        <td>${item.BestPlace}</td>
                         <td>${item['2017']}</td>
                         <td>${item['2018']}</td>
                         <td>${item['2019']}</td>
@@ -173,7 +193,6 @@
                     let valA = a[key];
                     let valB = b[key];
                     
-                    // Числовая сортировка для колонок с числами
                     if(['Rank', 'BestPlace', '2017', '2018', '2019', 
                        '2021', '2022', '2023', '2024', 'Total Points'].includes(key)) {
                         valA = parseFloat(valA) || 0;
@@ -186,10 +205,7 @@
                     return (valA > valB ? 1 : -1) * direction;
                 });
 
-                // Обновляем состояние сортировки
                 sortState.asc = !sortState.asc;
-                sortState.column = key;
-                
                 renderTable(currentData);
             }
 
