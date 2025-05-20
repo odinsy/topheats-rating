@@ -1,9 +1,7 @@
-// app.js
 document.addEventListener('DOMContentLoaded', () => {
     let currentData = [];
     let sortState = { column: null, asc: true };
 
-    // Конфигурация парсера
     const config = {
         fieldMap: {
             staticFields: {
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     startIndex: 6,
                     list: ['2017', '2018', '2019', '2021', '2022', '2023', '2024']
                 },
-                TotalPoints: { index: -1 } // Последняя колонка
+                TotalPoints: { index: -1 }
             }
         }
     };
@@ -43,22 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const columns = row.split(',').map(c => c.trim());
                 const athlete = {};
 
-                // Парсинг статических полей
                 for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
                     athlete[field] = settings.index !== null
                         ? (columns[settings.index] || settings.default)
                         : settings.default;
                 }
 
-                // Парсинг динамических годов
                 config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
                     const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
                     athlete[year] = columns[colIndex] || '0';
                 });
 
-                // Total Points (последняя колонка)
                 athlete.TotalPoints = columns[columns.length - 1] || '0';
-
                 return athlete;
             });
     }
@@ -70,20 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
         data.forEach((athlete, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td class="compact-column">${athlete.Rank}</td>
-                <td class="name-cell">
+                <td class="compact-col">${athlete.Rank}</td>
+                <td class="name-col name-cell">
                     ${athlete.Name}
                     <div class="tooltip">
                         <span>Год рождения: ${athlete.Birthday}</span>
                         ${athlete.Social ? `<a href="${athlete.Social}" target="_blank">Соцсети</a>` : ''}
                     </div>
                 </td>
-                <td>${athlete.Region}</td>
-                <td class="compact-column">${athlete.BestPlace}</td>
+                <td class="region-col">${athlete.Region}</td>
+                <td class="compact-col">${athlete.BestPlace}</td>
                 ${config.fieldMap.dynamicFields.years.list
-                    .map(year => `<td class="compact-column">${athlete[year]}</td>`)
+                    .map(year => `<td class="compact-col">${athlete[year]}</td>`)
                     .join('')}
-                <td class="compact-column total-points">${athlete.TotalPoints}</td>
+                <td class="compact-col total-points">${athlete.TotalPoints}</td>
             `;
             row.style.backgroundColor = index % 2 === 0 ? '#fdfdfd' : '';
             tbody.appendChild(row);
