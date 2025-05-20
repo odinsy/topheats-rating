@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тренд среднего возраста новых спортсменов</title>
+    <!-- Подключаем Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="ageTrendChart"></canvas>
+    </div>
+
+<script>
+// Загрузка данных и инициализация графика
+fetch('../../stats/trends/general_shortboard_men_stats.csv')
+    .then(response => response.text())
+    .then(csvData => {
+        // Парсинг CSV
+        const rows = csvData.split('\n').slice(1);
+        const data = rows.map(row => {
+            const [year, total, newbies, percent, avgAge] = row.split(',');
+            return {
+                year: parseInt(year),
+                avgAge: parseFloat(avgAge)
+            };
+        }).filter(item => !isNaN(item.year));
+
+        // Создание графика
+        const ctx = document.getElementById('ageTrendChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.map(d => d.year),
+                datasets: [{
+                    label: 'Средний возраст новых спортсменов',
+                    data: data.map(d => d.avgAge),
+                    borderColor: '#4e73df',
+                    backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Динамика среднего возраста новых спортсменов',
+                        font: { size: 18 }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Год',
+                            font: { weight: 'bold' }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Средний возраст',
+                            font: { weight: 'bold' }
+                        },
+                        suggestedMin: 25,
+                        suggestedMax: 40
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => console.error('Ошибка загрузки данных:', error));
+</script>
+</body>
+</html>
