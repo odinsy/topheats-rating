@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="filter">
-        <label>Регион: 
+        <label>Регион:
             <select id="regionFilter">
                 <option value="all">Все</option>
             </select>
@@ -22,7 +22,7 @@
 
 <script>
 async function loadData() {
-    return await d3.csv("../../ranking/longboard_men.csv", d => ({
+    return await d3.csv("../ranking/longboard_men.csv", d => ({
         ...d,
         Total: +d['Total Points'],
         Rank: +d.Rank,
@@ -34,7 +34,7 @@ async function loadData() {
 async function renderChart() {
     const data = await loadData();
     const regions = [...new Set(data.map(d => d.Region))].sort();
-    
+
     // Update filter options
     d3.select('#regionFilter')
         .selectAll('option')
@@ -43,8 +43,8 @@ async function renderChart() {
         .text(d => d);
 
     // Filter data
-    const filteredData = data.filter(d => 
-        document.getElementById('regionFilter').value === 'all' || 
+    const filteredData = data.filter(d =>
+        document.getElementById('regionFilter').value === 'all' ||
         d.Region === document.getElementById('regionFilter').value
     );
 
@@ -54,7 +54,7 @@ async function renderChart() {
         y: filteredData.map(d => d.Total),
         text: filteredData.map(d => `Регион: ${d.Region}<br>Лучшая позиция: ${d.Best}`),
         marker: {
-            color: filteredData.map(d => 
+            color: filteredData.map(d =>
                 d.Region === 'Калининградская область' ? '#1f77b4' :
                 d.Region === 'Санкт-Петербург' ? '#ff7f0e' :
                 d.Region === 'Приморский край' ? '#2ca02c' : '#d62728'
