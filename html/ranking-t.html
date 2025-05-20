@@ -37,41 +37,28 @@
             width: 100%;
             border-collapse: collapse;
             background: var(--table-bg);
-            table-layout: fixed;
+            min-width: 900px;
         }
 
         th {
             background: var(--header-bg);
             color: white;
             font-weight: 600;
-            padding: 16px 20px;
+            padding: 12px 15px;
             text-align: left;
             position: relative;
             border-right: 1px solid rgba(255,255,255,0.1);
-            min-width: 80px;
         }
 
         th.sortable {
             cursor: pointer;
             transition: background 0.3s;
-            white-space: nowrap;
         }
 
-        .rank-column { width: 70px; }
-        .name-column { width: 200px; }
-        .birth-column { width: 90px; }
-        .region-column { width: 180px; }
-        .best-column { width: 80px; }
-        .total-column { width: 100px; }
-        .year-column { width: 80px; }
-
         td {
-            padding: 14px 20px;
+            padding: 12px 15px;
             border-bottom: 1px solid var(--border-color);
             transition: background 0.2s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         tr:nth-child(even) {
@@ -87,18 +74,35 @@
             font-size: 0.8em;
         }
 
+        .year-header {
+            min-width: 60px;
+            text-align: center;
+        }
+
+        @media screen and (max-width: 1200px) {
+            th, td {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .year-header {
+                min-width: 55px;
+            }
+        }
+
         @media screen and (max-width: 768px) {
             .container {
                 border-radius: 8px;
             }
             
             th, td {
-                padding: 12px 15px;
-                font-size: 14px;
+                padding: 8px 10px;
+                font-size: 13px;
             }
             
-            .year-column { width: 70px; }
-            .region-column { width: 150px; }
+            .year-header {
+                min-width: 50px;
+            }
         }
     </style>
 </head>
@@ -108,19 +112,19 @@
             <table id="rankingTable">
                 <thead>
                     <tr>
-                        <th class="sortable rank-column" data-column="0">Rank</th>
-                        <th class="sortable name-column" data-column="1">Athlete</th>
-                        <th class="sortable birth-column" data-column="2">Birth</th>
-                        <th class="sortable region-column" data-column="3">Region</th>
-                        <th class="sortable best-column" data-column="4">Best</th>
-                        <th class="sortable total-column" data-column="5">Total</th>
-                        <th class="sortable year-column" data-column="6">2017</th>
-                        <th class="sortable year-column" data-column="7">2018</th>
-                        <th class="sortable year-column" data-column="8">2019</th>
-                        <th class="sortable year-column" data-column="9">2021</th>
-                        <th class="sortable year-column" data-column="10">2022</th>
-                        <th class="sortable year-column" data-column="11">2023</th>
-                        <th class="sortable year-column" data-column="12">2024</th>
+                        <th class="sortable" data-column="0">Rank</th>
+                        <th class="sortable" data-column="1">Athlete</th>
+                        <th class="sortable" data-column="2">Birth</th>
+                        <th class="sortable" data-column="3">Region</th>
+                        <th class="sortable" data-column="4">Best</th>
+                        <th class="sortable" data-column="5">Total</th>
+                        <th class="sortable year-header" data-column="6">2017</th>
+                        <th class="sortable year-header" data-column="7">2018</th>
+                        <th class="sortable year-header" data-column="8">2019</th>
+                        <th class="sortable year-header" data-column="9">2021</th>
+                        <th class="sortable year-header" data-column="10">2022</th>
+                        <th class="sortable year-header" data-column="11">2023</th>
+                        <th class="sortable year-header" data-column="12">2024</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -155,7 +159,7 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${row.Rank}</td>
-                    <td><strong>${row.Name}</strong></td>
+                    <td>${row.Name}</td>
                     <td>${row.Birthday}</td>
                     <td>${row.Region}</td>
                     <td>${row['Best Place']}</td>
@@ -176,20 +180,14 @@
                 const aValue = a.cells[columnIndex].textContent.replace(/,/g, '');
                 const bValue = b.cells[columnIndex].textContent.replace(/,/g, '');
                 
-                // Numerical sorting
-                if (!isNaN(aValue) && aValue !== '' && !isNaN(bValue) && bValue !== '') {
-                    return ascending ? 
-                        parseInt(aValue) - parseInt(bValue) : 
-                        parseInt(bValue) - parseInt(aValue);
+                if (!isNaN(aValue) {
+                    return ascending ? aValue - bValue : bValue - aValue;
                 }
-                
-                // String sorting
                 return ascending ? 
                     aValue.localeCompare(bValue, 'ru', { numeric: true }) : 
                     bValue.localeCompare(aValue, 'ru', { numeric: true });
             });
 
-            // Clear and re-append sorted rows
             tbody.innerHTML = '';
             rows.forEach(row => tbody.appendChild(row));
         }
@@ -209,19 +207,15 @@
                         const isSameColumn = currentSort.column === columnIndex;
                         const newAscending = isSameColumn ? !currentSort.ascending : true;
                         
-                        // Remove all sort icons
                         document.querySelectorAll('.sort-icon').forEach(icon => icon.remove());
                         
-                        // Add new sort icon
                         const icon = document.createElement('span');
                         icon.className = 'sort-icon';
                         icon.textContent = newAscending ? '↑' : '↓';
                         th.appendChild(icon);
                         
-                        // Perform sorting
                         sortTable(columnIndex, newAscending);
                         
-                        // Update state
                         currentSort = { column: columnIndex, ascending: newAscending };
                     });
                 });
