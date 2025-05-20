@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longboard Ranking</title>
     <style>
+        /* Стили остаются без изменений */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -121,20 +122,20 @@
             function parseCSV(csv) {
                 const rows = csv.split('\n').slice(1);
                 return rows.map(row => {
-                    const [Rank, Name, Birthday, Region, Category, BestPlace, ...points] = row.split(',');
+                    const columns = row.split(',').map(c => c.trim());
                     return {
-                        Rank,
-                        Name,
-                        Region,
-                        BestPlace,
-                        '2017': points[0],
-                        '2018': points[1],
-                        '2019': points[2],
-                        '2021': points[3],
-                        '2022': points[4],
-                        '2023': points[5],
-                        '2024': points[6],
-                        'Total Points': points[7]
+                        Rank: columns[0],
+                        Name: columns[1],
+                        Region: columns[3],
+                        BestPlace: columns[5],
+                        '2017': columns[6],
+                        '2018': columns[7],
+                        '2019': columns[8],
+                        '2021': columns[9],
+                        '2022': columns[10],
+                        '2023': columns[11],
+                        '2024': columns[12],
+                        'Total Points': columns[13]
                     };
                 });
             }
@@ -164,19 +165,31 @@
             }
 
             function sortTable(columnIndex) {
-                const columnKeys = Object.keys(currentData[0]);
-                const key = columnKeys[columnIndex];
+                const columns = ['Rank', 'Name', 'Region', 'BestPlace', '2017', '2018', 
+                               '2019', '2021', '2022', '2023', '2024', 'Total Points'];
+                const key = columns[columnIndex];
                 
                 currentData.sort((a, b) => {
-                    const valA = isNaN(a[key]) ? a[key] : Number(a[key]);
-                    const valB = isNaN(b[key]) ? b[key] : Number(b[key]);
+                    let valA = a[key];
+                    let valB = b[key];
                     
-                    if (valA < valB) return sortState.asc ? -1 : 1;
-                    if (valA > valB) return sortState.asc ? 1 : -1;
-                    return 0;
+                    // Числовая сортировка для колонок с числами
+                    if(['Rank', 'BestPlace', '2017', '2018', '2019', 
+                       '2021', '2022', '2023', '2024', 'Total Points'].includes(key)) {
+                        valA = parseFloat(valA) || 0;
+                        valB = parseFloat(valB) || 0;
+                    }
+
+                    if(valA === valB) return 0;
+                    const direction = sortState.asc ? 1 : -1;
+                    
+                    return (valA > valB ? 1 : -1) * direction;
                 });
 
+                // Обновляем состояние сортировки
                 sortState.asc = !sortState.asc;
+                sortState.column = key;
+                
                 renderTable(currentData);
             }
 
