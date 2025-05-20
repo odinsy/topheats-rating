@@ -7,14 +7,14 @@ years_order: [2017, 2018, 2019, 2021, 2022, 2023, 2024]
 input_paths:
   # - "data/shortboard/shortboard_men_*.csv"
   # - "data/longboard/longboard_men_*.csv"
-  # - "data/shortboard/shortboard_women_*.csv"
-  - "data/longboard/longboard_women_*.csv"
+  - "data/shortboard/shortboard_women_*.csv"
+  # - "data/longboard/longboard_women_*.csv"
 
 output:
   # filename: ranking/shortboard_men.csv
   # filename: ranking/longboard_men.csv
-  # filename: ranking/shortboard_women.csv
-  filename: ranking/longboard_women.csv
+  filename: ranking/shortboard_women.csv
+  # filename: ranking/longboard_women.csv
   columns: [Rank, Name, Birthday, Region, Category, Best Place, YearScores, Total Points]
 
 sorting:
@@ -74,14 +74,14 @@ bonuses:
     points: 50
 
 wildcard:
-  ranking_file: ranking/ranking_shortboard.csv
-  output_file: wildcard/wildcard_shortboard.csv
+  ranking_file: ranking/longboard_women.csv
+  output_file: wildcard/shortboard_women.csv
   # ranking_file: ranking/ranking_longboard.csv
   # output_file: wildcard/wildcard_longboard.csv
-  top_n: 32               # Максимальный ранг для отбора
+  top_n: 16               # Максимальный ранг для отбора
   min_participations: 2   # Минимальное количество участий
   last_years_period: 3    # За последние N лет
-  min_best_place: 8       # Лучший результат за карьеру
+  min_best_place: 6       # Лучший результат за карьеру
 
 trends:
   # input_ranking_file: ranking/shortboard_men.csv
