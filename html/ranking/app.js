@@ -14,26 +14,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function parseCSV(csv) {
-        const rows = csv.split('\n').slice(1);
+        const rows = csv.split('\n')
+            .slice(1) // Пропускаем заголовок
+            .filter(row => row.trim().length > 0); // Фильтруем пустые строки
+
         return rows.map(row => {
             const columns = row.split(',').map(c => c.trim());
+
+            // Проверка на валидность строки
+            if(columns.length < 14) return null;
+
             return {
-                Rank: columns[0],
-                Name: columns[1],
-                Birthday: columns[2],
-                Region: columns[3],
-                BestPlace: columns[5],
-                '2017': columns[6],
-                '2018': columns[7],
-                '2019': columns[8],
-                '2021': columns[9],
-                '2022': columns[10],
-                '2023': columns[11],
-                '2024': columns[12],
-                'Total Points': columns[13],
+                Rank: columns[0] || '',
+                Name: columns[1] || '',
+                Birthday: columns[2] || '',
+                Region: columns[3] || '',
+                BestPlace: columns[5] || '',
+                '2017': columns[6] || '0',
+                '2018': columns[7] || '0',
+                '2019': columns[8] || '0',
+                '2021': columns[9] || '0',
+                '2022': columns[10] || '0',
+                '2023': columns[11] || '0',
+                '2024': columns[12] || '0',
+                'Total Points': columns[13] || '0',
                 Social: 'https://vk.com/topheats'
             };
-        });
+        }).filter(item => item !== null); // Удаляем некорректные записи
     }
 
     function renderTable(data) {
