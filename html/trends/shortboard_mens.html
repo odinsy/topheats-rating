@@ -46,7 +46,7 @@
 
 <script>
 // Загрузка данных (путь исправлен согласно описанию)
-fetch('stats/trends/general_shortboard_men_stats.csv')
+fetch('../../stats/trends/general_shortboard_men_stats.csv')
     .then(response => response.text())
     .then(csvData => {
         const rows = csvData.split('\n').slice(1);
