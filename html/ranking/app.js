@@ -1,6 +1,28 @@
+// app.js
 document.addEventListener('DOMContentLoaded', () => {
     let currentData = [];
     let sortState = { column: null, asc: true };
+
+    // Конфигурация парсера
+    const config = {
+        fieldMap: {
+            staticFields: {
+                Rank: { index: 0, default: '' },
+                Name: { index: 1, default: '' },
+                Birthday: { index: 2, default: '' },
+                Region: { index: 3, default: '' },
+                BestPlace: { index: 5, default: '' },
+                Social: { index: null, default: 'https://vk.com/topheats' }
+            },
+            dynamicFields: {
+                years: {
+                    startIndex: 6,
+                    list: ['2017', '2018', '2019', '2021', '2022', '2023', '2024']
+                },
+                TotalPoints: { index: -1 } // Последняя колонка
+            }
+        }
+    };
 
     async function loadData() {
         try {
@@ -14,90 +36,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function parseCSV(csv) {
-        const rows = csv.split('\n')
-            .slice(1) // Пропускаем заголовок
-            .filter(row => row.trim().length > 0); // Фильтруем пустые строки
+        return csv.split('\n')
+            .slice(1)
+            .filter(row => row.trim().length > 0)
+            .map(row => {
+                const columns = row.split(',').map(c => c.trim());
+                const athlete = {};
 
-        return rows.map(row => {
-            const columns = row.split(',').map(c => c.trim());
+                // Парсинг статических полей
+                for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
+                    athlete[field] = settings.index !== null
+                        ? (columns[settings.index] || settings.default)
+                        : settings.default;
+                }
 
-            // Проверка на валидность строки
-            if(columns.length < 14) return null;
+                // Парсинг динамических годов
+                config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
+                    const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
+                    athlete[year] = columns[colIndex] || '0';
+                });
 
-            return {
-                Rank: columns[0] || '',
-                Name: columns[1] || '',
-                Birthday: columns[2] || '',
-                Region: columns[3] || '',
-                BestPlace: columns[5] || '',
-                '2017': columns[6] || '0',
-                '2018': columns[7] || '0',
-                '2019': columns[8] || '0',
-                '2021': columns[9] || '0',
-                '2022': columns[10] || '0',
-                '2023': columns[11] || '0',
-                '2024': columns[12] || '0',
-                'Total Points': columns[13] || '0',
-                Social: 'https://vk.com/topheats'
-            };
-        }).filter(item => item !== null); // Удаляем некорректные записи
+                // Total Points (последняя колонка)
+                athlete.TotalPoints = columns[columns.length - 1] || '0';
+
+                return athlete;
+            });
     }
 
     function renderTable(data) {
         const tbody = document.querySelector('#rankingTable tbody');
         tbody.innerHTML = '';
 
-        data.forEach((item, index) => {
+        data.forEach((athlete, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td class="compact-column">${item.Rank}</td>
+                <td class="compact-column">${athlete.Rank}</td>
                 <td class="name-cell">
-                    ${item.Name}
+                    ${athlete.Name}
                     <div class="tooltip">
-                        <span>Год рождения: ${item.Birthday}</span>
-                        <a href="${item.Social}" target="_blank">Соцсети</a>
+                        <span>Год рождения: ${athlete.Birthday}</span>
+                        ${athlete.Social ? `<a href="${athlete.Social}" target="_blank">Соцсети</a>` : ''}
                     </div>
                 </td>
-                <td>${item.Region}</td>
-                <td class="compact-column">${item.BestPlace}</td>
-                <td class="compact-column">${item['2017']}</td>
-                <td class="compact-column">${item['2018']}</td>
-                <td class="compact-column">${item['2019']}</td>
-                <td class="compact-column">${item['2021']}</td>
-                <td class="compact-column">${item['2022']}</td>
-                <td class="compact-column">${item['2023']}</td>
-                <td class="compact-column">${item['2024']}</td>
-                <td class="compact-column total-points">${item['Total Points']}</td>
+                <td>${athlete.Region}</td>
+                <td class="compact-column">${athlete.BestPlace}</td>
+                ${config.fieldMap.dynamicFields.years.list
+                    .map(year => `<td class="compact-column">${athlete[year]}</td>`)
+                    .join('')}
+                <td class="compact-column total-points">${athlete.TotalPoints}</td>
             `;
-            if(index % 2 === 0) row.style.backgroundColor = '#fdfdfd';
+            row.style.backgroundColor = index % 2 === 0 ? '#fdfdfd' : '';
             tbody.appendChild(row);
         });
     }
 
     function sortTable(columnIndex) {
-        const columns = ['Rank', 'Name', 'Region', 'BestPlace', '2017', '2018',
-                       '2019', '2021', '2022', '2023', '2024', 'Total Points'];
-        const key = columns[columnIndex];
+        const columns = [
+            ...Object.keys(config.fieldMap.staticFields),
+            ...config.fieldMap.dynamicFields.years.list,
+            'TotalPoints'
+        ];
+
+        const sortKey = columns[columnIndex];
 
         currentData.sort((a, b) => {
-            let valA = a[key];
-            let valB = b[key];
+            const valA = a[sortKey] || '';
+            const valB = b[sortKey] || '';
 
-            if(['Rank', 'BestPlace', '2017', '2018', '2019',
-               '2021', '2022', '2023', '2024', 'Total Points'].includes(key)) {
-                valA = parseFloat(valA) || 0;
-                valB = parseFloat(valB) || 0;
-            }
-
-            if(valA === valB) return 0;
+            const isNumeric = !isNaN(valA) && !isNaN(valB);
             const direction = sortState.asc ? 1 : -1;
 
-            return (valA > valB ? 1 : -1) * direction;
+            return isNumeric
+                ? (parseFloat(valA) - parseFloat(valB)) * direction
+                : String(valA).localeCompare(String(valB), 'ru') * direction;
         });
 
         sortState.asc = !sortState.asc;
-        sortState.column = key;
-
         renderTable(currentData);
     }
 
