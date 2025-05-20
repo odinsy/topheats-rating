@@ -10,6 +10,21 @@ body {
     padding: 20px;
 }
 
+.category-selector {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    text-align: right;
+}
+
+.category-selector select {
+    padding: 8px 12px;
+    border: 1px solid #2c3e50;
+    border-radius: 4px;
+    background: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 .table-wrapper {
     max-width: 1200px;
     margin: 0 auto;
@@ -101,6 +116,11 @@ tr:hover {
 }
 
 @media (max-width: 768px) {
+    .category-selector {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
     .table-wrapper {
         padding: 0 10px;
     }

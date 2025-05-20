@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let sortState = { column: null, asc: true };
 
     const config = {
+        categories: {
+            longboard_men: 'Longboard (Men)',
+            longboard_women: 'Longboard (Women)',
+            shortboard_men: 'Shortboard (Men)',
+            shortboard_women: 'Shortboard (Women)'
+        },
         fieldMap: {
             staticFields: {
                 Rank: { index: 0, default: '', type: 'number' },
@@ -28,14 +34,48 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    async function loadData() {
+    // Инициализация
+    initCategorySelector();
+    loadCategoryData(getCurrentCategory());
+
+    // Обработчики событий
+    document.getElementById('categorySelect').addEventListener('change', handleCategoryChange);
+
+    function initCategorySelector() {
+        const selector = document.getElementById('categorySelect');
+        const currentCategory = getCurrentCategory();
+
+        selector.value = currentCategory;
+    }
+
+    function getCurrentCategory() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('category') || 'longboard_men';
+    }
+
+    function handleCategoryChange(e) {
+        const category = e.target.value;
+        updateURL(category);
+        loadCategoryData(category);
+    }
+
+    function updateURL(category) {
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('category', category);
+        window.history.pushState({}, '', newUrl);
+    }
+
+    async function loadCategoryData(category) {
         try {
-            const response = await fetch('../../ranking/longboard_men.csv');
+            const response = await fetch(`../../ranking/${category}.csv`);
+            if(!response.ok) throw new Error('CSV not found');
+
             const csvData = await response.text();
             currentData = parseCSV(csvData);
             renderTable(currentData);
         } catch (error) {
-            console.error('Error loading CSV:', error);
+            console.error('Error:', error);
+            alert('Данные временно недоступны. Попробуйте позже.');
         }
     }
 
@@ -47,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const columns = row.split(',').map(c => c.trim());
                 const athlete = {};
 
-                // Parse static fields
+                // Парсинг статических полей
                 for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
                     athlete[field] = parseValue(
                         settings.index !== null ? columns[settings.index] : settings.default,
@@ -55,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 }
 
-                // Parse dynamic years
+                // Парсинг динамических годов
                 config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
                     const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
                     athlete[year] = parseValue(
@@ -64,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 });
 
-                // Parse Total Points
+                // Total Points
                 athlete.TotalPoints = parseValue(
                     columns[columns.length - 1] || '0',
                     config.fieldMap.dynamicFields.TotalPoints.type
@@ -133,22 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getSortType(key) {
-        // Check static fields
+        // Статические поля
         for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
             if(field === key) return settings.type;
         }
 
-        // Check dynamic years
+        // Динамические годы
         if(config.fieldMap.dynamicFields.years.list.includes(key)) {
             return config.fieldMap.dynamicFields.years.type;
         }
 
-        // Check TotalPoints
+        // Total Points
         if(key === 'TotalPoints') {
             return config.fieldMap.dynamicFields.TotalPoints.type;
         }
 
-        // Default to text sorting
         return 'text';
     }
 
@@ -156,5 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
         th.addEventListener('click', () => sortTable(index));
     });
 
-    loadData();
+    // Обработчик изменения истории
+    window.addEventListener('popstate', () => {
+        const category = getCurrentCategory();
+        document.getElementById('categorySelect').value = category;
+        loadCategoryData(category);
+    });
 });

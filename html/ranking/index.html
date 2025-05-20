@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Longboard Ranking</title>
+    <title>Sports Ranking</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav class="category-selector">
+        <select id="categorySelect">
+            <option value="longboard_men">Лонгборд (Мужчины)</option>
+            <option value="longboard_women">Лонгборд (Женщины)</option>
+            <option value="shortboard_men">Шортборд (Мужчины)</option>
+            <option value="shortboard_women">Шортборд (Женщины)</option>
+        </select>
+    </nav>
+
     <div class="table-wrapper">
         <div class="table-container">
             <table id="rankingTable">
@@ -30,6 +39,7 @@
             </table>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
