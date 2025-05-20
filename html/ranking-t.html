@@ -97,7 +97,7 @@
         function parseCSV(csv) {
             const rows = csv.split('\n');
             const headers = rows[0].split(',').map(h => h.trim());
-            
+
             return rows.slice(1).map(row => {
                 const values = row.split(',');
                 return headers.reduce((obj, header, index) => {
@@ -120,7 +120,7 @@
                     <td>${row.Region}</td>
                     <td>${row['Best Place']}</td>
                     <td><strong>${row['Total Points']}</strong></td>
-                    ${[2017, 2018, 2019, 2021, 2022, 2023, 2024].map(year => 
+                    ${[2017, 2018, 2019, 2021, 2022, 2023, 2024].map(year =>
                         `<td>${row[year] === '0' ? '-' : row[year]}</td>`
                     ).join('')}
                 `;
@@ -135,12 +135,12 @@
             rows.sort((a, b) => {
                 const aValue = a.cells[column].textContent;
                 const bValue = b.cells[column].textContent;
-                
-                if (!isNaN(aValue) {
+
+                if (!isNaN(aValue)) {
                     return ascending ? aValue - bValue : bValue - aValue;
                 }
-                return ascending ? 
-                    aValue.localeCompare(bValue, 'ru') : 
+                return ascending ?
+                    aValue.localeCompare(bValue, 'ru') :
                     bValue.localeCompare(aValue, 'ru');
             });
 
@@ -153,15 +153,15 @@
             renderTable(data);
 
             let sortState = { column: 0, ascending: true };
-            
+
             document.querySelectorAll('th').forEach((th, index) => {
                 th.addEventListener('click', () => {
                     sortState.ascending = sortState.column === index ? !sortState.ascending : true;
                     sortState.column = index;
                     sortTable(index, sortState.ascending);
-                    
+
                     // Update sort indicators
-                    document.querySelectorAll('th').forEach(h => h.innerHTML = 
+                    document.querySelectorAll('th').forEach(h => h.innerHTML =
                         h.innerHTML.replace(/ ?↑|↓/g, ''));
                     th.innerHTML += sortState.ascending ? ' ↑' : ' ↓';
                 });
