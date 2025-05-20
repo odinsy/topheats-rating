@@ -2,61 +2,114 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Рейтинг спортсменов</title>
+    <title>Longboard Rankings</title>
     <style>
+        :root {
+            --primary-blue: #0078D7;
+            --dark-bg: #1A1A1A;
+            --table-bg: #FFFFFF;
+            --header-bg: linear-gradient(180deg, #0078D7 0%, #005A9E 100%);
+            --row-hover: #F3F9FF;
+            --border-color: #E0E0E0;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: var(--dark-bg);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: #333;
+        }
+
         .container {
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
 
         .table-wrapper {
             overflow-x: auto;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
+            background: var(--table-bg);
         }
 
         th {
-            background-color: #4CAF50;
+            background: var(--header-bg);
             color: white;
+            font-weight: 600;
+            padding: 16px 20px;
+            text-align: left;
+            position: relative;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        th.sortable {
             cursor: pointer;
             transition: background 0.3s;
         }
 
-        th:hover {
-            background-color: #45a049;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        th.sortable:hover {
+            background: linear-gradient(180deg, #0066B3 0%, #004A86 100%);
         }
 
         .sort-icon {
-            margin-left: 5px;
-            font-size: 0.8em;
+            position: absolute;
+            right: 12px;
+            opacity: 0.8;
         }
 
-        @media screen and (max-width: 600px) {
-            td, th {
-                padding: 10px;
-                font-size: 12px;
+        td {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+
+        tr:nth-child(even) {
+            background: #F8FAFC;
+        }
+
+        tr:hover td {
+            background: var(--row-hover);
+        }
+
+        .rank {
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .total-points {
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        .year-header {
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .best-place {
+            font-weight: 700;
+            color: #00B294;
+        }
+
+        @media screen and (max-width: 768px) {
+            th, td {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .container {
+                border-radius: 8px;
             }
         }
     </style>
@@ -67,19 +120,19 @@
             <table id="rankingTable">
                 <thead>
                     <tr>
-                        <th data-column="rank">Ранг</th>
-                        <th data-column="name">Имя</th>
-                        <th data-column="birthday">Год рождения</th>
-                        <th data-column="region">Регион</th>
-                        <th data-column="best">Лучшее место</th>
-                        <th data-column="total">Всего очков</th>
-                        <th>2017</th>
-                        <th>2018</th>
-                        <th>2019</th>
-                        <th>2021</th>
-                        <th>2022</th>
-                        <th>2023</th>
-                        <th>2024</th>
+                        <th class="sortable" data-column="rank">Rank</th>
+                        <th class="sortable" data-column="name">Athlete</th>
+                        <th data-column="birthday">Birth</th>
+                        <th class="sortable" data-column="region">Region</th>
+                        <th class="sortable" data-column="best">Best</th>
+                        <th class="sortable" data-column="total">Total</th>
+                        <th class="sortable year-header">2017</th>
+                        <th class="sortable year-header">2018</th>
+                        <th class="sortable year-header">2019</th>
+                        <th class="sortable year-header">2021</th>
+                        <th class="sortable year-header">2022</th>
+                        <th class="sortable year-header">2023</th>
+                        <th class="sortable year-header">2024</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -90,14 +143,13 @@
     <script>
         async function loadData() {
             const response = await fetch('../ranking/longboard_men.csv');
-            const data = await response.text();
-            return data;
+            return await response.text();
         }
 
         function parseCSV(csv) {
             const rows = csv.split('\n').filter(row => row.trim() !== '');
             const headers = rows[0].split(',').map(h => h.trim());
-
+            
             return rows.slice(1).map(row => {
                 const values = row.split(',');
                 return headers.reduce((obj, header, index) => {
@@ -106,6 +158,7 @@
                 }, {});
             });
         }
+
         function renderTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
@@ -113,13 +166,13 @@
             data.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${row.Rank}</td>
-                    <td>${row.Name}</td>
+                    <td class="rank">${row.Rank}</td>
+                    <td><strong>${row.Name}</strong></td>
                     <td>${row.Birthday}</td>
                     <td>${row.Region}</td>
-                    <td>${row['Best Place']}</td>
-                    <td><strong>${row['Total Points']}</strong></td>
-                    ${[2017, 2018, 2019, 2021, 2022, 2023, 2024].map(year =>
+                    <td class="best-place">${row['Best Place']}</td>
+                    <td class="total-points">${row['Total Points']}</td>
+                    ${[2017, 2018, 2019, 2021, 2022, 2023, 2024].map(year => 
                         `<td>${row[year] === '0' ? '-' : row[year]}</td>`
                     ).join('')}
                 `;
@@ -127,44 +180,51 @@
             });
         }
 
-        function sortTable(column, ascending) {
+        function sortTable(columnIndex, ascending) {
             const tbody = document.getElementById('tableBody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
 
             rows.sort((a, b) => {
-                const aValue = a.cells[column].textContent;
-                const bValue = b.cells[column].textContent;
-
+                const aValue = a.cells[columnIndex].textContent;
+                const bValue = b.cells[columnIndex].textContent;
+                
                 if (!isNaN(aValue)) {
                     return ascending ? aValue - bValue : bValue - aValue;
                 }
-                return ascending ?
-                    aValue.localeCompare(bValue, 'ru') :
+                return ascending ? 
+                    aValue.localeCompare(bValue, 'ru') : 
                     bValue.localeCompare(aValue, 'ru');
             });
 
+            tbody.innerHTML = '';
             rows.forEach(row => tbody.appendChild(row));
         }
 
         async function init() {
-            const csv = await loadData();
-            const data = parseCSV(csv);
-            renderTable(data);
+            try {
+                const csv = await loadData();
+                const data = parseCSV(csv);
+                renderTable(data);
 
-            let sortState = { column: 0, ascending: true };
-
-            document.querySelectorAll('th').forEach((th, index) => {
-                th.addEventListener('click', () => {
-                    sortState.ascending = sortState.column === index ? !sortState.ascending : true;
-                    sortState.column = index;
-                    sortTable(index, sortState.ascending);
-
-                    // Update sort indicators
-                    document.querySelectorAll('th').forEach(h => h.innerHTML =
-                        h.innerHTML.replace(/ ?↑|↓/g, ''));
-                    th.innerHTML += sortState.ascending ? ' ↑' : ' ↓';
+                let currentSort = { column: 0, ascending: true };
+                
+                document.querySelectorAll('.sortable').forEach((th, index) => {
+                    th.innerHTML += `<span class="sort-icon">${currentSort.ascending ? '↑' : '↓'}</span>`;
+                    
+                    th.addEventListener('click', () => {
+                        const isSameColumn = currentSort.column === index;
+                        currentSort.ascending = isSameColumn ? !currentSort.ascending : true;
+                        currentSort.column = index;
+                        
+                        document.querySelectorAll('.sort-icon').forEach(icon => icon.remove());
+                        th.innerHTML += `<span class="sort-icon">${currentSort.ascending ? '↑' : '↓'}</span>`;
+                        
+                        sortTable(index, currentSort.ascending);
+                    });
                 });
-            });
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
         }
 
         init();
