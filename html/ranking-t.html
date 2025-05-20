@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рейтинг спортсменов</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        th:hover {
+            background-color: #45a049;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .sort-icon {
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" class="search-box" placeholder="Поиск по имени или региону..." id="searchInput">
+        <div class="table-wrapper">
+            <table id="rankingTable">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const response = await fetch('../ranking/longboard_men.csv');
+                const data = await response.text();
+                return data;
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+            }
+        }
+
+        function parseCSV(csv) {
+            const rows = csv.split('\n').slice(1);
+            return rows.map(row => {
+                const [Rank, Name, Birthday, Region, Category, BestPlace, ...points] = row.split(',');
+                return {
+                    Rank,
+                    Name,
+                    Birthday,
+                    Region,
+                    Category,
+                    'Best Place': BestPlace,
+                    '2017': points[0],
+                    '2018': points[1],
+                    '2019': points[2],
+                    '2021': points[3],
+                    '2022': points[4],
+                    '2023': points[5],
+                    '2024': points[6],
+                    'Total Points': points[7]
+                };
+            });
+        }
+
+        function renderTable(data) {
+            const table = document.getElementById('rankingTable');
+            const thead = table.querySelector('thead');
+            const tbody = table.querySelector('tbody');
+            
+            // Создание заголовков
+            const headers = Object.keys(data[0]);
+            thead.innerHTML = `<tr>${headers.map(header => 
+                `<th data-sort="${header}">${header} <span class="sort-icon">▼</span></th>`
+            ).join('')}</tr>`;
+
+            // Создание строк данных
+            tbody.innerHTML = data.map(row => 
+                `<tr>${headers.map(header => 
+                    `<td>${row[header] === '0' ? '-' : row[header]}</td>`
+                ).join('')}</tr>`
+            ).join('');
+        }
+
+        function addSorting() {
+            const headers = document.querySelectorAll('th[data-sort]');
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const key = header.dataset.sort;
+                    const isAsc = header.classList.toggle('asc');
+                    sortTable(key, isAsc);
+                });
+            });
+        }
+
+        function sortTable(key, asc = true) {
+            const tbody = document.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                const aVal = a.children[Array.from(a.parentNode.children).indexOf(a)].textContent;
+                const bVal = b.children[Array.from(b.parentNode.children).indexOf(b)].textContent;
+                
+                if (!isNaN(aVal) return asc ? aVal - bVal : bVal - aVal;
+                return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        function addSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const rows = document.querySelectorAll('tbody tr');
+                
+                rows.forEach(row => {
+                    const name = row.children[1].textContent.toLowerCase();
+                    const region = row.children[3].textContent.toLowerCase();
+                    row.style.display = (name.includes(query) || region.includes(query)) ? '' : 'none';
+                });
+            });
+        }
+
+        async function init() {
+            const csvData = await loadData();
+            const parsedData = parseCSV(csvData);
+            renderTable(parsedData);
+            addSorting();
+            addSearch();
+        }
+
+        init();
+    </script>
+</body>
+</html>
