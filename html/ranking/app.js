@@ -5,21 +5,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const config = {
         fieldMap: {
             staticFields: {
-                Rank: { index: 0, default: '' },
-                Name: { index: 1, default: '' },
-                Birthday: { index: 2, default: '' },
-                Region: { index: 3, default: '' },
-                BestPlace: { index: 5, default: '' },
-                Social: { index: null, default: 'https://vk.com/topheats' }
+                Rank: { index: 0, default: '', type: 'number' },
+                Name: { index: 1, default: '', type: 'text' },
+                Birthday: { index: 2, default: '', type: 'text' },
+                Region: { index: 3, default: '', type: 'text' },
+                BestPlace: { index: 5, default: '', type: 'number' },
+                Social: { index: null, default: 'https://vk.com/topheats', type: 'text' }
             },
             dynamicFields: {
                 years: {
                     startIndex: 6,
-                    list: ['2017', '2018', '2019', '2021', '2022', '2023', '2024']
+                    list: ['2017', '2018', '2019', '2021', '2022', '2023', '2024'],
+                    type: 'number'
                 },
-                TotalPoints: { index: -1 }
+                TotalPoints: { index: -1, type: 'number' }
             }
-        }
+        },
+        columnsOrder: [
+            'Rank', 'Name', 'Region', 'BestPlace',
+            ...['2017', '2018', '2019', '2021', '2022', '2023', '2024'],
+            'TotalPoints'
+        ]
     };
 
     async function loadData() {
@@ -41,20 +47,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 const columns = row.split(',').map(c => c.trim());
                 const athlete = {};
 
+                // Parse static fields
                 for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
-                    athlete[field] = settings.index !== null
-                        ? (columns[settings.index] || settings.default)
-                        : settings.default;
+                    athlete[field] = parseValue(
+                        settings.index !== null ? columns[settings.index] : settings.default,
+                        settings.type
+                    );
                 }
 
+                // Parse dynamic years
                 config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
                     const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
-                    athlete[year] = columns[colIndex] || '0';
+                    athlete[year] = parseValue(
+                        columns[colIndex] || '0',
+                        config.fieldMap.dynamicFields.years.type
+                    );
                 });
 
-                athlete.TotalPoints = columns[columns.length - 1] || '0';
+                // Parse Total Points
+                athlete.TotalPoints = parseValue(
+                    columns[columns.length - 1] || '0',
+                    config.fieldMap.dynamicFields.TotalPoints.type
+                );
+
                 return athlete;
             });
+    }
+
+    function parseValue(value, type) {
+        if(type === 'number') {
+            const num = parseFloat(value.replace(/\s/g, ''));
+            return isNaN(num) ? 0 : num;
+        }
+        return value.trim();
     }
 
     function renderTable(data) {
@@ -85,28 +110,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sortTable(columnIndex) {
-        const columns = [
-            ...Object.keys(config.fieldMap.staticFields),
-            ...config.fieldMap.dynamicFields.years.list,
-            'TotalPoints'
-        ];
-
-        const sortKey = columns[columnIndex];
+        const sortKey = config.columnsOrder[columnIndex];
+        const sortType = getSortType(sortKey);
 
         currentData.sort((a, b) => {
-            const valA = a[sortKey] || '';
-            const valB = b[sortKey] || '';
+            const valA = a[sortKey] ?? '';
+            const valB = b[sortKey] ?? '';
 
-            const isNumeric = !isNaN(valA) && !isNaN(valB);
-            const direction = sortState.asc ? 1 : -1;
+            let result = 0;
 
-            return isNumeric
-                ? (parseFloat(valA) - parseFloat(valB)) * direction
-                : String(valA).localeCompare(String(valB), 'ru') * direction;
+            if(sortType === 'number') {
+                result = (valA - valB);
+            } else {
+                result = String(valA).localeCompare(String(valB), 'ru');
+            }
+
+            return sortState.asc ? result : -result;
         });
 
         sortState.asc = !sortState.asc;
         renderTable(currentData);
+    }
+
+    function getSortType(key) {
+        // Check static fields
+        for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
+            if(field === key) return settings.type;
+        }
+
+        // Check dynamic years
+        if(config.fieldMap.dynamicFields.years.list.includes(key)) {
+            return config.fieldMap.dynamicFields.years.type;
+        }
+
+        // Check TotalPoints
+        if(key === 'TotalPoints') {
+            return config.fieldMap.dynamicFields.TotalPoints.type;
+        }
+
+        // Default to text sorting
+        return 'text';
     }
 
     document.querySelectorAll('th').forEach((th, index) => {
