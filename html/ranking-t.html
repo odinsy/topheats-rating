@@ -2,229 +2,211 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Longboard Rankings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longboard Ranking</title>
     <style>
-        :root {
-            --primary-blue: #0078D7;
-            --dark-bg: #1A1A1A;
-            --table-bg: #FFFFFF;
-            --header-bg: linear-gradient(180deg, #0078D7 0%, #005A9E 100%);
-            --row-hover: #F3F9FF;
-            --border-color: #E0E0E0;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            margin: 0;
+            background: #0a0a0a;
+            color: #ffffff;
             padding: 20px;
-            background: var(--dark-bg);
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            color: #333;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .table-wrapper {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: var(--table-bg);
-            min-width: 900px;
+            margin-top: 20px;
+            background: #1a1a1a;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            white-space: nowrap;
         }
 
         th {
-            background: var(--header-bg);
-            color: white;
-            font-weight: 600;
-            padding: 12px 15px;
-            text-align: left;
-            position: relative;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        th.sortable {
+            background: #2d2d2d;
             cursor: pointer;
             transition: background 0.3s;
+            position: relative;
         }
 
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.2s;
+        th:hover {
+            background: #3d3d3d;
         }
 
-        tr:nth-child(even) {
-            background: #F8FAFC;
-        }
-
-        tr:hover td {
-            background: var(--row-hover);
-        }
-
-        .sort-icon {
-            margin-left: 5px;
+        th::after {
+            content: '↕';
+            position: absolute;
+            right: 8px;
+            opacity: 0.6;
             font-size: 0.8em;
         }
 
-        .year-header {
-            min-width: 60px;
-            text-align: center;
+        tr:hover {
+            background: #252525;
         }
 
-        @media screen and (max-width: 1200px) {
-            th, td {
-                padding: 10px 12px;
-                font-size: 14px;
-            }
-            
-            .year-header {
-                min-width: 55px;
-            }
+        .rank {
+            color: #4a90e2;
+            font-weight: bold;
         }
 
-        @media screen and (max-width: 768px) {
-            .container {
-                border-radius: 8px;
-            }
-            
-            th, td {
-                padding: 8px 10px;
-                font-size: 13px;
-            }
-            
-            .year-header {
-                min-width: 50px;
-            }
+        .total-points {
+            color: #00d474;
+            font-weight: bold;
+        }
+
+        .sort-asc::after {
+            content: ' ↑';
+            color: #4a90e2;
+        }
+
+        .sort-desc::after {
+            content: ' ↓';
+            color: #4a90e2;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="table-wrapper">
-            <table id="rankingTable">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-column="0">Rank</th>
-                        <th class="sortable" data-column="1">Athlete</th>
-                        <th class="sortable" data-column="2">Birth</th>
-                        <th class="sortable" data-column="3">Region</th>
-                        <th class="sortable" data-column="4">Best</th>
-                        <th class="sortable" data-column="5">Total</th>
-                        <th class="sortable year-header" data-column="6">2017</th>
-                        <th class="sortable year-header" data-column="7">2018</th>
-                        <th class="sortable year-header" data-column="8">2019</th>
-                        <th class="sortable year-header" data-column="9">2021</th>
-                        <th class="sortable year-header" data-column="10">2022</th>
-                        <th class="sortable year-header" data-column="11">2023</th>
-                        <th class="sortable year-header" data-column="12">2024</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
+        <table id="rankingTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Birthday</th>
+                    <th>Region</th>
+                    <th>Best Place</th>
+                    <th>2017</th>
+                    <th>2018</th>
+                    <th>2019</th>
+                    <th>2021</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                    <th>Total Points</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <script>
-        async function loadData() {
-            const response = await fetch('../ranking/longboard_men.csv');
-            return await response.text();
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentSortColumn = null;
+            let isAscending = true;
+            let tableData = [];
 
-        function parseCSV(csv) {
-            const rows = csv.split('\n').filter(row => row.trim() !== '');
-            const headers = rows[0].split(',').map(h => h.trim());
-            
-            return rows.slice(1).map(row => {
-                const values = row.split(',');
-                return headers.reduce((obj, header, index) => {
-                    obj[header] = (values[index] || '').trim();
-                    return obj;
-                }, {});
-            });
-        }
-
-        function renderTable(data) {
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row.Rank}</td>
-                    <td>${row.Name}</td>
-                    <td>${row.Birthday}</td>
-                    <td>${row.Region}</td>
-                    <td>${row['Best Place']}</td>
-                    <td>${row['Total Points']}</td>
-                    ${[2017, 2018, 2019, 2021, 2022, 2023, 2024].map(year => 
-                        `<td>${row[year] === '0' ? '-' : row[year]}</td>`
-                    ).join('')}
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function sortTable(columnIndex, ascending) {
-            const tbody = document.getElementById('tableBody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            
-            rows.sort((a, b) => {
-                const aValue = a.cells[columnIndex].textContent.replace(/,/g, '');
-                const bValue = b.cells[columnIndex].textContent.replace(/,/g, '');
-                
-                if (!isNaN(aValue) {
-                    return ascending ? aValue - bValue : bValue - aValue;
-                }
-                return ascending ? 
-                    aValue.localeCompare(bValue, 'ru', { numeric: true }) : 
-                    bValue.localeCompare(aValue, 'ru', { numeric: true });
-            });
-
-            tbody.innerHTML = '';
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        async function init() {
-            try {
-                const csv = await loadData();
-                const data = parseCSV(csv);
-                renderTable(data);
-
-                let currentSort = { column: 0, ascending: true };
-                
-                document.querySelectorAll('.sortable').forEach(th => {
-                    const columnIndex = parseInt(th.dataset.column);
-                    
-                    th.addEventListener('click', () => {
-                        const isSameColumn = currentSort.column === columnIndex;
-                        const newAscending = isSameColumn ? !currentSort.ascending : true;
-                        
-                        document.querySelectorAll('.sort-icon').forEach(icon => icon.remove());
-                        
-                        const icon = document.createElement('span');
-                        icon.className = 'sort-icon';
-                        icon.textContent = newAscending ? '↑' : '↓';
-                        th.appendChild(icon);
-                        
-                        sortTable(columnIndex, newAscending);
-                        
-                        currentSort = { column: columnIndex, ascending: newAscending };
+            // Load and parse CSV
+            fetch('../ranking/longboard_men.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n').slice(1);
+                    tableData = rows.map(row => {
+                        const cells = row.split(',');
+                        return {
+                            rank: parseInt(cells[0]),
+                            name: cells[1],
+                            birthday: cells[2],
+                            region: cells[3],
+                            bestPlace: parseInt(cells[5]),
+                            y2017: parseInt(cells[6]),
+                            y2018: parseInt(cells[7]),
+                            y2019: parseInt(cells[8]),
+                            y2021: parseInt(cells[9]),
+                            y2022: parseInt(cells[10]),
+                            y2023: parseInt(cells[11]),
+                            y2024: parseInt(cells[12]),
+                            total: parseInt(cells[13])
+                        };
                     });
+                    renderTable(tableData);
                 });
-            } catch (error) {
-                console.error('Error loading data:', error);
-            }
-        }
 
-        init();
+            // Render table
+            function renderTable(data) {
+                const tbody = document.querySelector('#rankingTable tbody');
+                tbody.innerHTML = '';
+                
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="rank">${item.rank}</td>
+                        <td>${item.name}</td>
+                        <td>${item.birthday}</td>
+                        <td>${item.region}</td>
+                        <td>${item.bestPlace}</td>
+                        <td>${item.y2017 || '-'}</td>
+                        <td>${item.y2018 || '-'}</td>
+                        <td>${item.y2019 || '-'}</td>
+                        <td>${item.y2021 || '-'}</td>
+                        <td>${item.y2022 || '-'}</td>
+                        <td>${item.y2023 || '-'}</td>
+                        <td>${item.y2024 || '-'}</td>
+                        <td class="total-points">${item.total}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Sorting functionality
+            document.querySelectorAll('th').forEach((th, index) => {
+                th.addEventListener('click', () => {
+                    const column = getColumnKey(index);
+                    
+                    if(currentSortColumn === column) {
+                        isAscending = !isAscending;
+                    } else {
+                        isAscending = true;
+                        currentSortColumn = column;
+                    }
+
+                    // Update sorting indicators
+                    document.querySelectorAll('th').forEach(th => {
+                        th.classList.remove('sort-asc', 'sort-desc');
+                    });
+                    th.classList.add(isAscending ? 'sort-asc' : 'sort-desc');
+
+                    // Sort data
+                    tableData.sort((a, b) => {
+                        if(typeof a[column] === 'string') {
+                            return isAscending 
+                                ? a[column].localeCompare(b[column]) 
+                                : b[column].localeCompare(a[column]);
+                        }
+                        return isAscending 
+                            ? a[column] - b[column] 
+                            : b[column] - a[column];
+                    });
+
+                    renderTable(tableData);
+                });
+            });
+
+            function getColumnKey(index) {
+                const columns = [
+                    'rank', 'name', 'birthday', 'region', 'bestPlace',
+                    'y2017', 'y2018', 'y2019', 'y2021', 'y2022',
+                    'y2023', 'y2024', 'total'
+                ];
+                return columns[index];
+            }
+        });
     </script>
 </body>
 </html>
