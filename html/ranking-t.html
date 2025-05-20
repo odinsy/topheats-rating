@@ -95,18 +95,17 @@
         }
 
         function parseCSV(csv) {
-            const rows = csv.split('\n');
+            const rows = csv.split('\n').filter(row => row.trim() !== '');
             const headers = rows[0].split(',').map(h => h.trim());
 
             return rows.slice(1).map(row => {
                 const values = row.split(',');
                 return headers.reduce((obj, header, index) => {
-                    obj[header] = values[index].trim();
+                    obj[header] = (values[index] || '').trim();
                     return obj;
                 }, {});
             });
         }
-
         function renderTable(data) {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
