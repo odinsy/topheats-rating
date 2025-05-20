@@ -1,9 +1,29 @@
 import csv
 import yaml
 import glob
+import re
+import pandas as pd
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List
+
+def extract_year(date_str: str) -> int:
+    """Извлекает год из строки с датой в различных форматах."""
+    try:
+        # Пытаемся распознать дату с помощью pandas
+        date = pd.to_datetime(date_str, dayfirst=True, errors='coerce')
+        if not pd.isnull(date):
+            return date.year
+
+        # Если pandas не распознал, ищем 4 цифры подряд
+        match = re.search(r'\b\d{4}\b', date_str)
+        if match:
+            return int(match.group())
+
+        # Если ничего не найдено, возвращаем 0 (можно изменить на значение по умолчанию)
+        return 0
+    except Exception:
+        return 0
 
 def load_config(config_path: str = 'config.yaml') -> Dict:
     with open(config_path, 'r', encoding='utf-8') as f:
@@ -50,7 +70,8 @@ def parse_files() -> Dict[str, Dict]:
                     athletes[name]['years'][year] = place
                     athletes[name]['regions'][year] = region
                     athletes[name]['ranks'][year] = rank
-                    athletes[name]['birthday'] = int(row['Год рождения'])
+                    # Измененная строка для обработки даты
+                    athletes[name]['birthday'] = extract_year(row['Год рождения'])
                     athletes[name]['category'] = row['Категория']
                     athletes[name]['last_year'] = max(athletes[name]['last_year'], year)
 
@@ -113,6 +134,7 @@ def process_athletes(data: Dict) -> List[Dict]:
     for name, info in data.items():
         entry = {
             'name': name,
+            'birthday': info['birthday'],
             'region': info['region'],
             'rank': info['rank'],
             'category': info['category'],
@@ -149,6 +171,7 @@ def generate_output(results: List[Dict]):
             headers.append(col if not translate else {
                 'Rank': 'Место',
                 'Name': 'ФИО',
+                'Birthday': 'Год рождения',
                 'Region': 'Регион',
                 'Category': 'Категория',
                 'Best Place': 'Лучший результат',
@@ -166,6 +189,7 @@ def generate_output(results: List[Dict]):
             row = [
                 i,
                 athlete['name'],
+                athlete['birthday'],
                 athlete['region'],
                 athlete['category'],
                 athlete['best_place'] if athlete['best_place'] != 9999 else '-',
@@ -179,6 +203,7 @@ def generate_output(results: List[Dict]):
         row = [
             i,
             athlete['name'],
+            athlete['birthday'],
             athlete['region'],
             athlete['category'],
             athlete['best_place'] if athlete['best_place'] != 9999 else '-',
