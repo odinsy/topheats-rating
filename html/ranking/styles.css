@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    padding: 15px;
+}
+
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 1px 10px rgba(0,0,0,0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    font-size: 0.85em;
+}
+
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+    line-height: 1.4;
+}
+
+th {
+    background: #2c3e50;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e9ecef !important;
+}
+
+th:hover {
+    background: #34495e;
+}
+
+.total-points {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.name-cell {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    white-space: nowrap;
+    display: none;
+    z-index: 100;
+    font-size: 0.9em;
+}
+
+.name-cell:hover .tooltip {
+    display: block;
+}
+
+.tooltip span {
+    display: block;
+    margin: 2px 0;
+    color: #666;
+}
+
+.tooltip a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+.tooltip a:hover {
+    text-decoration: underline;
+}
+
+.compact-column {
+    width: 1%;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    
+    body {
+        padding: 10px;
+    }
+    
+    table {
+        min-width: 500px;
+        font-size: 0.8em;
+    }
+    
+    th, td {
+        padding: 6px 8px;
+    }
+}
