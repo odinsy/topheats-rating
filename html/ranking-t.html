@@ -108,19 +108,19 @@
             <table id="rankingTable">
                 <thead>
                     <tr>
-                        <th class="sortable rank-column" data-column="rank">Rank</th>
-                        <th class="sortable name-column" data-column="name">Athlete</th>
-                        <th class="birth-column" data-column="birthday">Birth</th>
-                        <th class="sortable region-column" data-column="region">Region</th>
-                        <th class="sortable best-column" data-column="best">Best</th>
-                        <th class="sortable total-column" data-column="total">Total</th>
-                        <th class="sortable year-column">2017</th>
-                        <th class="sortable year-column">2018</th>
-                        <th class="sortable year-column">2019</th>
-                        <th class="sortable year-column">2021</th>
-                        <th class="sortable year-column">2022</th>
-                        <th class="sortable year-column">2023</th>
-                        <th class="sortable year-column">2024</th>
+                        <th class="sortable rank-column" data-column="0">Rank</th>
+                        <th class="sortable name-column" data-column="1">Athlete</th>
+                        <th class="sortable birth-column" data-column="2">Birth</th>
+                        <th class="sortable region-column" data-column="3">Region</th>
+                        <th class="sortable best-column" data-column="4">Best</th>
+                        <th class="sortable total-column" data-column="5">Total</th>
+                        <th class="sortable year-column" data-column="6">2017</th>
+                        <th class="sortable year-column" data-column="7">2018</th>
+                        <th class="sortable year-column" data-column="8">2019</th>
+                        <th class="sortable year-column" data-column="9">2021</th>
+                        <th class="sortable year-column" data-column="10">2022</th>
+                        <th class="sortable year-column" data-column="11">2023</th>
+                        <th class="sortable year-column" data-column="12">2024</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -202,26 +202,27 @@
 
                 let currentSort = { column: 0, ascending: true };
                 
-                document.querySelectorAll('.sortable').forEach((th, index) => {
+                document.querySelectorAll('.sortable').forEach(th => {
+                    const columnIndex = parseInt(th.dataset.column);
+                    
                     th.addEventListener('click', () => {
-                        const isSameColumn = currentSort.column === index;
+                        const isSameColumn = currentSort.column === columnIndex;
                         const newAscending = isSameColumn ? !currentSort.ascending : true;
                         
-                        // Update sorting indicators
-                        document.querySelectorAll('.sortable').forEach(h => {
-                            h.querySelector('.sort-icon')?.remove();
-                        });
+                        // Remove all sort icons
+                        document.querySelectorAll('.sort-icon').forEach(icon => icon.remove());
                         
+                        // Add new sort icon
                         const icon = document.createElement('span');
                         icon.className = 'sort-icon';
                         icon.textContent = newAscending ? '↑' : '↓';
                         th.appendChild(icon);
                         
                         // Perform sorting
-                        sortTable(index, newAscending);
+                        sortTable(columnIndex, newAscending);
                         
                         // Update state
-                        currentSort = { column: index, ascending: newAscending };
+                        currentSort = { column: columnIndex, ascending: newAscending };
                     });
                 });
             } catch (error) {
