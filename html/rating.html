@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Longboard Ranking</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chart { height: 90vh; width: 100%; }
+        .filter { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="filter">
+        <label>Регион: 
+            <select id="regionFilter">
+                <option value="all">Все</option>
+            </select>
+        </label>
+    </div>
+    <div id="chart" class="chart"></div>
+
+<script>
+async function loadData() {
+    return await d3.csv("../../ranking/longboard_men.csv", d => ({
+        ...d,
+        Total: +d['Total Points'],
+        Rank: +d.Rank,
+        Best: +d['Best Place'],
+        points: ['2017','2018','2019','2021','2022','2023','2024'].map(year => +d[year])
+    }));
+}
+
+async function renderChart() {
+    const data = await loadData();
+    const regions = [...new Set(data.map(d => d.Region))].sort();
+    
+    // Update filter options
+    d3.select('#regionFilter')
+        .selectAll('option')
+        .data(['all', ...regions])
+        .join('option')
+        .text(d => d);
+
+    // Filter data
+    const filteredData = data.filter(d => 
+        document.getElementById('regionFilter').value === 'all' || 
+        d.Region === document.getElementById('regionFilter').value
+    );
+
+    const trace = {
+        type: 'bar',
+        x: filteredData.map(d => d.Name),
+        y: filteredData.map(d => d.Total),
+        text: filteredData.map(d => `Регион: ${d.Region}<br>Лучшая позиция: ${d.Best}`),
+        marker: {
+            color: filteredData.map(d => 
+                d.Region === 'Калининградская область' ? '#1f77b4' :
+                d.Region === 'Санкт-Петербург' ? '#ff7f0e' :
+                d.Region === 'Приморский край' ? '#2ca02c' : '#d62728'
+            )
+        },
+        hoverinfo: 'y+text',
+    };
+
+    const layout = {
+        title: 'Общий рейтинг спортсменов (Longboard)',
+        xaxis: { title: 'Спортсмен', tickangle: 45 },
+        yaxis: { title: 'Общее количество очков' },
+        hovermode: 'closest',
+        margin: { b: 150 },
+        showlegend: false
+    };
+
+    Plotly.newPlot('chart', [trace], layout);
+}
+
+// Initial render
+renderChart();
+
+// Add filter handler
+document.getElementById('regionFilter').addEventListener('change', renderChart);
+</script>
+</body>
+</html>
