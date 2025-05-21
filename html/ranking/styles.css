@@ -149,4 +149,36 @@ tr:hover {
     .region-col {
         min-width: 100px;
     }
+
+    /* Sticky columns for mobile */
+    .sticky-col {
+        position: sticky;
+        background: white;
+        z-index: 2;
+        transform: translateZ(0);
+    }
+    
+    th.sticky-col {
+        background: #2c3e50;
+        z-index: 3;
+    }
+
+    /* Left sticky columns */
+    th.sticky-col:nth-child(1),
+    td.sticky-col:nth-child(1) {
+        left: 0;
+    }
+
+    th.sticky-col:nth-child(2),
+    td.sticky-col:nth-child(2) {
+        left: 50px;
+    }
+
+    /* Right sticky total column */
+    th.sticky-col.total-col,
+    td.sticky-col.total-col {
+        right: 0;
+        left: auto;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+    }
 }
