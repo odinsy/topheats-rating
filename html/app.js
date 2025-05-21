@@ -1,8 +1,8 @@
 const CSV_PATHS = {
-    'shortboard_men': '../../ranking/shortboard_men.csv',
-    'longboard_men': '../../ranking/longboard_men.csv',
-    'shortboard_women': '../../ranking/shortboard_women.csv',
-    'longboard_women': '../../ranking/longboard_women.csv'
+    'shortboard_men': '../ranking/shortboard_men.csv',
+    'longboard_men': '../ranking/longboard_men.csv',
+    'shortboard_women': '../ranking/shortboard_women.csv',
+    'longboard_women': '../ranking/longboard_women.csv'
 };
 
 async function loadCSV(category) {
