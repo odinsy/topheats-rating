@@ -39,7 +39,7 @@ function initializeChart() {
                 y: {
                     title: { display: true, text: 'Средний возраст', color: '#7f8c8d' },
                     grid: { color: 'rgba(0,0,0,0.05)' },
-                    min: 25,
+                    min: 20,
                     max: 40
                 }
             }
