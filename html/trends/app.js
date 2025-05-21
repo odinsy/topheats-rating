@@ -12,7 +12,7 @@ let chartInstance = null;
 
 function initializeChart() {
     const ctx = document.getElementById('trendChart').getContext('2d');
-    
+
     return new Chart(ctx, {
         type: 'line',
         data: { datasets: [] },
@@ -50,11 +50,11 @@ function initializeChart() {
 async function loadData(category, discipline) {
     const filename = `general_${category}_${discipline}_stats.csv`;
     const path = `${config.basePath}/${filename}`;
-    
+
     try {
         const response = await fetch(path);
         const csvData = await response.text();
-        
+
         const data = csvData.split('\n').slice(1)
             .map(row => {
                 const [year, total, newbies, percent, avgAge] = row.split(',');
@@ -76,17 +76,17 @@ async function loadData(category, discipline) {
 async function updateChart() {
     const category = document.getElementById('categorySelect').value;
     const discipline = document.getElementById('disciplineSelect').value;
-    
+
     const data = await loadData(category, discipline);
     if (!data) return;
 
     if (chartInstance) chartInstance.destroy();
-    
+
     chartInstance = initializeChart();
     chartInstance.data = {
         labels: data.map(d => d.year),
         datasets: [{
-            label: `Средний возраст (${config.categories[`${category}_${discipline}`})`,
+            label: `Средний возраст (${config.categories[`${category}_${discipline}`]})`,
             data: data.map(d => d.avgAge),
             borderColor: '#3498db',
             backgroundColor: 'rgba(52, 152, 219, 0.1)',
@@ -97,7 +97,7 @@ async function updateChart() {
             fill: true
         }]
     };
-    
+
     chartInstance.update();
 }
 
