@@ -15,7 +15,7 @@ const config = {
             const chart = ctx.chart;
             const {ctx: context, chartArea} = chart;
             if (!chartArea) return;
-            
+
             const gradient = context.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
             gradient.addColorStop(0, `${config.colors[currentCategory]}10`);
             gradient.addColorStop(1, `${config.colors[currentCategory]}03`);
@@ -82,7 +82,7 @@ function updateChartConfig(data, category) {
             scales: {
                 x: {
                     grid: { color: '#e9ecef' },
-                    title: { 
+                    title: {
                         display: true,
                         text: 'Year',
                         color: '#7f8c8d'
@@ -90,12 +90,12 @@ function updateChartConfig(data, category) {
                 },
                 y: {
                     grid: { color: '#e9ecef' },
-                    title: { 
+                    title: {
                         display: true,
                         text: 'Average Age',
                         color: '#7f8c8d'
                     },
-                    suggestedMin: 25,
+                    suggestedMin: 20,
                     suggestedMax: 40
                 }
             }
@@ -107,15 +107,15 @@ async function updateChart() {
     const boardType = document.getElementById('boardType').value;
     const gender = document.getElementById('gender').value;
     currentCategory = `${boardType}_${gender}`;
-    
+
     const data = await fetchData(boardType, gender);
     if (!data) return;
 
-    document.getElementById('currentCategory').textContent = 
+    document.getElementById('currentCategory').textContent =
         `${boardType.charAt(0).toUpperCase() + boardType.slice(1)} - ${gender.charAt(0).toUpperCase() + gender.slice(1)}`;
 
     if (chartInstance) chartInstance.destroy();
-    
+
     const ctx = document.getElementById('trendChart').getContext('2d');
     chartInstance = new Chart(ctx, updateChartConfig(data, currentCategory));
 }
