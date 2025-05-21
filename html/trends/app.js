@@ -80,4 +80,28 @@ async function updateChart() {
     const data = await loadData(category, discipline);
     if (!data) return;
 
-    if (chartInstance) chartInstance.d
+    if (chartInstance) chartInstance.destroy();
+    
+    chartInstance = initializeChart();
+    chartInstance.data = {
+        labels: data.map(d => d.year),
+        datasets: [{
+            label: `Средний возраст (${config.categories[`${category}_${discipline}`})`,
+            data: data.map(d => d.avgAge),
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+            borderWidth: 3,
+            tension: 0.3,
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            fill: true
+        }]
+    };
+    
+    chartInstance.update();
+}
+
+// Инициализация
+document.getElementById('categorySelect').addEventListener('change', updateChart);
+document.getElementById('disciplineSelect').addEventListener('change', updateChart);
+updateChart();
