@@ -1,31 +1,18 @@
 const config = {
     basePath: '../../stats/trends',
     colors: {
-        longboard_men: '#2e86de',
-        longboard_women: '#10ac84',
-        shortboard_men: '#ff9f43',
-        shortboard_women: '#ee5253'
+        age: '#2e86de',
+        newAthletes: '#10ac84'
     },
     chartConfig: {
         borderWidth: 3,
         tension: 0.4,
         pointRadius: 6,
-        fill: true,
-        backgroundColor: (ctx) => {
-            const chart = ctx.chart;
-            const {ctx: context, chartArea} = chart;
-            if (!chartArea) return;
-
-            const gradient = context.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-            gradient.addColorStop(0, `${config.colors[currentCategory]}10`);
-            gradient.addColorStop(1, `${config.colors[currentCategory]}03`);
-            return gradient;
-        }
+        fill: true
     }
 };
 
 let chartInstance = null;
-let currentCategory = 'longboard_men';
 
 async function fetchData(boardType, gender) {
     const path = `${config.basePath}/general_${boardType}_${gender}_stats.csv`;
@@ -34,10 +21,11 @@ async function fetchData(boardType, gender) {
         const csvData = await response.text();
         return csvData.split('\n').slice(1)
             .map(row => {
-                const [year, total, newbies, percent, avgAge] = row.split(',');
+                const [year, total, newAthletes, percent, avgAge] = row.split(',');
                 return {
                     year: year.trim(),
-                    avgAge: parseFloat(avgAge)
+                    avgAge: parseFloat(avgAge),
+                    newAthletes: parseInt(newAthletes)
                 };
             })
             .filter(item => item.year && !isNaN(item.avgAge))
@@ -48,55 +36,106 @@ async function fetchData(boardType, gender) {
     }
 }
 
-function updateChartConfig(data, category) {
+function createGradient(ctx, color) {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, `${color}40`);
+    gradient.addColorStop(1, `${color}10`);
+    return gradient;
+}
+
+function updateChartConfig(data) {
     return {
         type: 'line',
         data: {
             labels: data.map(d => d.year),
-            datasets: [{
-                label: 'Average Age',
-                data: data.map(d => d.avgAge),
-                borderColor: config.colors[category],
-                backgroundColor: (ctx) => config.chartConfig.backgroundColor(ctx),
-                borderWidth: config.chartConfig.borderWidth,
-                tension: config.chartConfig.tension,
-                pointRadius: config.chartConfig.pointRadius,
-                fill: config.chartConfig.fill
-            }]
+            datasets: [
+                {
+                    label: 'Средний возраст',
+                    data: data.map(d => d.avgAge),
+                    borderColor: config.colors.age,
+                    backgroundColor: (ctx) => createGradient(ctx.chart.ctx, config.colors.age),
+                    yAxisID: 'y',
+                    ...config.chartConfig
+                },
+                {
+                    label: 'Новые спортсмены',
+                    data: data.map(d => d.newAthletes),
+                    borderColor: config.colors.newAthletes,
+                    backgroundColor: (ctx) => createGradient(ctx.chart.ctx, config.colors.newAthletes),
+                    type: 'bar',
+                    yAxisID: 'y1',
+                    borderRadius: 4,
+                    borderWidth: 0,
+                    hoverBackgroundColor: config.colors.newAthletes
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { display: false },
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#2c3e50',
+                        usePointStyle: true
+                    }
+                },
                 tooltip: {
-                    backgroundColor: '#2c3e50',
-                    bodyColor: '#ffffff',
-                    titleColor: '#dfe6e9',
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    titleFont: { size: 14 },
-                    bodyFont: { size: 14 },
-                    displayColors: false
+                    mode: 'index',
+                    backgroundColor: '#ffffff',
+                    titleColor: '#2c3e50',
+                    bodyColor: '#2c3e50',
+                    borderColor: '#e9ecef',
+                    borderWidth: 1,
+                    boxPadding: 6,
+                    callbacks: {
+                        label: (context) => {
+                            const label = context.dataset.label || '';
+                            const value = context.parsed.y;
+                            return ` ${label}: ${value}${context.datasetIndex === 0 ? ' лет' : ' чел.'}`;
+                        }
+                    }
                 }
             },
             scales: {
                 x: {
-                    grid: { color: '#e9ecef' },
-                    title: {
-                        display: true,
-                        text: 'Year',
+                    grid: {
+                        display: false,
+                        color: '#e9ecef'
+                    },
+                    ticks: {
                         color: '#7f8c8d'
                     }
                 },
                 y: {
-                    grid: { color: '#e9ecef' },
-                    title: {
-                        display: true,
-                        text: 'Average Age',
+                    position: 'left',
+                    grid: {
+                        color: '#f1f3f5'
+                    },
+                    ticks: {
                         color: '#7f8c8d'
                     },
-                    suggestedMin: 20,
-                    suggestedMax: 40
+                    title: {
+                        display: true,
+                        text: 'Средний возраст (лет)',
+                        color: '#7f8c8d'
+                    }
+                },
+                y1: {
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false,
+                        color: '#f1f3f5'
+                    },
+                    ticks: {
+                        color: '#7f8c8d'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Новые спортсмены (чел.)',
+                        color: '#7f8c8d'
+                    }
                 }
             }
         }
@@ -106,7 +145,6 @@ function updateChartConfig(data, category) {
 async function updateChart() {
     const boardType = document.getElementById('boardType').value;
     const gender = document.getElementById('gender').value;
-    currentCategory = `${boardType}_${gender}`;
 
     const data = await fetchData(boardType, gender);
     if (!data) return;
@@ -117,12 +155,10 @@ async function updateChart() {
     if (chartInstance) chartInstance.destroy();
 
     const ctx = document.getElementById('trendChart').getContext('2d');
-    chartInstance = new Chart(ctx, updateChartConfig(data, currentCategory));
+    chartInstance = new Chart(ctx, updateChartConfig(data));
 }
 
-// Event Listeners
+// Инициализация событий
 document.getElementById('boardType').addEventListener('change', updateChart);
 document.getElementById('gender').addEventListener('change', updateChart);
-
-// Initial load
 updateChart();
