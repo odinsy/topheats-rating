@@ -57,7 +57,7 @@ scoring:
 bonuses:
   decay:
     enabled: true
-    factor: 0.90
+    factor: 0.9
 
   rank:
     enabled: false
@@ -74,14 +74,22 @@ bonuses:
     points: 50
 
 wildcard:
-  ranking_file: ranking/longboard_women.csv
-  output_file: wildcard/shortboard_women.csv
-  # ranking_file: ranking/ranking_longboard.csv
-  # output_file: wildcard/wildcard_longboard.csv
   top_n: 16               # Максимальный ранг для отбора
   min_participations: 2   # Минимальное количество участий
   last_years_period: 3    # За последние N лет
-  min_best_place: 6       # Лучший результат за карьеру
+  min_best_place: 3       # Лучший результат за карьеру
+
+  # ranking_file: ranking/shortboard_men.csv
+  # output_file: wildcard/shortboard_men.csv
+
+  # ranking_file: ranking/shortboard_women.csv
+  # output_file: wildcard/shortboard_women.csv
+
+  # ranking_file: ranking/longboard_women.csv
+  # output_file: wildcard/longboard_women.csv
+
+  ranking_file: ranking/longboard_men.csv
+  output_file: wildcard/longboard_men.csv
 
 trends:
   # input_ranking_file: ranking/shortboard_men.csv
