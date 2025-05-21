@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surf Stats Dashboard</title>
+    <title>Surf Statistics Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="dashboard">
-        <div class="header">
-            <h1>🏄 Surf Statistics Analyzer</h1>
-            <div class="filters">
-                <select id="categorySelect" class="filter-select">
-                    <option value="longboard">Longboard</option>
-                    <option value="shortboard">Shortboard</option>
-                </select>
-                <select id="disciplineSelect" class="filter-select">
-                    <option value="men">Men</option>
-                    <option value="women">Women</option>
-                </select>
-            </div>
+    <div class="dashboard-container">
+        <div class="category-selector">
+            <select id="boardType" class="filter-select">
+                <option value="longboard">Longboard</option>
+                <option value="shortboard">Shortboard</option>
+            </select>
+            <select id="gender" class="filter-select">
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+            </select>
         </div>
-        
-        <div class="chart-container">
-            <canvas id="trendChart"></canvas>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h2>Age Trend Analysis</h2>
+                <div class="chart-subtitle">
+                    <span id="currentCategory" class="badge">Longboard - Men</span>
+                </div>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="trendChart"></canvas>
+            </div>
         </div>
     </div>
 

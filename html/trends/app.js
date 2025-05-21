@@ -1,107 +1,128 @@
 const config = {
     basePath: '../../stats/trends',
-    categories: {
-        longboard_men: 'Longboard (Men)',
-        longboard_women: 'Longboard (Women)',
-        shortboard_men: 'Shortboard (Men)',
-        shortboard_women: 'Shortboard (Women)'
+    colors: {
+        longboard_men: '#2e86de',
+        longboard_women: '#10ac84',
+        shortboard_men: '#ff9f43',
+        shortboard_women: '#ee5253'
+    },
+    chartConfig: {
+        borderWidth: 3,
+        tension: 0.4,
+        pointRadius: 6,
+        fill: true,
+        backgroundColor: (ctx) => {
+            const chart = ctx.chart;
+            const {ctx: context, chartArea} = chart;
+            if (!chartArea) return;
+            
+            const gradient = context.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+            gradient.addColorStop(0, `${config.colors[currentCategory]}10`);
+            gradient.addColorStop(1, `${config.colors[currentCategory]}03`);
+            return gradient;
+        }
     }
 };
 
 let chartInstance = null;
+let currentCategory = 'longboard_men';
 
-function initializeChart() {
-    const ctx = document.getElementById('trendChart').getContext('2d');
-
-    return new Chart(ctx, {
-        type: 'line',
-        data: { datasets: [] },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'top' },
-                tooltip: {
-                    backgroundColor: 'rgba(44, 62, 80, 0.95)',
-                    titleFont: { size: 14 },
-                    bodyFont: { size: 14 },
-                    displayColors: false,
-                    callbacks: {
-                        label: (context) => `${context.parsed.y.toFixed(1)} лет`
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: { display: true, text: 'Год', color: '#7f8c8d' },
-                    grid: { color: 'rgba(0,0,0,0.05)' }
-                },
-                y: {
-                    title: { display: true, text: 'Средний возраст', color: '#7f8c8d' },
-                    grid: { color: 'rgba(0,0,0,0.05)' },
-                    min: 20,
-                    max: 40
-                }
-            }
-        }
-    });
-}
-
-async function loadData(category, discipline) {
-    const filename = `general_${category}_${discipline}_stats.csv`;
-    const path = `${config.basePath}/${filename}`;
-
+async function fetchData(boardType, gender) {
+    const path = `${config.basePath}/general_${boardType}_${gender}_stats.csv`;
     try {
         const response = await fetch(path);
         const csvData = await response.text();
-
-        const data = csvData.split('\n').slice(1)
+        return csvData.split('\n').slice(1)
             .map(row => {
                 const [year, total, newbies, percent, avgAge] = row.split(',');
                 return {
                     year: year.trim(),
-                    avgAge: parseFloat(avgAge),
-                    newbies: parseInt(newbies)
+                    avgAge: parseFloat(avgAge)
                 };
             })
-            .filter(item => item.year && !isNaN(item.avgAge));
-
-        return data.sort((a, b) => a.year - b.year);
+            .filter(item => item.year && !isNaN(item.avgAge))
+            .sort((a, b) => a.year - b.year);
     } catch (error) {
-        console.error('Ошибка загрузки данных:', error);
+        console.error('Error loading data:', error);
         return null;
     }
 }
 
-async function updateChart() {
-    const category = document.getElementById('categorySelect').value;
-    const discipline = document.getElementById('disciplineSelect').value;
-
-    const data = await loadData(category, discipline);
-    if (!data) return;
-
-    if (chartInstance) chartInstance.destroy();
-
-    chartInstance = initializeChart();
-    chartInstance.data = {
-        labels: data.map(d => d.year),
-        datasets: [{
-            label: `Средний возраст (${config.categories[`${category}_${discipline}`]})`,
-            data: data.map(d => d.avgAge),
-            borderColor: '#3498db',
-            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-            borderWidth: 3,
-            tension: 0.3,
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            fill: true
-        }]
+function updateChartConfig(data, category) {
+    return {
+        type: 'line',
+        data: {
+            labels: data.map(d => d.year),
+            datasets: [{
+                label: 'Average Age',
+                data: data.map(d => d.avgAge),
+                borderColor: config.colors[category],
+                backgroundColor: (ctx) => config.chartConfig.backgroundColor(ctx),
+                borderWidth: config.chartConfig.borderWidth,
+                tension: config.chartConfig.tension,
+                pointRadius: config.chartConfig.pointRadius,
+                fill: config.chartConfig.fill
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#2c3e50',
+                    bodyColor: '#ffffff',
+                    titleColor: '#dfe6e9',
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    titleFont: { size: 14 },
+                    bodyFont: { size: 14 },
+                    displayColors: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: '#e9ecef' },
+                    title: { 
+                        display: true,
+                        text: 'Year',
+                        color: '#7f8c8d'
+                    }
+                },
+                y: {
+                    grid: { color: '#e9ecef' },
+                    title: { 
+                        display: true,
+                        text: 'Average Age',
+                        color: '#7f8c8d'
+                    },
+                    suggestedMin: 25,
+                    suggestedMax: 40
+                }
+            }
+        }
     };
-
-    chartInstance.update();
 }
 
-// Инициализация
-document.getElementById('categorySelect').addEventListener('change', updateChart);
-document.getElementById('disciplineSelect').addEventListener('change', updateChart);
+async function updateChart() {
+    const boardType = document.getElementById('boardType').value;
+    const gender = document.getElementById('gender').value;
+    currentCategory = `${boardType}_${gender}`;
+    
+    const data = await fetchData(boardType, gender);
+    if (!data) return;
+
+    document.getElementById('currentCategory').textContent = 
+        `${boardType.charAt(0).toUpperCase() + boardType.slice(1)} - ${gender.charAt(0).toUpperCase() + gender.slice(1)}`;
+
+    if (chartInstance) chartInstance.destroy();
+    
+    const ctx = document.getElementById('trendChart').getContext('2d');
+    chartInstance = new Chart(ctx, updateChartConfig(data, currentCategory));
+}
+
+// Event Listeners
+document.getElementById('boardType').addEventListener('change', updateChart);
+document.getElementById('gender').addEventListener('change', updateChart);
+
+// Initial load
 updateChart();
