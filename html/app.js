@@ -35,11 +35,6 @@ function createTable(data, title, link) {
     return `
         <h2>${title}</h2>
         <table>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Points</th>
-            </tr>
             ${data.map(athlete => `
                 <tr>
                     <td>${athlete.Rank}</td>
@@ -48,7 +43,7 @@ function createTable(data, title, link) {
                 </tr>
             `).join('')}
         </table>
-        <a href="${link}" target="_blank">Полный рейтинг →</a>
+        <a href="${link}">Полный рейтинг →</a>  <!-- Убрал target="_blank" -->
     `;
 }
 
