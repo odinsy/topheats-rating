@@ -68,20 +68,8 @@ body {
 }
 
 .chart-wrapper {
-    height: 400px;
+    height: 500px;
     position: relative;
-}
-
-.chart-tooltip {
-    background: white !important;
-    border: 1px solid #dee2e6 !important;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08) !important;
-    border-radius: 6px !important;
-}
-
-.chart-tooltip .title {
-    color: #495057 !important;
-    font-weight: 600 !important;
 }
 
 @media (max-width: 768px) {
@@ -89,11 +77,11 @@ body {
         flex-direction: column;
         align-items: flex-end;
     }
-
+    
     .chart-card {
         padding: 16px;
     }
-
+    
     .chart-header {
         flex-direction: column;
         align-items: flex-start;

@@ -2,7 +2,8 @@ const config = {
     basePath: '../../stats/trends',
     colors: {
         age: '#2e86de',
-        newAthletes: '#10ac84'
+        total: '#10ac84',
+        newAthletes: '#ff9f43'
     },
     chartConfig: {
         borderWidth: 3,
@@ -24,14 +25,15 @@ async function fetchData(boardType, gender) {
                 const [year, total, newAthletes, percent, avgAge] = row.split(',');
                 return {
                     year: year.trim(),
-                    avgAge: parseFloat(avgAge),
-                    newAthletes: parseInt(newAthletes)
+                    total: parseInt(total),
+                    newAthletes: parseInt(newAthletes),
+                    avgAge: parseFloat(avgAge)
                 };
             })
             .filter(item => item.year && !isNaN(item.avgAge))
             .sort((a, b) => a.year - b.year);
     } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('Ошибка загрузки данных:', error);
         return null;
     }
 }
@@ -58,15 +60,25 @@ function updateChartConfig(data) {
                     ...config.chartConfig
                 },
                 {
-                    label: 'Новые спортсмены',
-                    data: data.map(d => d.newAthletes),
-                    borderColor: config.colors.newAthletes,
-                    backgroundColor: (ctx) => createGradient(ctx.chart.ctx, config.colors.newAthletes),
+                    label: 'Всего участников',
+                    data: data.map(d => d.total),
+                    borderColor: config.colors.total,
+                    backgroundColor: (ctx) => createGradient(ctx.chart.ctx, config.colors.total),
                     type: 'bar',
                     yAxisID: 'y1',
                     borderRadius: 4,
                     borderWidth: 0,
-                    hoverBackgroundColor: config.colors.newAthletes
+                    hoverBackgroundColor: config.colors.total
+                },
+                {
+                    label: 'Новые спортсмены',
+                    data: data.map(d => d.newAthletes),
+                    borderColor: config.colors.newAthletes,
+                    borderDash: [5, 5],
+                    yAxisID: 'y1',
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    tension: 0.3
                 }
             ]
         },
@@ -76,7 +88,7 @@ function updateChartConfig(data) {
             plugins: {
                 legend: {
                     position: 'top',
-                    labels: {
+                    labels: { 
                         color: '#2c3e50',
                         usePointStyle: true
                     }
@@ -93,14 +105,18 @@ function updateChartConfig(data) {
                         label: (context) => {
                             const label = context.dataset.label || '';
                             const value = context.parsed.y;
-                            return ` ${label}: ${value}${context.datasetIndex === 0 ? ' лет' : ' чел.'}`;
+                            let suffix = '';
+                            if (context.dataset.label === 'Средний возраст') suffix = ' лет';
+                            if (context.dataset.label === 'Всего участников') suffix = ' чел.';
+                            if (context.dataset.label === 'Новые спортсмены') suffix = ' новичков';
+                            return ` ${label}: ${value}${suffix}`;
                         }
                     }
                 }
             },
             scales: {
                 x: {
-                    grid: {
+                    grid: { 
                         display: false,
                         color: '#e9ecef'
                     },
@@ -110,7 +126,7 @@ function updateChartConfig(data) {
                 },
                 y: {
                     position: 'left',
-                    grid: {
+                    grid: { 
                         color: '#f1f3f5'
                     },
                     ticks: {
@@ -133,7 +149,7 @@ function updateChartConfig(data) {
                     },
                     title: {
                         display: true,
-                        text: 'Новые спортсмены (чел.)',
+                        text: 'Количество участников',
                         color: '#7f8c8d'
                     }
                 }
@@ -145,15 +161,15 @@ function updateChartConfig(data) {
 async function updateChart() {
     const boardType = document.getElementById('boardType').value;
     const gender = document.getElementById('gender').value;
-
+    
     const data = await fetchData(boardType, gender);
     if (!data) return;
 
-    document.getElementById('currentCategory').textContent =
+    document.getElementById('currentCategory').textContent = 
         `${boardType.charAt(0).toUpperCase() + boardType.slice(1)} - ${gender.charAt(0).toUpperCase() + gender.slice(1)}`;
 
     if (chartInstance) chartInstance.destroy();
-
+    
     const ctx = document.getElementById('trendChart').getContext('2d');
     chartInstance = new Chart(ctx, updateChartConfig(data));
 }
