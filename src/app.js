@@ -39,6 +39,7 @@ function createAthleteItem(athlete) {
                 <div class="tooltip-item">
                     <div class="tooltip-region">${athlete.Region}</div>
                     <div class="tooltip-points">${athlete.TotalPoints} points</div>
+                    <a href="https://topheats.ru" class="tooltip-follow">Follow</a>
                 </div>
             </div>
             <div class="athlete-info">
@@ -49,7 +50,6 @@ function createAthleteItem(athlete) {
         </div>
     `;
 }
-
 function createGroupHTML(data, title, link) {
     return `
         <h2 class="group-title">${title}</h2>

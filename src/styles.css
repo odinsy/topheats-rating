@@ -119,7 +119,7 @@ body {
     text-decoration: underline;
 }
 
-/* Стили для тултипа */
+/* Обновленные стили тултипа */
 .tooltip-item {
     position: absolute;
     bottom: calc(100% + 10px);
@@ -154,17 +154,29 @@ body {
     margin-bottom: 8px;
 }
 
-.tooltip-link {
-    display: block;
-    color: #4a69bd;
-    text-decoration: none;
+/* Новая кнопка Follow */
+.tooltip-follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #4a69bd;
+    color: white !important;
+    padding: 6px 12px;
+    border-radius: 15px;
     font-size: 0.8em;
-    padding-top: 8px;
-    border-top: 1px solid #eee;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: 8px;
 }
 
-.tooltip-link:hover {
-    text-decoration: underline;
+.tooltip-follow:hover {
+    background: #3c4d99;
+    transform: translateY(-1px);
+}
+
+.tooltip-follow::after {
+    content: '→';
+    font-weight: bold;
 }
 
 .tooltip-item::after {
@@ -207,5 +219,10 @@ body {
     .tooltip-item {
         width: 160px;
         font-size: 0.9em;
+    }
+
+    .tooltip-follow {
+        padding: 5px 10px;
+        font-size: 0.75em;
     }
 }
