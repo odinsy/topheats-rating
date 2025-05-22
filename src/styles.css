@@ -122,92 +122,61 @@ body {
 /* Обновленные стили тултипа */
 .tooltip-item {
     position: absolute;
-    bottom: calc(100% + 15px);
+    bottom: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%);
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    width: 220px;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    width: 180px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1000;
-    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
 .athlete-avatar:hover .tooltip-item {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
 }
 
-.tooltip-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.tooltip-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ddd;
-    margin-right: 12px;
-}
-
-.tooltip-title {
-    flex: 1;
-}
-
-.tooltip-name {
-    font-weight: 700;
-    color: #1e3799;
-    margin-bottom: 4px;
-}
-
-.tooltip-rank {
-    font-size: 0.9em;
+.tooltip-region {
+    font-weight: 600;
     color: #4a69bd;
+    margin-bottom: 6px;
+    font-size: 0.95em;
 }
 
-.tooltip-body {
-    border-top: 1px solid #eee;
-    padding-top: 12px;
-}
-
-.tooltip-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.9em;
-}
-
-.tooltip-label {
+.tooltip-points {
     color: #666;
-}
-
-.tooltip-value {
-    color: #333;
-    font-weight: 500;
-}
-
-.tooltip-social {
-    display: block;
-    text-align: center;
-    margin-top: 12px;
-    padding: 8px;
-    background: #f8f9fd;
-    border-radius: 6px;
-    color: #4a69bd;
-    text-decoration: none;
     font-size: 0.85em;
-    transition: background 0.2s;
+    margin-bottom: 8px;
 }
 
-.tooltip-social:hover {
-    background: #eef2ff;
+/* Новая кнопка Follow */
+.tooltip-follow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #4a69bd;
+    color: white !important;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.tooltip-follow:hover {
+    background: #3c4d99;
+    transform: translateY(-1px);
+}
+
+.tooltip-follow::after {
+    content: '→';
+    font-weight: bold;
 }
 
 .tooltip-item::after {
@@ -216,20 +185,44 @@ body {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 8px;
+    border-width: 6px;
     border-style: solid;
     border-color: white transparent transparent transparent;
 }
 
 @media (max-width: 768px) {
-    .tooltip-item {
-        width: 200px;
-        font-size: 0.9em;
-        bottom: calc(100% + 10px);
+    .tour-category {
+        flex-direction: column;
+        gap: 20px;
     }
-    
-    .tooltip-avatar {
-        width: 40px;
-        height: 40px;
+
+    .athletes-group {
+        padding: 12px;
+    }
+
+    .group-title {
+        font-size: 1.1em;
+        padding: 10px;
+        margin: -12px -12px 12px;
+    }
+
+    .athlete-item {
+        padding: 8px 0;
+        font-size: 0.9em;
+    }
+
+    .athlete-avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    .tooltip-item {
+        width: 160px;
+        font-size: 0.9em;
+    }
+
+    .tooltip-follow {
+        padding: 5px 10px;
+        font-size: 0.75em;
     }
 }

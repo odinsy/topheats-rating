@@ -1,31 +1,45 @@
+const CSV_PATHS = {
+    'shortboard_men': './data/ranking/shortboard_men.csv',
+    'longboard_men': './data/ranking/longboard_men.csv',
+    'shortboard_women': './data/ranking/shortboard_women.csv',
+    'longboard_women': './data/ranking/longboard_women.csv'
+};
+
+async function loadCSV(category) {
+    try {
+        const response = await fetch(CSV_PATHS[category]);
+        const data = await response.text();
+        return data
+            .split('\n')
+            .slice(1)
+            .filter(row => row.trim() !== '')
+            .map(row => {
+                const columns = row.split(',');
+                if (columns.length < 14) return null;
+                return {
+                    Rank: columns[0].trim(),
+                    Name: columns[1].trim(),
+                    Region: columns[3].trim(),
+                    TotalPoints: columns[13].trim() || '0'
+                };
+            })
+            .filter(item => item !== null)
+            .slice(0, 5);
+    } catch (error) {
+        console.error('Ошибка загрузки CSV:', error);
+        return [];
+    }
+}
+
 function createAthleteItem(athlete) {
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
             <div class="athlete-avatar">
                 <div class="tooltip-item">
-                    <div class="tooltip-header">
-                        <div class="tooltip-avatar"></div>
-                        <div class="tooltip-title">
-                            <div class="tooltip-name">${athlete.Name}</div>
-                            <div class="tooltip-rank">Rank ${athlete.Rank}</div>
-                        </div>
-                    </div>
-                    <div class="tooltip-body">
-                        <div class="tooltip-row">
-                            <span class="tooltip-label">Region:</span>
-                            <span class="tooltip-value">${athlete.Region}</span>
-                        </div>
-                        <div class="tooltip-row">
-                            <span class="tooltip-label">Total Points:</span>
-                            <span class="tooltip-value">${athlete.TotalPoints}</span>
-                        </div>
-                        <a href="https://topheats.ru/athletes/${encodeURIComponent(athlete.Name)}" 
-                           class="tooltip-social"
-                           target="_blank">
-                            View Social Profile
-                        </a>
-                    </div>
+                    <div class="tooltip-region">${athlete.Region}</div>
+                    <div class="tooltip-points">${athlete.TotalPoints} points</div>
+                    <a href="https://topheats.ru" class="tooltip-follow">Follow</a>
                 </div>
             </div>
             <div class="athlete-info">
@@ -36,3 +50,50 @@ function createAthleteItem(athlete) {
         </div>
     `;
 }
+function createGroupHTML(data, title, link) {
+    return `
+        <h2 class="group-title">${title}</h2>
+        ${data.map(athlete => createAthleteItem(athlete)).join('')}
+        <a href="${link}" class="full-ranking-link">Полный рейтинг →</a>
+    `;
+}
+
+async function init() {
+    const categories = [
+        {
+            id: 'shortboard-men',
+            title: 'Короткая доска, Мужчины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_men'
+        },
+        {
+            id: 'longboard-men',
+            title: 'Длинная доска, Мужчины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_men'
+        },
+        {
+            id: 'shortboard-women',
+            title: 'Короткая доска, Женщины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_women'
+        },
+        {
+            id: 'longboard-women',
+            title: 'Длинная доска, Женщины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_women'
+        }
+    ];
+
+    for (const category of categories) {
+        const [boardType, gender] = category.id.split('-');
+        const csvKey = `${boardType}_${gender}`;
+        const data = await loadCSV(csvKey);
+        if (data.length > 0) {
+            document.getElementById(category.id).innerHTML = createGroupHTML(
+                data,
+                category.title,
+                category.link
+            );
+        }
+    }
+}
+
+init();
