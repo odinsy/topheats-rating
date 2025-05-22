@@ -35,7 +35,12 @@ function createAthleteItem(athlete) {
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
-            <div class="athlete-avatar"></div>
+            <div class="athlete-avatar">
+                <div class="tooltip-item">
+                    <div class="tooltip-region">${athlete.Region}</div>
+                    <div class="tooltip-points">${athlete.TotalPoints} points</div>
+                </div>
+            </div>
             <div class="athlete-info">
                 <div class="athlete-name">${athlete.Name}</div>
                 <div class="athlete-region">${athlete.Region}</div>
