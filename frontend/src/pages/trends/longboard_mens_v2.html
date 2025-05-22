@@ -69,7 +69,7 @@
     Chart.defaults.animation.duration = 2000;
     Chart.defaults.animation.easing = 'easeOutQuart';
 
-    fetch('../../stats/trends/general_longboard_men_stats.csv')
+    fetch('../../data/trends/general_longboard_men_stats.csv')
         .then(response => response.text())
         .then(csvData => {
             const data = csvData.split('\n').slice(1).map(row => {

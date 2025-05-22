@@ -1,5 +1,5 @@
 const config = {
-    basePath: '../../stats/trends',
+    basePath: '../../data/trends',
     colors: {
         age: '#2e86de',
         total: '#10ac84',
@@ -88,7 +88,7 @@ function updateChartConfig(data) {
             plugins: {
                 legend: {
                     position: 'top',
-                    labels: { 
+                    labels: {
                         color: '#2c3e50',
                         usePointStyle: true
                     }
@@ -116,7 +116,7 @@ function updateChartConfig(data) {
             },
             scales: {
                 x: {
-                    grid: { 
+                    grid: {
                         display: false,
                         color: '#e9ecef'
                     },
@@ -126,7 +126,7 @@ function updateChartConfig(data) {
                 },
                 y: {
                     position: 'left',
-                    grid: { 
+                    grid: {
                         color: '#f1f3f5'
                     },
                     ticks: {
@@ -161,15 +161,15 @@ function updateChartConfig(data) {
 async function updateChart() {
     const boardType = document.getElementById('boardType').value;
     const gender = document.getElementById('gender').value;
-    
+
     const data = await fetchData(boardType, gender);
     if (!data) return;
 
-    document.getElementById('currentCategory').textContent = 
+    document.getElementById('currentCategory').textContent =
         `${boardType.charAt(0).toUpperCase() + boardType.slice(1)} - ${gender.charAt(0).toUpperCase() + gender.slice(1)}`;
 
     if (chartInstance) chartInstance.destroy();
-    
+
     const ctx = document.getElementById('trendChart').getContext('2d');
     chartInstance = new Chart(ctx, updateChartConfig(data));
 }

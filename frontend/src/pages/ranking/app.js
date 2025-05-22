@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadCategoryData(category) {
         try {
-            const response = await fetch(`../../ranking/${category}.csv`);
+            const response = await fetch(`../../data/ranking/${category}.csv`);
             if(!response.ok) throw new Error('CSV not found');
 
             const csvData = await response.text();

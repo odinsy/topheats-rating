@@ -1,8 +1,8 @@
 const CSV_PATHS = {
-    'shortboard_men': '../ranking/shortboard_men.csv',
-    'longboard_men': '../ranking/longboard_men.csv',
-    'shortboard_women': '../ranking/shortboard_women.csv',
-    'longboard_women': '../ranking/longboard_women.csv'
+    'shortboard_men': './data/ranking/shortboard_men.csv',
+    'longboard_men': './data/ranking/longboard_men.csv',
+    'shortboard_women': './data/ranking/shortboard_women.csv',
+    'longboard_women': './data/ranking/longboard_women.csv'
 };
 
 async function loadCSV(category) {
@@ -43,7 +43,7 @@ function createTable(data, title, link) {
                 </tr>
             `).join('')}
         </table>
-        <a href="${link}">Полный рейтинг →</a>  <!-- Убрал target="_blank" -->
+        <a href="${link}">Полный рейтинг →</a>
     `;
 }
 

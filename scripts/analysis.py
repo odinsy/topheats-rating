@@ -4,7 +4,7 @@ from collections import defaultdict
 from datetime import datetime
 
 def load_config():
-    with open("config.yaml") as f:
+    with open("../config.yaml") as f:
         return yaml.safe_load(f)["trends"]
 
 def normalize_region(region):
