@@ -122,7 +122,7 @@ tr:hover {
     }
     
     .table-wrapper {
-        padding: 0 10px;
+        padding: 0;
     }
     
     .table-container {
@@ -162,7 +162,7 @@ tr:hover {
         z-index: 3;
         background: #2c3e50;
     }
-
+    
     td.sticky-col {
         z-index: 2;
         background: white;
@@ -172,7 +172,6 @@ tr:hover {
     th.rank-col,
     td.sticky-col:first-child {
         left: 0;
-        min-width: 50px;
         box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     }
 
@@ -180,7 +179,6 @@ tr:hover {
     th.sticky-col:nth-child(2),
     td.sticky-col:nth-child(2) {
         left: 50px;
-        min-width: 120px;
         box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     }
 
@@ -193,9 +191,7 @@ tr:hover {
     }
 
     /* Fix header overlapping */
-    thead th {
-        position: sticky;
-        top: 0;
+    thead th.sticky-col {
         z-index: 4;
     }
 }
