@@ -3,7 +3,7 @@ import yaml
 from pathlib import Path
 from typing import List, Dict
 
-def load_config(config_path: str = '../config.yaml') -> Dict:
+def load_config(config_path: str = 'config.yaml') -> Dict:
     with open(config_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 

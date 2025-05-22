@@ -25,7 +25,7 @@ def extract_year(date_str: str) -> int:
     except Exception:
         return 0
 
-def load_config(config_path: str = '../config.yaml') -> Dict:
+def load_config(config_path: str = 'config.yaml') -> Dict:
     with open(config_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
