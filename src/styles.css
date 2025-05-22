@@ -7,7 +7,7 @@
 
 body {
     background: #f5f6f7;
-    padding: 20px;
+    padding: 15px;
 }
 
 .container {
@@ -18,37 +18,37 @@ body {
 .main-title {
     text-align: center;
     color: #1e3799;
-    margin-bottom: 40px;
-    font-size: 2em;
+    margin-bottom: 30px;
+    font-size: 1.8em;
 }
 
 .tour-group {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .tour-category {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .athletes-group {
     flex: 1;
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .group-title {
     color: #4a69bd;
-    font-size: 1.5em;
-    margin-bottom: 20px;
+    font-size: 1.3em;
+    margin-bottom: 15px;
 }
 
 .athlete-item {
     display: flex;
     align-items: center;
-    padding: 15px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -57,46 +57,57 @@ body {
 }
 
 .athlete-rank {
-    width: 40px;
+    width: 30px;
     font-weight: bold;
     color: #4a69bd;
+    font-size: 0.9em;
 }
 
 .athlete-avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: #ddd;
-    margin-right: 15px;
+    margin-right: 12px;
+    position: relative;
+    cursor: pointer;
 }
 
 .athlete-info {
     flex: 1;
+    min-width: 0;
 }
 
 .athlete-name {
     font-weight: 600;
     color: #333;
+    font-size: 0.95em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .athlete-region {
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #666;
+    margin-top: 2px;
 }
 
 .athlete-points {
-    width: 80px;
+    width: 70px;
     text-align: right;
     font-weight: bold;
     color: #4a69bd;
+    font-size: 0.9em;
 }
 
 .full-ranking-link {
     display: block;
-    margin-top: 20px;
+    margin-top: 15px;
     color: #4a69bd;
     text-decoration: none;
     font-weight: bold;
+    font-size: 0.9em;
     transition: opacity 0.3s;
 }
 
@@ -104,25 +115,20 @@ body {
     opacity: 0.8;
 }
 
-/* Стили для тултипа */
-.athlete-avatar {
-    position: relative;
-    cursor: pointer;
-}
-
+/* Тултип */
 .tooltip-item {
     position: absolute;
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    width: 200px;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    width: 160px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10;
     text-align: center;
 }
@@ -130,48 +136,71 @@ body {
 .athlete-avatar:hover .tooltip-item {
     opacity: 1;
     visibility: visible;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .tooltip-region {
     font-weight: 600;
     color: #4a69bd;
-    margin-bottom: 8px;
+    font-size: 0.85em;
+    margin-bottom: 5px;
 }
 
 .tooltip-points {
     color: #666;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
-/* Стрелка тултипа */
 .tooltip-item::after {
     content: '';
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 8px;
+    border-width: 6px;
     border-style: solid;
     border-color: white transparent transparent transparent;
 }
 
 @media (max-width: 768px) {
-    .tour-category {
-        flex-direction: column;
-        gap: 30px;
+    body {
+        padding: 10px;
     }
 
-    .group-title {
-        font-size: 1.3em;
+    .tour-category {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .athletes-group {
+        padding: 12px;
     }
 
     .athlete-item {
-        padding: 12px 0;
+        padding: 8px 0;
     }
 
     .athlete-avatar {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
+    }
+
+    .athlete-name {
+        font-size: 0.9em;
+    }
+
+    .athlete-region {
+        font-size: 0.75em;
+    }
+
+    .group-title {
+        font-size: 1.2em;
+        margin-bottom: 12px;
+    }
+
+    .tooltip-item {
+        width: 140px;
+        padding: 8px;
     }
 }
