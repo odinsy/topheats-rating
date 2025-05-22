@@ -5,12 +5,6 @@ const CSV_PATHS = {
     'longboard_women': './data/ranking/longboard_women.csv'
 };
 
-// Генерация случайного цвета для аватара
-function getRandomColor() {
-    const hue = Math.floor(Math.random() * 360);
-    return `hsl(${hue}, 60%, 80%)`;
-}
-
 async function loadCSV(category) {
     try {
         const response = await fetch(CSV_PATHS[category]);
@@ -37,31 +31,62 @@ async function loadCSV(category) {
     }
 }
 
-function createAthleteList(data) {
-    return data.map(athlete => `
+function createAthleteItem(athlete) {
+    return `
         <div class="athlete-item">
-            <div class="athlete-avatar" style="background: ${getRandomColor()}"></div>
+            <div class="athlete-rank">${athlete.Rank}</div>
+            <div class="athlete-avatar"></div>
             <div class="athlete-info">
                 <div class="athlete-name">${athlete.Name}</div>
                 <div class="athlete-region">${athlete.Region}</div>
             </div>
             <div class="athlete-points">${athlete.TotalPoints}</div>
         </div>
-    `).join('');
+    `;
+}
+
+function createGroupHTML(data, title, link) {
+    return `
+        <h2 class="group-title">${title}</h2>
+        ${data.map(athlete => createAthleteItem(athlete)).join('')}
+        <a href="${link}" class="full-ranking-link">Полный рейтинг →</a>
+    `;
 }
 
 async function init() {
-    const elements = [
-        { id: 'shortboard-men', category: 'shortboard_men' },
-        { id: 'longboard-men', category: 'longboard_men' },
-        { id: 'shortboard-women', category: 'shortboard_women' },
-        { id: 'longboard-women', category: 'longboard_women' }
+    const categories = [
+        {
+            id: 'shortboard-men',
+            title: 'Короткая доска, Мужчины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_men'
+        },
+        {
+            id: 'longboard-men',
+            title: 'Длинная доска, Мужчины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_men'
+        },
+        {
+            id: 'shortboard-women',
+            title: 'Короткая доска, Женщины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_women'
+        },
+        {
+            id: 'longboard-women',
+            title: 'Длинная доска, Женщины',
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_women'
+        }
     ];
 
-    for (const {id, category} of elements) {
-        const data = await loadCSV(category);
+    for (const category of categories) {
+        const [boardType, gender] = category.id.split('-');
+        const csvKey = `${boardType}_${gender}`;
+        const data = await loadCSV(csvKey);
         if (data.length > 0) {
-            document.getElementById(id).innerHTML = createAthleteList(data);
+            document.getElementById(category.id).innerHTML = createGroupHTML(
+                data,
+                category.title,
+                category.link
+            );
         }
     }
 }

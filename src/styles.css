@@ -15,37 +15,34 @@ body {
     margin: 0 auto;
 }
 
-h1 {
+.main-title {
     text-align: center;
     color: #1e3799;
     margin-bottom: 40px;
     font-size: 2em;
 }
 
-.row {
-    display: flex;
-    gap: 30px;
+.tour-group {
     margin-bottom: 40px;
 }
 
-.tour-group {
+.tour-category {
+    display: flex;
+    gap: 20px;
+}
+
+.athletes-group {
     flex: 1;
     background: white;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-h2 {
+.group-title {
     color: #4a69bd;
-    font-size: 1.4em;
+    font-size: 1.5em;
     margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #eee;
-}
-
-.athletes-list {
-    margin: 15px 0;
 }
 
 .athlete-item {
@@ -55,17 +52,26 @@ h2 {
     border-bottom: 1px solid #eee;
 }
 
+.athlete-item:last-child {
+    border-bottom: none;
+}
+
+.athlete-rank {
+    width: 40px;
+    font-weight: bold;
+    color: #4a69bd;
+}
+
 .athlete-avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background: #ddd;
     margin-right: 15px;
-    flex-shrink: 0;
 }
 
 .athlete-info {
-    flex-grow: 1;
+    flex: 1;
 }
 
 .athlete-name {
@@ -74,49 +80,46 @@ h2 {
 }
 
 .athlete-region {
-    font-size: 0.85em;
+    font-size: 0.9em;
     color: #666;
-    margin-top: 4px;
 }
 
 .athlete-points {
+    width: 80px;
+    text-align: right;
     font-weight: bold;
     color: #4a69bd;
-    min-width: 80px;
-    text-align: right;
 }
 
-.full-ranking {
+.full-ranking-link {
     display: block;
-    text-align: center;
+    margin-top: 20px;
     color: #4a69bd;
     text-decoration: none;
-    font-weight: 600;
-    padding: 12px;
-    margin-top: 15px;
+    font-weight: bold;
     transition: opacity 0.3s;
 }
 
-.full-ranking:hover {
+.full-ranking-link:hover {
     opacity: 0.8;
 }
 
 @media (max-width: 768px) {
-    .row {
+    .tour-category {
         flex-direction: column;
-        gap: 25px;
+        gap: 30px;
     }
-    
-    .tour-group {
-        width: 100%;
-        margin-bottom: 0;
+
+    .group-title {
+        font-size: 1.3em;
     }
-    
-    h1 {
-        font-size: 1.8em;
+
+    .athlete-item {
+        padding: 12px 0;
     }
-    
-    h2 {
-        font-size: 1.2em;
+
+    .athlete-avatar {
+        width: 40px;
+        height: 40px;
     }
 }
