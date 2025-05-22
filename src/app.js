@@ -1,9 +1,15 @@
 const CSV_PATHS = {
-    'shortboard_men': './data/ranking/shortboard_men.csv',
-    'longboard_men': './data/ranking/longboard_men.csv',
-    'shortboard_women': './data/ranking/shortboard_women.csv',
-    'longboard_women': './data/ranking/longboard_women.csv'
+    'shortboard_men': '../../ranking/shortboard_men.csv',
+    'longboard_men': '../../ranking/longboard_men.csv',
+    'shortboard_women': '../../ranking/shortboard_women.csv',
+    'longboard_women': '../../ranking/longboard_women.csv'
 };
+
+// Генерация случайного цвета для аватара
+function getRandomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 60%, 80%)`;
+}
 
 async function loadCSV(category) {
     try {
@@ -31,52 +37,31 @@ async function loadCSV(category) {
     }
 }
 
-function createTable(data, title, link) {
-    return `
-        <h2>${title}</h2>
-        <table>
-            ${data.map(athlete => `
-                <tr>
-                    <td>${athlete.Rank}</td>
-                    <td>${athlete.Name}<span class="region">${athlete.Region}</span></td>
-                    <td>${athlete.TotalPoints}</td>
-                </tr>
-            `).join('')}
-        </table>
-        <a href="${link}">Полный рейтинг →</a>
-    `;
+function createAthleteList(data) {
+    return data.map(athlete => `
+        <div class="athlete-item">
+            <div class="athlete-avatar" style="background: ${getRandomColor()}"></div>
+            <div class="athlete-info">
+                <div class="athlete-name">${athlete.Name}</div>
+                <div class="athlete-region">${athlete.Region}</div>
+            </div>
+            <div class="athlete-points">${athlete.TotalPoints}</div>
+        </div>
+    `).join('');
 }
 
 async function init() {
-    const categories = [
-        {
-            id: 'shortboard-men',
-            title: 'Короткая доска, Мужчины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_men'
-        },
-        {
-            id: 'longboard-men',
-            title: 'Длинная доска, Мужчины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_men'
-        },
-        {
-            id: 'shortboard-women',
-            title: 'Короткая доска, Женщины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_women'
-        },
-        {
-            id: 'longboard-women',
-            title: 'Длинная доска, Женщины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_women'
-        }
+    const elements = [
+        { id: 'shortboard-men', category: 'shortboard_men' },
+        { id: 'longboard-men', category: 'longboard_men' },
+        { id: 'shortboard-women', category: 'shortboard_women' },
+        { id: 'longboard-women', category: 'longboard_women' }
     ];
 
-    for (const category of categories) {
-        const [boardType, gender] = category.id.split('-');
-        const csvKey = `${boardType}_${gender}`;
-        const data = await loadCSV(csvKey);
+    for (const {id, category} of elements) {
+        const data = await loadCSV(category);
         if (data.length > 0) {
-            document.getElementById(category.id).innerHTML = createTable(data, category.title, category.link);
+            document.getElementById(id).innerHTML = createAthleteList(data);
         }
     }
 }
