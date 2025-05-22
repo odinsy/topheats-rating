@@ -150,35 +150,52 @@ tr:hover {
         min-width: 100px;
     }
 
-    /* Sticky columns for mobile */
+    /* Sticky columns */
     .sticky-col {
         position: sticky;
-        background: white;
-        z-index: 2;
+        background: inherit;
+        z-index: 1;
         transform: translateZ(0);
     }
     
     th.sticky-col {
-        background: #2c3e50;
         z-index: 3;
+        background: #2c3e50;
     }
 
-    /* Left sticky columns */
-    th.sticky-col:nth-child(1),
-    td.sticky-col:nth-child(1) {
+    td.sticky-col {
+        z-index: 2;
+        background: white;
+    }
+
+    /* Rank column */
+    th.rank-col,
+    td.sticky-col:first-child {
         left: 0;
+        min-width: 50px;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     }
 
+    /* Name column */
     th.sticky-col:nth-child(2),
     td.sticky-col:nth-child(2) {
         left: 50px;
+        min-width: 120px;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     }
 
-    /* Right sticky total column */
-    th.sticky-col.total-col,
-    td.sticky-col.total-col {
+    /* Total column */
+    th.total-col,
+    td.total-col {
         right: 0;
         left: auto;
         box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+    }
+
+    /* Fix header overlapping */
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 4;
     }
 }
