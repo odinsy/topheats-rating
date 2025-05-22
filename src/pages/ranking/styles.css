@@ -35,61 +35,80 @@ body {
     background: #ffffff;
     border-radius: 6px;
     box-shadow: 0 1px 10px rgba(0,0,0,0.08);
+    position: relative;
 }
 
 table {
-    width: auto;
+    width: max-content;
+    min-width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
-    table-layout: auto;
     font-size: 0.85em;
 }
 
-th, td {
-    padding: 8px 12px;
-    text-align: left;
-    border-bottom: 1px solid #e9ecef;
-    line-height: 1.4;
-    vertical-align: top;
+/* Sticky header and columns */
+th {
+    background: #2c3e50;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
-.compact-col {
-    white-space: nowrap;
-    min-width: 60px;
+.sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: inherit;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.total-col {
+    left: auto;
+    right: 0;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+
+/* Double sticky magic */
+th.sticky-col {
+    z-index: 3;
+}
+
+td.sticky-col {
+    z-index: 2;
+}
+
+/* Column sizes */
+.rank-col {
+    width: 70px;
     text-align: center;
 }
 
 .name-col {
-    min-width: 160px;
-    max-width: 240px;
+    width: 180px;
+    min-width: 180px;
 }
 
-.region-col {
-    min-width: 140px;
-    max-width: 200px;
+.total-col {
+    width: 80px;
+    text-align: center;
 }
 
-th {
-    background: #2c3e50;
-    color: #ffffff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+th, td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+    background: white;
 }
 
-tr:nth-child(even) {
-    background-color: #f8f9fa;
+tr:nth-child(even) td {
+    background: #f8f9fa;
 }
 
-tr:hover {
+tr:hover td {
     background-color: #e9ecef !important;
 }
 
-.total-points {
-    font-weight: 700;
-    color: #2c3e50;
-}
-
+/* Tooltip styles */
 .name-cell {
     position: relative;
     cursor: help;
@@ -138,64 +157,16 @@ tr:hover {
         padding: 6px 8px;
     }
     
-    .compact-col {
-        min-width: 50px;
+    .rank-col {
+        width: 50px;
     }
     
     .name-col {
+        width: 120px;
         min-width: 120px;
     }
     
-    .region-col {
-        min-width: 100px;
-    }
-
-    /* Sticky columns */
-    .sticky-col {
-        position: sticky;
-        background: inherit;
-        z-index: 1;
-        transform: translateZ(0);
-    }
-    
-    th.sticky-col {
-        z-index: 3;
-        background: #2c3e50;
-    }
-
-    td.sticky-col {
-        z-index: 2;
-        background: white;
-    }
-
-    /* Rank column */
-    th.rank-col,
-    td.sticky-col:first-child {
-        left: 0;
-        min-width: 50px;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    }
-
-    /* Name column */
-    th.sticky-col:nth-child(2),
-    td.sticky-col:nth-child(2) {
-        left: 50px;
-        min-width: 120px;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    }
-
-    /* Total column */
-    th.total-col,
-    td.total-col {
-        right: 0;
-        left: auto;
-        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
-    }
-
-    /* Fix header overlapping */
-    thead th {
-        position: sticky;
-        top: 0;
-        z-index: 4;
+    .total-col {
+        width: 60px;
     }
 }
