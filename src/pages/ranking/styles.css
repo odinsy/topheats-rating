@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Arial', sans-serif;
 }
 
 body {
@@ -19,69 +20,84 @@ body {
     padding: 8px 12px;
     border: 1px solid #2c3e50;
     border-radius: 4px;
+    background: white;
     font-size: 1em;
+    cursor: pointer;
+}
+
+.table-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .table-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-}
-
-table {
-    border-collapse: collapse;
-    font-size: 0.9em;
-    min-width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 1px 10px rgba(0,0,0,0.08);
     position: relative;
 }
 
-/* Sticky Header */
+table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85em;
+}
+
+/* Sticky header and columns */
 th {
     background: #2c3e50;
     color: white;
     position: sticky;
     top: 0;
-    z-index: 3;
-}
-
-/* Sticky Columns */
-.sticky-col {
-    position: sticky;
-    background: inherit;
     z-index: 2;
 }
 
-.rank-col {
+.sticky-col {
+    position: sticky;
     left: 0;
+    z-index: 1;
+    background: inherit;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.total-col {
+    left: auto;
+    right: 0;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+}
+
+/* Double sticky magic */
+th.sticky-col {
+    z-index: 3;
+}
+
+td.sticky-col {
+    z-index: 2;
+}
+
+/* Column sizes */
+.rank-col {
     width: 70px;
     text-align: center;
 }
 
 .name-col {
-    left: 70px;
     width: 180px;
+    min-width: 180px;
 }
 
 .total-col {
-    right: 0;
-    width: 90px;
+    width: 80px;
     text-align: center;
-    box-shadow: -2px 0 8px rgba(0,0,0,0.1);
 }
 
-/* Double sticky intersection */
-th.sticky-col {
-    z-index: 4;
-}
-
-/* Body cells styling */
-td {
-    padding: 12px;
-    background: white;
+th, td {
+    padding: 8px 12px;
     border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+    background: white;
 }
 
 tr:nth-child(even) td {
@@ -92,28 +108,65 @@ tr:hover td {
     background-color: #e9ecef !important;
 }
 
-/* Mobile adaptations */
+/* Tooltip styles */
+.name-cell {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    white-space: nowrap;
+    display: none;
+    z-index: 100;
+    font-size: 0.9em;
+}
+
+.name-cell:hover .tooltip {
+    display: block;
+}
+
 @media (max-width: 768px) {
+    .category-selector {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .table-wrapper {
+        padding: 0 10px;
+    }
+    
     .table-container {
         border-radius: 0;
         box-shadow: none;
     }
     
+    table {
+        font-size: 0.8em;
+    }
+    
+    th, td {
+        padding: 6px 8px;
+    }
+    
     .rank-col {
         width: 50px;
-        left: 0;
     }
     
     .name-col {
-        width: 130px;
-        left: 50px;
+        width: 120px;
+        min-width: 120px;
     }
     
     .total-col {
-        width: 70px;
-    }
-    
-    td, th {
-        padding: 8px;
+        width: 60px;
     }
 }

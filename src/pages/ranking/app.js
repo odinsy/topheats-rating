@@ -2,87 +2,203 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentData = [];
     let sortState = { column: null, asc: true };
 
-    // Конфигурация
     const config = {
+        categories: {
+            longboard_men: 'Longboard (Men)',
+            longboard_women: 'Longboard (Women)',
+            shortboard_men: 'Shortboard (Men)',
+            shortboard_women: 'Shortboard (Women)'
+        },
         fieldMap: {
             staticFields: {
-                Rank: { index: 0, type: 'number' },
-                Name: { index: 1, type: 'text' },
-                Region: { index: 3, type: 'text' },
-                BestPlace: { index: 5, type: 'number' }
+                Rank: { index: 0, default: '', type: 'number' },
+                Name: { index: 1, default: '', type: 'text' },
+                Birthday: { index: 2, default: '', type: 'text' },
+                Region: { index: 3, default: '', type: 'text' },
+                BestPlace: { index: 5, default: '', type: 'number' },
+                Social: { index: null, default: 'https://vk.com/topheats', type: 'text' }
             },
             dynamicFields: {
-                years: [2017, 2018, 2019, 2021, 2022, 2023, 2024],
-                startIndex: 6
+                years: {
+                    startIndex: 6,
+                    list: ['2017', '2018', '2019', '2021', '2022', '2023', '2024'],
+                    type: 'number'
+                },
+                TotalPoints: { index: -1, type: 'number' }
             }
-        }
+        },
+        columnsOrder: [
+            'Rank', 'Name', 'Region', 'BestPlace',
+            ...['2017', '2018', '2019', '2021', '2022', '2023', '2024'],
+            'TotalPoints'
+        ]
     };
 
     // Инициализация
     initCategorySelector();
-    
+    loadCategoryData(getCurrentCategory());
+
+    // Обработчики событий
+    document.getElementById('categorySelect').addEventListener('change', handleCategoryChange);
+
     function initCategorySelector() {
         const selector = document.getElementById('categorySelect');
-        selector.addEventListener('change', loadData);
-        loadData();
+        const currentCategory = getCurrentCategory();
+
+        selector.value = currentCategory;
     }
 
-    async function loadData() {
-        const category = document.getElementById('categorySelect').value;
+    function getCurrentCategory() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('category') || 'longboard_men';
+    }
+
+    function handleCategoryChange(e) {
+        const category = e.target.value;
+        updateURL(category);
+        loadCategoryData(category);
+    }
+
+    function updateURL(category) {
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('category', category);
+        window.history.pushState({}, '', newUrl);
+    }
+
+    async function loadCategoryData(category) {
         try {
-            const response = await fetch(`../ranking/${category}.csv`);
-            const csv = await response.text();
-            currentData = parseCSV(csv);
-            renderTable();
+            const response = await fetch(`../../data/ranking/${category}.csv`);
+            if(!response.ok) throw new Error('CSV not found');
+
+            const csvData = await response.text();
+            currentData = parseCSV(csvData);
+            renderTable(currentData);
         } catch (error) {
-            console.error('Ошибка загрузки:', error);
+            console.error('Error:', error);
+            alert('Данные временно недоступны. Попробуйте позже.');
         }
     }
 
     function parseCSV(csv) {
         return csv.split('\n')
             .slice(1)
-            .filter(row => row.trim())
+            .filter(row => row.trim().length > 0)
             .map(row => {
-                const cols = row.split(',');
-                const athlete = {
-                    Rank: parseNumber(cols[0]),
-                    Name: cols[1],
-                    Region: cols[3],
-                    BestPlace: parseNumber(cols[5])
-                };
-                
-                config.fieldMap.dynamicFields.years.forEach((year, i) => {
-                    athlete[year] = parseNumber(cols[config.fieldMap.dynamicFields.startIndex + i]);
+                const columns = row.split(',').map(c => c.trim());
+                const athlete = {};
+
+                // Парсинг статических полей
+                for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
+                    athlete[field] = parseValue(
+                        settings.index !== null ? columns[settings.index] : settings.default,
+                        settings.type
+                    );
+                }
+
+                // Парсинг динамических годов
+                config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
+                    const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
+                    athlete[year] = parseValue(
+                        columns[colIndex] || '0',
+                        config.fieldMap.dynamicFields.years.type
+                    );
                 });
-                
-                athlete.Total = parseNumber(cols[cols.length - 1]);
+
+                // Total Points
+                athlete.TotalPoints = parseValue(
+                    columns[columns.length - 1] || '0',
+                    config.fieldMap.dynamicFields.TotalPoints.type
+                );
+
                 return athlete;
             });
     }
 
-    function parseNumber(value) {
-        const num = Number(value);
-        return isNaN(num) ? 0 : num;
+    function parseValue(value, type) {
+        if(type === 'number') {
+            const num = parseFloat(value.replace(/\s/g, ''));
+            return isNaN(num) ? 0 : num;
+        }
+        return value.trim();
     }
 
-    function renderTable() {
+    function renderTable(data) {
         const tbody = document.querySelector('#rankingTable tbody');
         tbody.innerHTML = '';
-        
-        currentData.forEach(athlete => {
+
+        data.forEach((athlete, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td class="sticky-col rank-col">${athlete.Rank}</td>
-                <td class="sticky-col name-col">${athlete.Name}</td>
-                <td>${athlete.Region}</td>
-                <td>${athlete.BestPlace}</td>
-                ${config.fieldMap.dynamicFields.years.map(year => `
-                    <td>${athlete[year]}</td>
-                `).join('')}
-                <td class="sticky-col total-col">${athlete.Total}</td>
+                <td class="compact-col">${athlete.Rank}</td>
+                <td class="name-col name-cell">
+                    ${athlete.Name}
+                    <div class="tooltip">
+                        <span>Год рождения: ${athlete.Birthday}</span>
+                        ${athlete.Social ? `<a href="${athlete.Social}" target="_blank">Соцсети</a>` : ''}
+                    </div>
+                </td>
+                <td class="region-col">${athlete.Region}</td>
+                <td class="compact-col">${athlete.BestPlace}</td>
+                ${config.fieldMap.dynamicFields.years.list
+                    .map(year => `<td class="compact-col">${athlete[year]}</td>`)
+                    .join('')}
+                <td class="compact-col total-points">${athlete.TotalPoints}</td>
             `;
+            row.style.backgroundColor = index % 2 === 0 ? '#fdfdfd' : '';
             tbody.appendChild(row);
         });
     }
+
+    function sortTable(columnIndex) {
+        const sortKey = config.columnsOrder[columnIndex];
+        const sortType = getSortType(sortKey);
+
+        currentData.sort((a, b) => {
+            const valA = a[sortKey] ?? '';
+            const valB = b[sortKey] ?? '';
+
+            let result = 0;
+
+            if(sortType === 'number') {
+                result = (valA - valB);
+            } else {
+                result = String(valA).localeCompare(String(valB), 'ru');
+            }
+
+            return sortState.asc ? result : -result;
+        });
+
+        sortState.asc = !sortState.asc;
+        renderTable(currentData);
+    }
+
+    function getSortType(key) {
+        // Статические поля
+        for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
+            if(field === key) return settings.type;
+        }
+
+        // Динамические годы
+        if(config.fieldMap.dynamicFields.years.list.includes(key)) {
+            return config.fieldMap.dynamicFields.years.type;
+        }
+
+        // Total Points
+        if(key === 'TotalPoints') {
+            return config.fieldMap.dynamicFields.TotalPoints.type;
+        }
+
+        return 'text';
+    }
+
+    document.querySelectorAll('th').forEach((th, index) => {
+        th.addEventListener('click', () => sortTable(index));
+    });
+
+    // Обработчик изменения истории
+    window.addEventListener('popstate', () => {
+        const category = getCurrentCategory();
+        document.getElementById('categorySelect').value = category;
+        loadCategoryData(category);
+    });
 });
