@@ -32,41 +32,45 @@ async function loadCSV(category) {
 }
 
 function createAthleteItem(athlete) {
-    const bestResult = athlete.BestPlace ? `${athlete.BestPlace} место в ${athlete.BestYear}` : 'Нет данных';
-
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
-            <div class="athlete-avatar">
-                <div class="tooltip-item">
-                    <!-- Первый блок -->
-                    <div class="tooltip-section tooltip-main-info">
-                        <div class="tooltip-text">
-                            <div class="athlete-name">${athlete.Name}</div>
-                            <div class="athlete-region">${athlete.Region}</div>
-                        </div>
-                        <div class="tooltip-avatar"></div>
-                    </div>
-
-                    <!-- Второй блок -->
-                    <div class="tooltip-section tooltip-rank-info">
-                        <div class="tooltip-rank">#${athlete.Rank}</div>
-                        <div class="tooltip-best-result">${athlete.bestResult}</div>
-                    </div>
-
-                    <!-- Третий блок -->
-                    <div class="tooltip-section tooltip-social">
-                        <a href="https://topheats.ru" class="tooltip-social-link" target="_blank">
-                            Страница спортсмена →
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div class="athlete-avatar"></div>
             <div class="athlete-info">
                 <div class="athlete-name">${athlete.Name}</div>
                 <div class="athlete-region">${athlete.Region}</div>
             </div>
             <div class="athlete-points">${athlete.TotalPoints}</div>
+
+            <div class="tooltip-item">
+                <div class="tooltip-grid">
+                    <!-- Первый ряд -->
+                    <div class="tooltip-row">
+                        <div class="tooltip-header">
+                            <div class="tooltip-avatar"></div>
+                            <div class="tooltip-meta">
+                                <div class="tooltip-name">${athlete.Name}</div>
+                                <div class="tooltip-region">${athlete.Region}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Второй ряд -->
+                    <div class="tooltip-row">
+                        <div class="tooltip-rank">
+                            <span>#${athlete.Rank}</span>
+                            <span class="tooltip-best">ЧР 2024</span>
+                        </div>
+                    </div>
+
+                    <!-- Третий ряд -->
+                    <div class="tooltip-row">
+                        <div class="tooltip-social">
+                            <a href="https://topheats.ru" target="_blank">topheats.ru</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
 }

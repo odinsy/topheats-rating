@@ -120,51 +120,51 @@ body {
     text-decoration: underline;
 }
 
-/* НОВЫЕ СТИЛИ ДЛЯ ТУЛТИПА */
+/* НОВЫЕ СТИЛИ ТУЛТИПА */
 .tooltip-item {
     position: absolute;
-    bottom: calc(100% + 15px);
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: -10px;
+    left: 0;
+    transform: translateY(100%);
     background: white;
+    width: 300px;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    width: 280px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.athlete-avatar:hover .tooltip-item {
+.athlete-item:hover .tooltip-item {
     opacity: 1;
     visibility: visible;
 }
 
-.tooltip-section {
+.tooltip-grid {
     display: flex;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tooltip-row {
+    display: flex;
+    align-items: center;
     padding-bottom: 12px;
     border-bottom: 1px solid #eee;
 }
 
-.tooltip-section:last-child {
+.tooltip-row:last-child {
     border-bottom: none;
-    margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.tooltip-main-info {
-    width: 40%;
+.tooltip-header {
+    flex: 0 0 40%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.tooltip-text {
-    flex: 1;
-    padding-right: 15px;
+    gap: 15px;
 }
 
 .tooltip-avatar {
@@ -174,51 +174,61 @@ body {
     background: #ddd;
 }
 
-.tooltip-rank-info {
-    width: 30%;
-    justify-content: space-between;
+.tooltip-meta {
+    flex: 1;
 }
 
-.tooltip-rank,
-.tooltip-best-result {
+.tooltip-name {
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 4px;
+}
+
+.tooltip-region {
     font-size: 0.9em;
+    color: #666;
 }
 
 .tooltip-rank {
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tooltip-rank span:first-child {
     color: #4a69bd;
     font-weight: 600;
 }
 
-.tooltip-best-result {
+.tooltip-best {
     color: #666;
+    font-size: 0.9em;
 }
 
 .tooltip-social {
-    width: 30%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.tooltip-social-link {
-    display: block;
+.tooltip-social a {
     color: #4a69bd;
     text-decoration: none;
     font-size: 0.85em;
-    padding: 6px 0;
-    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.tooltip-social-link:hover {
-    opacity: 0.8;
+.tooltip-social a::before {
+    content: '🌐';
+    font-size: 1.2em;
 }
 
-.tooltip-item::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 8px;
-    border-style: solid;
-    border-color: white transparent transparent transparent;
+.tooltip-social a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
@@ -248,23 +258,8 @@ body {
     }
 
     .tooltip-item {
-        width: 240px;
-        padding: 12px;
-        bottom: calc(100% + 10px);
-    }
-
-    .tooltip-avatar {
-        width: 50px;
-        height: 50px;
-    }
-
-    .tooltip-main-info {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .tooltip-text {
-        padding-right: 0;
-        margin-bottom: 8px;
+        width: 260px;
+        left: 50%;
+        transform: translate(-50%, 100%);
     }
 }
