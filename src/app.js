@@ -32,6 +32,7 @@ async function loadCSV(category) {
 }
 
 function createAthleteItem(athlete) {
+    const avatarPath = `images/avatars/${athlete.Name.replace(/ /g, '_')}.jpg`;
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
