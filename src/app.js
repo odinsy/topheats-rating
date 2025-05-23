@@ -47,14 +47,15 @@ function createAthleteItem(athlete) {
                     <!-- Первый ряд -->
                     <div class="tooltip-row">
                         <div class="tooltip-header">
-                            <div class="tooltip-avatar"></div>
+                            <img src="${avatarPath}" class="tooltip-avatar"
+                                 alt="${athlete.Name}"
+                                 onerror="this.src='img/avatars/default.jpg'">
                             <div class="tooltip-meta">
                                 <div class="tooltip-name">${athlete.Name}</div>
                                 <div class="tooltip-region">${athlete.Region}</div>
                             </div>
                         </div>
                     </div>
-
                     <!-- Второй ряд -->
                     <div class="tooltip-row">
                         <div class="tooltip-rank">

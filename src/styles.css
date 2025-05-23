@@ -163,17 +163,16 @@ body {
     flex: 0 0 100%;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 15px;
+    align-items: center;
 }
 
 .tooltip-avatar {
-    order: 2;
     width: 80px;
     height: 80px;
-    border-radius: 8px;
-    background: #ddd;
+    border-radius: 50%;
     object-fit: cover;
+    order: 2;
+    margin-left: 15px;
 }
 
 .tooltip-meta {
