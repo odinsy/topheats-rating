@@ -6,15 +6,15 @@ top_n: 100
 years_order: [2017, 2018, 2019, 2021, 2022, 2023, 2024]
 
 input_paths:
-  # - "data/shortboard/shortboard_men_*.csv"
+  - "data/shortboard/shortboard_men_*.csv"
   # - "data/longboard/longboard_men_*.csv"
   # - "data/shortboard/shortboard_women_*.csv"
-  - "data/longboard/longboard_women_*.csv"
+  # - "data/longboard/longboard_women_*.csv"
 output:
-  # filename: processed/ranking/shortboard_men.csv
-  # filename: processed/ranking/longboard_men.csv
-  # filename: processed/ranking/shortboard_women.csv
-  filename: processed/ranking/longboard_women.csv
+  filename: processed/rankings/shortboard_men.csv
+  # filename: processed/rankings/longboard_men.csv
+  # filename: processed/rankings/shortboard_women.csv
+  # filename: processed/rankings/longboard_women.csv
   columns: [Rank, Name, Birthday, Region, Category, Best Place, YearScores, Total Points]
 
 sorting:
@@ -79,31 +79,31 @@ wildcard:
   last_years_period: 3    # За последние N лет
   min_best_place: 3       # Лучший результат за карьеру
 
-  # ranking_file: processed/ranking/shortboard_men.csv
+  # ranking_file: processed/rankings/shortboard_men.csv
   # output_file: processed/wildcard/shortboard_men.csv
 
-  # ranking_file: processed/ranking/shortboard_women.csv
+  # ranking_file: processed/rankings/shortboard_women.csv
   # output_file: processed/wildcard/shortboard_women.csv
 
-  # ranking_file: processed/ranking/longboard_women.csv
+  # ranking_file: processed/rankings/longboard_women.csv
   # output_file: processed/wildcard/longboard_women.csv
 
-  ranking_file: processed/ranking/longboard_men.csv
+  ranking_file: processed/rankings/longboard_men.csv
   output_file: processed/wildcard/longboard_men.csv
 
 trends:
-  # input_ranking_file: processed/ranking/shortboard_men.csv
+  # input_ranking_file: processed/rankings/shortboard_men.csv
   # output_general_file: processed/trends/general_shortboard_men_stats.csv
   # output_detailed_file: processed/trends/detailed_shortboard_men_stats.csv
 
-  # input_ranking_file: processed/ranking/longboard_men.csv
+  # input_ranking_file: processed/rankings/longboard_men.csv
   # output_general_file: processed/trends/general_longboard_men_stats.csv
   # output_detailed_file: processed/trends/detailed_longboard_men_stats.csv
 
-  # input_ranking_file: processed/ranking/longboard_women.csv
+  # input_ranking_file: processed/rankings/longboard_women.csv
   # output_general_file: processed/trends/general_longboard_women_stats.csv
   # output_detailed_file: processed/trends/detailed_longboard_women_stats.csv
 
-  input_ranking_file: processed/ranking/shortboard_women.csv
+  input_ranking_file: processed/rankings/shortboard_women.csv
   output_general_file: processed/trends/general_shortboard_women_stats.csv
   output_detailed_file: processed/trends/detailed_shortboard_women_stats.csv
