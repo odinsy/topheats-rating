@@ -37,29 +37,36 @@ function createAthleteItem(athlete) {
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
-            <div class="athlete-avatar"></div>
+            <div class="athlete-avatar">
+                <div class="tooltip-item">
+                    <!-- Первый блок -->
+                    <div class="tooltip-section tooltip-main-info">
+                        <div class="tooltip-text">
+                            <div class="athlete-name">${athlete.Name}</div>
+                            <div class="athlete-region">${athlete.Region}</div>
+                        </div>
+                        <div class="tooltip-avatar"></div>
+                    </div>
+
+                    <!-- Второй блок -->
+                    <div class="tooltip-section tooltip-rank-info">
+                        <div class="tooltip-rank">#${athlete.Rank}</div>
+                        <div class="tooltip-best-result">${athlete.bestResult}</div>
+                    </div>
+
+                    <!-- Третий блок -->
+                    <div class="tooltip-section tooltip-social">
+                        <a href="https://topheats.ru" class="tooltip-social-link" target="_blank">
+                            Страница спортсмена →
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="athlete-info">
                 <div class="athlete-name">${athlete.Name}</div>
                 <div class="athlete-region">${athlete.Region}</div>
             </div>
             <div class="athlete-points">${athlete.TotalPoints}</div>
-
-            <div class="athlete-tooltip">
-                <div class="tooltip-header">
-                    <div class="tooltip-name">${athlete.Name}</div>
-                    <div class="tooltip-region">${athlete.Region}</div>
-                </div>
-                <div class="tooltip-rank">#${athlete.Rank} в рейтинге</div>
-                <div class="tooltip-best-result">
-                    <div class="tooltip-best-year">Лучший результат:</div>
-                    <div class="tooltip-best-event">${bestResult}</div>
-                </div>
-                <a href="https://topheats.ru/${athlete.Name.replace(/ /g, '-')}"
-                   class="tooltip-social"
-                   target="_blank">
-                    Страница спортсмена
-                </a>
-            </div>
         </div>
     `;
 }

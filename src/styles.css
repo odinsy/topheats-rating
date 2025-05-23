@@ -52,12 +52,12 @@ body {
 }
 
 .athlete-item {
-    position: relative;
     display: flex;
     align-items: center;
-    padding: 12px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
     font-size: 0.95em;
+    position: relative;
 }
 
 .athlete-item:last-child {
@@ -73,17 +73,12 @@ body {
 
 .athlete-avatar {
     position: relative;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: #ddd;
-    margin-right: 15px;
+    margin-right: 12px;
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.athlete-avatar:hover {
-    transform: scale(1.05);
 }
 
 .athlete-info {
@@ -102,7 +97,7 @@ body {
 .athlete-region {
     font-size: 0.85em;
     color: #666;
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 .athlete-points {
@@ -125,101 +120,105 @@ body {
     text-decoration: underline;
 }
 
-/* Стили для расширенного тултипа */
-.athlete-tooltip {
+/* НОВЫЕ СТИЛИ ДЛЯ ТУЛТИПА */
+.tooltip-item {
     position: absolute;
-    top: calc(100% + 10px);
+    bottom: calc(100% + 15px);
     left: 50%;
     transform: translateX(-50%);
     background: white;
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    width: 220px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    width: 280px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 100;
-    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
 }
 
-.athlete-item:hover .athlete-tooltip {
+.athlete-avatar:hover .tooltip-item {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
 }
 
-.tooltip-header {
+.tooltip-section {
+    display: flex;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
 }
 
-.tooltip-name {
-    font-size: 1.1em;
-    font-weight: 700;
-    color: #1e3799;
+.tooltip-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
-.tooltip-region {
+.tooltip-main-info {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tooltip-text {
+    flex: 1;
+    padding-right: 15px;
+}
+
+.tooltip-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.tooltip-rank-info {
+    width: 30%;
+    justify-content: space-between;
+}
+
+.tooltip-rank,
+.tooltip-best-result {
     font-size: 0.9em;
-    color: #666;
-    margin-top: 3px;
 }
 
 .tooltip-rank {
     color: #4a69bd;
     font-weight: 600;
-    margin: 8px 0;
 }
 
 .tooltip-best-result {
-    background: #f8f9fa;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 10px 0;
-}
-
-.tooltip-best-year {
-    font-size: 0.85em;
-    color: #4a69bd;
-    font-weight: 500;
-}
-
-.tooltip-best-event {
-    font-size: 0.9em;
-    color: #333;
-    margin-top: 4px;
+    color: #666;
 }
 
 .tooltip-social {
+    width: 30%;
+}
+
+.tooltip-social-link {
     display: block;
     color: #4a69bd;
     text-decoration: none;
     font-size: 0.85em;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-    transition: opacity 0.2s;
+    padding: 6px 0;
+    transition: opacity 0.3s;
 }
 
-.tooltip-social:hover {
+.tooltip-social-link:hover {
     opacity: 0.8;
 }
 
-.tooltip-social::before {
-    content: "🌐";
-    margin-right: 8px;
-}
-
-.athlete-tooltip::after {
+.tooltip-item::after {
     content: '';
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     border-width: 8px;
     border-style: solid;
-    border-color: transparent transparent white transparent;
+    border-color: white transparent transparent transparent;
 }
 
 @media (max-width: 768px) {
@@ -239,19 +238,33 @@ body {
     }
 
     .athlete-item {
-        padding: 10px 0;
+        padding: 8px 0;
+        font-size: 0.9em;
     }
 
     .athlete-avatar {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
     }
 
-    .athlete-tooltip {
-        width: 200px;
-        font-size: 0.9em;
-        left: 0;
-        transform: none;
-        top: 100%;
+    .tooltip-item {
+        width: 240px;
+        padding: 12px;
+        bottom: calc(100% + 10px);
+    }
+
+    .tooltip-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .tooltip-main-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tooltip-text {
+        padding-right: 0;
+        margin-bottom: 8px;
     }
 }
