@@ -107,7 +107,7 @@ body {
     color: #4a69bd;
 }
 
-.full-ranking-link {
+.full-rankings-link {
     display: block;
     margin-top: 15px;
     color: #4a69bd;
@@ -116,7 +116,7 @@ body {
     font-weight: 600;
 }
 
-.full-ranking-link:hover {
+.full-rankings-link:hover {
     text-decoration: underline;
 }
 

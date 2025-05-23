@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadCategoryData(category) {
         try {
-            const response = await fetch(`../../data/ranking/${category}.csv`);
+            const response = await fetch(`../../data/rankings/${category}.csv`);
             if(!response.ok) throw new Error('CSV not found');
 
             const csvData = await response.text();
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderTable(data) {
-        const tbody = document.querySelector('#rankingTable tbody');
+        const tbody = document.querySelector('#rankingsTable tbody');
         tbody.innerHTML = '';
 
         data.forEach((athlete, index) => {

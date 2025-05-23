@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Longboard Ranking</title>
+    <title>Longboard rankings</title>
     <style>
         * {
             box-sizing: border-box;
@@ -115,7 +115,7 @@
 </head>
 <body>
     <div class="table-container">
-        <table id="rankingTable">
+        <table id="rankingsTable">
             <thead>
                 <tr>
                     <th class="compact-column">Rank</th>
@@ -143,7 +143,7 @@
 
             async function loadData() {
                 try {
-                    const response = await fetch('../ranking/longboard_men.csv');
+                    const response = await fetch('../rankings/longboard_men.csv');
                     const csvData = await response.text();
                     currentData = parseCSV(csvData);
                     renderTable(currentData);
@@ -177,7 +177,7 @@
             }
 
             function renderTable(data) {
-                const tbody = document.querySelector('#rankingTable tbody');
+                const tbody = document.querySelector('#rankingsTable tbody');
                 tbody.innerHTML = '';
 
                 data.forEach(item => {

@@ -1,8 +1,8 @@
 const CSV_PATHS = {
-    'shortboard_men': './data/ranking/shortboard_men.csv',
-    'longboard_men': './data/ranking/longboard_men.csv',
-    'shortboard_women': './data/ranking/shortboard_women.csv',
-    'longboard_women': './data/ranking/longboard_women.csv'
+    'shortboard_men': './data/rankings/shortboard_men.csv',
+    'longboard_men': './data/rankings/longboard_men.csv',
+    'shortboard_women': './data/rankings/shortboard_women.csv',
+    'longboard_women': './data/rankings/longboard_women.csv'
 };
 
 async function loadCSV(category) {
@@ -81,7 +81,7 @@ function createGroupHTML(data, title, link) {
     return `
         <h2 class="group-title">${title}</h2>
         ${data.map(athlete => createAthleteItem(athlete)).join('')}
-        <a href="${link}" class="full-ranking-link">Полный рейтинг →</a>
+        <a href="${link}" class="full-rankings-link">Полный рейтинг →</a>
     `;
 }
 
@@ -90,22 +90,22 @@ async function init() {
         {
             id: 'shortboard-men',
             title: 'Короткая доска, Мужчины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_men'
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/rankings/index.html?category=shortboard_men'
         },
         {
             id: 'longboard-men',
             title: 'Длинная доска, Мужчины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_men'
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/rankings/index.html?category=longboard_men'
         },
         {
             id: 'shortboard-women',
             title: 'Короткая доска, Женщины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=shortboard_women'
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/rankings/index.html?category=shortboard_women'
         },
         {
             id: 'longboard-women',
             title: 'Длинная доска, Женщины',
-            link: 'https://odinsy.github.io/topheats-rating/src/pages/ranking/index.html?category=longboard_women'
+            link: 'https://odinsy.github.io/topheats-rating/src/pages/rankings/index.html?category=longboard_women'
         }
     ];
 
