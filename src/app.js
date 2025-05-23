@@ -32,6 +32,8 @@ async function loadCSV(category) {
 }
 
 function createAthleteItem(athlete) {
+    const bestResult = athlete.BestPlace ? `${athlete.BestPlace} место в ${athlete.BestYear}` : 'Нет данных';
+
     return `
         <div class="athlete-item">
             <div class="athlete-rank">${athlete.Rank}</div>
@@ -48,15 +50,20 @@ function createAthleteItem(athlete) {
                     <div class="tooltip-region">${athlete.Region}</div>
                 </div>
                 <div class="tooltip-rank">#${athlete.Rank} в рейтинге</div>
-                <a href="https://topheats.ru" class="tooltip-social">Страница в соцсетях</a>
-                <div class="tooltip-event">
-                    <div class="tooltip-event-year">Лучший результат (2024)</div>
-                    <div class="tooltip-event-place">1 место</div>
+                <div class="tooltip-best-result">
+                    <div class="tooltip-best-year">Лучший результат:</div>
+                    <div class="tooltip-best-event">${bestResult}</div>
                 </div>
+                <a href="https://topheats.ru/${athlete.Name.replace(/ /g, '-')}"
+                   class="tooltip-social"
+                   target="_blank">
+                    Страница спортсмена
+                </a>
             </div>
         </div>
     `;
 }
+
 function createGroupHTML(data, title, link) {
     return `
         <h2 class="group-title">${title}</h2>
