@@ -48,7 +48,7 @@ def parse_files() -> Dict[str, Dict]:
         'category': '',
         'birthday': 0,
         'regions': defaultdict(str),
-        'ranks': defaultdict(str),
+        'sport_ranks': defaultdict(str),
         'best_place': None,
         'last_year': 0
     })
@@ -66,12 +66,11 @@ def parse_files() -> Dict[str, Dict]:
                     place = row['Место'].strip().upper()
                     name = ' '.join(row['ФИО'].split()[:2])
                     region = row['Регион'].strip()
-                    rank = row['Разряд'].strip()
+                    sport_rank = row['Разряд'].strip()
 
                     athletes[name]['years'][year] = place
                     athletes[name]['regions'][year] = region
-                    athletes[name]['ranks'][year] = rank
-                    # Измененная строка для обработки даты
+                    athletes[name]['sport_ranks'][year] = sport_rank
                     athletes[name]['birthday'] = extract_year(row['Год рождения'])
                     athletes[name]['category'] = row['Категория']
                     athletes[name]['last_year'] = max(athletes[name]['last_year'], year)
@@ -84,7 +83,7 @@ def parse_files() -> Dict[str, Dict]:
 
     for athlete in athletes.values():
         athlete['region'] = max(athlete['regions'].items())[1] if athlete['regions'] else ''
-        athlete['rank'] = max(athlete['ranks'].items())[1] if athlete['ranks'] else ''
+        athlete['sport_rank'] = max(athlete['sport_ranks'].items())[1] if athlete['sport_ranks'] else ''
 
     return athletes
 
@@ -137,8 +136,8 @@ def process_athletes(data: Dict) -> List[Dict]:
             'name': name,
             'birthday': info['birthday'],
             'region': info['region'],
-            'rank': info['rank'],
             'category': info['category'],
+            'sport_rank': info['sport_rank'],
             'best_place': info['best_place'] or 9999,
             'last_year': info['last_year'],
             'years': defaultdict(int),
@@ -151,7 +150,7 @@ def process_athletes(data: Dict) -> List[Dict]:
             entry['years'][year] = year_points
             total += year_points
 
-        total = apply_rank_bonus(total, entry['rank'])
+        total = apply_rank_bonus(total, entry['sport_rank'])
         entry['total'] = total
         results.append(entry)
 
