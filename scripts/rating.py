@@ -1,4 +1,5 @@
 import csv
+import json
 import yaml
 import glob
 import re
@@ -6,6 +7,22 @@ import pandas as pd
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List
+
+def load_config(config_path: str = 'config.yaml') -> Dict:
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+
+    for system in config['scoring'].values():
+        new_keys = {}
+        for k in list(system.keys()):
+            if '-' in str(k):
+                min_max = tuple(map(int, k.split('-')))
+                new_keys[min_max] = system.pop(k)
+        system.update(new_keys)
+
+    return config
+
+CONFIG = load_config()
 
 def extract_year(date_str: str) -> int:
     """Извлекает год из строки с датой в различных форматах."""
@@ -24,22 +41,6 @@ def extract_year(date_str: str) -> int:
         return 0
     except Exception:
         return 0
-
-def load_config(config_path: str = 'config.yaml') -> Dict:
-    with open(config_path, 'r', encoding='utf-8') as f:
-        config = yaml.safe_load(f)
-
-    for system in config['scoring'].values():
-        new_keys = {}
-        for k in list(system.keys()):
-            if '-' in str(k):
-                min_max = tuple(map(int, k.split('-')))
-                new_keys[min_max] = system.pop(k)
-        system.update(new_keys)
-
-    return config
-
-CONFIG = load_config()
 
 def parse_files() -> Dict[str, Dict]:
     athletes = defaultdict(lambda: {
@@ -180,6 +181,7 @@ def generate_output(results: List[Dict]):
 
     output_path = Path(CONFIG['output']['filename'])
     output_path.parent.mkdir(exist_ok=True)
+    json_path = Path(CONFIG['output']['filename']).with_suffix('.json')
 
     with open(output_path, 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
@@ -197,6 +199,12 @@ def generate_output(results: List[Dict]):
                 athlete['total']
             ]
             writer.writerow(row)
+
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump({
+            'headers': headers,
+            'athletes': results
+        }, f, ensure_ascii=False, indent=2)
 
     print(','.join(map(str, headers)))
     for i, athlete in enumerate(results[:CONFIG['top_n']], 1):

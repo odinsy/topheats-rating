@@ -67,59 +67,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadCategoryData(category) {
         try {
-            const response = await fetch(`../../data/rankings/${category}.csv`);
-            if(!response.ok) throw new Error('CSV not found');
+            const response = await fetch(`../../data/rankings/${category}.json`);
+            if(!response.ok) throw new Error('JSON not found');
 
-            const csvData = await response.text();
-            currentData = parseCSV(csvData);
+            const { headers, athletes } = await response.json();
+            currentData = athletes;
             renderTable(currentData);
         } catch (error) {
             console.error('Error:', error);
-            alert('Данные временно недоступны. Попробуйте позже.');
+            alert('Данные временно недоступны');
         }
-    }
-
-    function parseCSV(csv) {
-        return csv.split('\n')
-            .slice(1)
-            .filter(row => row.trim().length > 0)
-            .map(row => {
-                const columns = row.split(',').map(c => c.trim());
-                const athlete = {};
-
-                // Парсинг статических полей
-                for(const [field, settings] of Object.entries(config.fieldMap.staticFields)) {
-                    athlete[field] = parseValue(
-                        settings.index !== null ? columns[settings.index] : settings.default,
-                        settings.type
-                    );
-                }
-
-                // Парсинг динамических годов
-                config.fieldMap.dynamicFields.years.list.forEach((year, idx) => {
-                    const colIndex = config.fieldMap.dynamicFields.years.startIndex + idx;
-                    athlete[year] = parseValue(
-                        columns[colIndex] || '0',
-                        config.fieldMap.dynamicFields.years.type
-                    );
-                });
-
-                // Total Points
-                athlete.TotalPoints = parseValue(
-                    columns[columns.length - 1] || '0',
-                    config.fieldMap.dynamicFields.TotalPoints.type
-                );
-
-                return athlete;
-            });
     }
 
     function parseValue(value, type) {
-        if(type === 'number') {
-            const num = parseFloat(value.replace(/\s/g, ''));
-            return isNaN(num) ? 0 : num;
-        }
-        return value.trim();
+        if(type === 'number') return Number(value) || 0;
+        return value;
     }
 
     function renderTable(data) {
