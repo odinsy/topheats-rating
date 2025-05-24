@@ -1,4 +1,5 @@
 import csv
+import json
 import yaml
 import glob
 import re
@@ -6,6 +7,22 @@ import pandas as pd
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List
+
+def load_config(config_path: str = 'config.yaml') -> Dict:
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+
+    for system in config['scoring'].values():
+        new_keys = {}
+        for k in list(system.keys()):
+            if '-' in str(k):
+                min_max = tuple(map(int, k.split('-')))
+                new_keys[min_max] = system.pop(k)
+        system.update(new_keys)
+
+    return config
+
+CONFIG = load_config()
 
 def extract_year(date_str: str) -> int:
     """Извлекает год из строки с датой в различных форматах."""
@@ -25,29 +42,13 @@ def extract_year(date_str: str) -> int:
     except Exception:
         return 0
 
-def load_config(config_path: str = 'config.yaml') -> Dict:
-    with open(config_path, 'r', encoding='utf-8') as f:
-        config = yaml.safe_load(f)
-
-    for system in config['scoring'].values():
-        new_keys = {}
-        for k in list(system.keys()):
-            if '-' in str(k):
-                min_max = tuple(map(int, k.split('-')))
-                new_keys[min_max] = system.pop(k)
-        system.update(new_keys)
-
-    return config
-
-CONFIG = load_config()
-
 def parse_files() -> Dict[str, Dict]:
     athletes = defaultdict(lambda: {
         'years': defaultdict(str),
         'category': '',
         'birthday': 0,
         'regions': defaultdict(str),
-        'ranks': defaultdict(str),
+        'sport_ranks': defaultdict(str),
         'best_place': None,
         'last_year': 0
     })
@@ -65,12 +66,11 @@ def parse_files() -> Dict[str, Dict]:
                     place = row['Место'].strip().upper()
                     name = ' '.join(row['ФИО'].split()[:2])
                     region = row['Регион'].strip()
-                    rank = row['Разряд'].strip()
+                    sport_rank = row['Разряд'].strip()
 
                     athletes[name]['years'][year] = place
                     athletes[name]['regions'][year] = region
-                    athletes[name]['ranks'][year] = rank
-                    # Измененная строка для обработки даты
+                    athletes[name]['sport_ranks'][year] = sport_rank
                     athletes[name]['birthday'] = extract_year(row['Год рождения'])
                     athletes[name]['category'] = row['Категория']
                     athletes[name]['last_year'] = max(athletes[name]['last_year'], year)
@@ -83,7 +83,7 @@ def parse_files() -> Dict[str, Dict]:
 
     for athlete in athletes.values():
         athlete['region'] = max(athlete['regions'].items())[1] if athlete['regions'] else ''
-        athlete['rank'] = max(athlete['ranks'].items())[1] if athlete['ranks'] else ''
+        athlete['sport_rank'] = max(athlete['sport_ranks'].items())[1] if athlete['sport_ranks'] else ''
 
     return athletes
 
@@ -136,8 +136,8 @@ def process_athletes(data: Dict) -> List[Dict]:
             'name': name,
             'birthday': info['birthday'],
             'region': info['region'],
-            'rank': info['rank'],
             'category': info['category'],
+            'sport_rank': info['sport_rank'],
             'best_place': info['best_place'] or 9999,
             'last_year': info['last_year'],
             'years': defaultdict(int),
@@ -150,7 +150,7 @@ def process_athletes(data: Dict) -> List[Dict]:
             entry['years'][year] = year_points
             total += year_points
 
-        total = apply_rank_bonus(total, entry['rank'])
+        total = apply_rank_bonus(total, entry['sport_rank'])
         entry['total'] = total
         results.append(entry)
 
@@ -180,6 +180,7 @@ def generate_output(results: List[Dict]):
 
     output_path = Path(CONFIG['output']['filename'])
     output_path.parent.mkdir(exist_ok=True)
+    json_path = Path(CONFIG['output']['filename']).with_suffix('.json')
 
     with open(output_path, 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
@@ -197,6 +198,12 @@ def generate_output(results: List[Dict]):
                 athlete['total']
             ]
             writer.writerow(row)
+
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump({
+            'headers': headers,
+            'athletes': results
+        }, f, ensure_ascii=False, indent=2)
 
     print(','.join(map(str, headers)))
     for i, athlete in enumerate(results[:CONFIG['top_n']], 1):
