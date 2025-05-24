@@ -1,0 +1,478 @@
+{
+  "headers": [
+    "Rank",
+    "Name",
+    "Birthday",
+    "Region",
+    "Category",
+    "Best Place",
+    "2017",
+    "2018",
+    "2019",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "Total Points"
+  ],
+  "athletes": [
+    {
+      "name": "Чудненко Анна",
+      "birthday": 1987,
+      "region": "Санкт-Петербург",
+      "rank": "МС",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2018": 478,
+        "2019": 590,
+        "2021": 656,
+        "2024": 1000,
+        "2022": 810,
+        "2023": 900,
+        "2017": 383
+      },
+      "total": 4817
+    },
+    {
+      "name": "Тиманина Анжелика",
+      "birthday": 1989,
+      "region": "Москва",
+      "rank": "1",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2018": 266,
+        "2021": 583,
+        "2024": 900,
+        "2022": 567,
+        "2023": 720,
+        "2017": 335
+      },
+      "total": 3371
+    },
+    {
+      "name": "Тимаревская Анастасия",
+      "birthday": 1986,
+      "region": "Московская область",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2024,
+      "years": {
+        "2019": 413,
+        "2021": 365,
+        "2024": 700,
+        "2022": 648,
+        "2023": 630
+      },
+      "total": 2756
+    },
+    {
+      "name": "Галимова Чулпан",
+      "birthday": 1987,
+      "region": "Республика Татарстан",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2021": 510,
+        "2024": 500,
+        "2022": 729,
+        "2023": 450
+      },
+      "total": 2189
+    },
+    {
+      "name": "Тихонова Анна",
+      "birthday": 1997,
+      "region": "Калининградская область",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2024": 800,
+        "2022": 405,
+        "2023": 810
+      },
+      "total": 2015
+    },
+    {
+      "name": "Тихолаз Ульяна",
+      "birthday": 1993,
+      "region": "Санкт-Петербург",
+      "rank": "1",
+      "category": "женщины",
+      "best_place": 5,
+      "last_year": 2024,
+      "years": {
+        "2021": 365,
+        "2024": 500,
+        "2022": 405,
+        "2023": 450
+      },
+      "total": 1720
+    },
+    {
+      "name": "Рудик Майи",
+      "birthday": 1984,
+      "region": "Москва",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2024,
+      "years": {
+        "2021": 365,
+        "2024": 300,
+        "2023": 450
+      },
+      "total": 1115
+    },
+    {
+      "name": "Кособукина Ирина",
+      "birthday": 1987,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2018,
+      "years": {
+        "2018": 372,
+        "2017": 478
+      },
+      "total": 850
+    },
+    {
+      "name": "Матвеева Анна",
+      "birthday": 1985,
+      "region": "Калининградская область",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 5,
+      "last_year": 2024,
+      "years": {
+        "2024": 300,
+        "2023": 450
+      },
+      "total": 750
+    },
+    {
+      "name": "Большова Елена",
+      "birthday": 1983,
+      "region": "Москва",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2021,
+      "years": {
+        "2021": 729
+      },
+      "total": 729
+    },
+    {
+      "name": "Ким Ольга",
+      "birthday": 1988,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2018,
+      "years": {
+        "2018": 266,
+        "2017": 430
+      },
+      "total": 696
+    },
+    {
+      "name": "Мализия Полина",
+      "birthday": 2000,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2018,
+      "years": {
+        "2018": 531
+      },
+      "total": 531
+    },
+    {
+      "name": "Больсова Елена",
+      "birthday": 1983,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2019,
+      "years": {
+        "2019": 531
+      },
+      "total": 531
+    },
+    {
+      "name": "Рудик Майя",
+      "birthday": 1984,
+      "region": "Московская область",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 6,
+      "last_year": 2018,
+      "years": {
+        "2018": 266,
+        "2017": 239
+      },
+      "total": 505
+    },
+    {
+      "name": "Пташко Ксения",
+      "birthday": 1986,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2024,
+      "years": {
+        "2024": 500
+      },
+      "total": 500
+    },
+    {
+      "name": "Кутьина Анна",
+      "birthday": 1995,
+      "region": "Севастополь",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 8,
+      "last_year": 2024,
+      "years": {
+        "2024": 500
+      },
+      "total": 500
+    },
+    {
+      "name": "Шемна Ольга",
+      "birthday": 1987,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2019,
+      "years": {
+        "2019": 472
+      },
+      "total": 472
+    },
+    {
+      "name": "Боярова Полина",
+      "birthday": 1985,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2018,
+      "years": {
+        "2018": 425
+      },
+      "total": 425
+    },
+    {
+      "name": "Чимытова Кристина",
+      "birthday": 1984,
+      "region": "Камчатский край",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 8,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Мысовская Дина",
+      "birthday": 1984,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 4,
+      "last_year": 2017,
+      "years": {
+        "2017": 335
+      },
+      "total": 335
+    },
+    {
+      "name": "Горанько Эвелина",
+      "birthday": 2007,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 9,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Кузьмина Маргарита",
+      "birthday": 1992,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "женщины",
+      "best_place": 10,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Зубатова Ксения",
+      "birthday": 1998,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "женщины",
+      "best_place": 11,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Романовская Ева",
+      "birthday": 2007,
+      "region": "Калининградская область",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 13,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Мавричева Дарья",
+      "birthday": 2007,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 14,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Пыжова Алена",
+      "birthday": 1988,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 15,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Максимова Елизавета",
+      "birthday": 1988,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 5,
+      "last_year": 2019,
+      "years": {
+        "2019": 295
+      },
+      "total": 295
+    },
+    {
+      "name": "Юсова Анна",
+      "birthday": 1985,
+      "region": "Калининградская область",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 6,
+      "last_year": 2018,
+      "years": {
+        "2018": 266
+      },
+      "total": 266
+    },
+    {
+      "name": "Нарышкина Вероника",
+      "birthday": 1988,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2017,
+      "years": {
+        "2017": 239
+      },
+      "total": 239
+    },
+    {
+      "name": "Шеина Ольга",
+      "birthday": 1987,
+      "region": "Москва",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 9,
+      "last_year": 2021,
+      "years": {
+        "2021": 219
+      },
+      "total": 219
+    },
+    {
+      "name": "Шабалина Людмила",
+      "birthday": 1991,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "женщины",
+      "best_place": 17,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Любешкина Дарья",
+      "birthday": 1986,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "женщины",
+      "best_place": 18,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Бланк Мария",
+      "birthday": 1992,
+      "region": "Калининградская область",
+      "rank": "2",
+      "category": "женщины",
+      "best_place": 9999,
+      "last_year": 2024,
+      "years": {
+        "2024": 0
+      },
+      "total": 0
+    }
+  ]
+}

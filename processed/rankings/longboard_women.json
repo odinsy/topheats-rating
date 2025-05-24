@@ -1,0 +1,685 @@
+{
+  "headers": [
+    "Rank",
+    "Name",
+    "Birthday",
+    "Region",
+    "Category",
+    "Best Place",
+    "2017",
+    "2018",
+    "2019",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "Total Points"
+  ],
+  "athletes": [
+    {
+      "name": "Тихонова Анна",
+      "birthday": 1997,
+      "region": "Калининградская область",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2019": 295,
+        "2023": 900,
+        "2022": 729,
+        "2017": 335,
+        "2024": 1000
+      },
+      "total": 3259
+    },
+    {
+      "name": "Матвеева Анна",
+      "birthday": 1985,
+      "region": "Калининградская область",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2018": 531,
+        "2023": 810,
+        "2022": 567,
+        "2017": 383,
+        "2024": 700
+      },
+      "total": 2991
+    },
+    {
+      "name": "Позняк Анна",
+      "birthday": 1985,
+      "region": "Москва",
+      "rank": "1 разряд",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2021": 729,
+        "2019": 295,
+        "2023": 720,
+        "2022": 405,
+        "2024": 500
+      },
+      "total": 2649
+    },
+    {
+      "name": "Рудик Майи",
+      "birthday": 1984,
+      "region": "Москва",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2021": 656,
+        "2019": 472,
+        "2023": 270,
+        "2017": 430,
+        "2024": 300
+      },
+      "total": 2128
+    },
+    {
+      "name": "Второва Елена",
+      "birthday": 1989,
+      "region": "Москва",
+      "rank": "КМС",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2022,
+      "years": {
+        "2019": 590,
+        "2022": 810
+      },
+      "total": 1400
+    },
+    {
+      "name": "Вяткина Анна",
+      "birthday": 1997,
+      "region": "Сахалинская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2024,
+      "years": {
+        "2023": 450,
+        "2024": 800
+      },
+      "total": 1250
+    },
+    {
+      "name": "Степанец Мария",
+      "birthday": 1989,
+      "region": "Санкт-Петербург",
+      "rank": "МС",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2024,
+      "years": {
+        "2021": 583,
+        "2024": 500
+      },
+      "total": 1083
+    },
+    {
+      "name": "Галимова Чулпан",
+      "birthday": 1987,
+      "region": "Татарстан",
+      "rank": "1 разряд",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2022,
+      "years": {
+        "2021": 365,
+        "2022": 648
+      },
+      "total": 1013
+    },
+    {
+      "name": "Чимытова Кристина",
+      "birthday": 1984,
+      "region": "Камчатский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 4,
+      "last_year": 2022,
+      "years": {
+        "2021": 510,
+        "2022": 405
+      },
+      "total": 915
+    },
+    {
+      "name": "Бланк Мария",
+      "birthday": 1992,
+      "region": "Калининградская область",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2024": 900
+      },
+      "total": 900
+    },
+    {
+      "name": "Куллен Оксана",
+      "birthday": 1980,
+      "region": "Сахалинская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2022,
+      "years": {
+        "2021": 365,
+        "2022": 405
+      },
+      "total": 770
+    },
+    {
+      "name": "Силютина Алина",
+      "birthday": 1996,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2023,
+      "years": {
+        "2023": 450,
+        "2022": 243
+      },
+      "total": 693
+    },
+    {
+      "name": "Тихолаз Ульяна",
+      "birthday": 1993,
+      "region": "Санкт-Петербург",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 5,
+      "last_year": 2023,
+      "years": {
+        "2023": 270,
+        "2022": 405
+      },
+      "total": 675
+    },
+    {
+      "name": "Кузнецова Галина",
+      "birthday": 1984,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 4,
+      "last_year": 2023,
+      "years": {
+        "2023": 630
+      },
+      "total": 630
+    },
+    {
+      "name": "Пыжова Алена",
+      "birthday": 1988,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 10,
+      "last_year": 2024,
+      "years": {
+        "2023": 270,
+        "2024": 300
+      },
+      "total": 570
+    },
+    {
+      "name": "Шевчук Елена",
+      "birthday": 1983,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2019,
+      "years": {
+        "2019": 531
+      },
+      "total": 531
+    },
+    {
+      "name": "Силивончик Анастасия",
+      "birthday": 1994,
+      "region": "Приморский край",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 7,
+      "last_year": 2024,
+      "years": {
+        "2024": 500
+      },
+      "total": 500
+    },
+    {
+      "name": "Смирнова Вероника",
+      "birthday": 1995,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 8,
+      "last_year": 2024,
+      "years": {
+        "2024": 500
+      },
+      "total": 500
+    },
+    {
+      "name": "Кособукина Ирина",
+      "birthday": 1987,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 1,
+      "last_year": 2017,
+      "years": {
+        "2017": 478
+      },
+      "total": 478
+    },
+    {
+      "name": "Тиманина Анжелика",
+      "birthday": 1989,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 2,
+      "last_year": 2018,
+      "years": {
+        "2018": 478
+      },
+      "total": 478
+    },
+    {
+      "name": "Дыба Екатерина",
+      "birthday": 1990,
+      "region": "Камчатский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 9,
+      "last_year": 2022,
+      "years": {
+        "2021": 219,
+        "2022": 243
+      },
+      "total": 462
+    },
+    {
+      "name": "Климова Наталья",
+      "birthday": 2000,
+      "region": "Калининградская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 6,
+      "last_year": 2023,
+      "years": {
+        "2023": 450
+      },
+      "total": 450
+    },
+    {
+      "name": "Архангельская Екатерина",
+      "birthday": 1998,
+      "region": "Москва",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 8,
+      "last_year": 2023,
+      "years": {
+        "2023": 450
+      },
+      "total": 450
+    },
+    {
+      "name": "Хабкина?",
+      "birthday": 1985,
+      "region": "Московская область",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 3,
+      "last_year": 2018,
+      "years": {
+        "2018": 425
+      },
+      "total": 425
+    },
+    {
+      "name": "Вострикова Екатерина",
+      "birthday": 1991,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 4,
+      "last_year": 2019,
+      "years": {
+        "2019": 413
+      },
+      "total": 413
+    },
+    {
+      "name": "Дудова Татьяна",
+      "birthday": 1988,
+      "region": "Московская область",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 4,
+      "last_year": 2018,
+      "years": {
+        "2018": 372
+      },
+      "total": 372
+    },
+    {
+      "name": "Климова Мария",
+      "birthday": 1989,
+      "region": "Мурманская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 11,
+      "last_year": 2024,
+      "years": {
+        "2023": 270,
+        "2024": 100
+      },
+      "total": 370
+    },
+    {
+      "name": "Кузьмина Полина",
+      "birthday": 1993,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 14,
+      "last_year": 2024,
+      "years": {
+        "2023": 270,
+        "2024": 100
+      },
+      "total": 370
+    },
+    {
+      "name": "Зикратова Ела",
+      "birthday": 1988,
+      "region": "Камчатский край",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 6,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Туринцева Илона",
+      "birthday": 1995,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 8,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Морозова Александра",
+      "birthday": 1993,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 9,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Кабаргина Кира",
+      "birthday": 1987,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 11,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Горанько Эвелина",
+      "birthday": 2007,
+      "region": "Камчатский край",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 12,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Данькова Елизавета",
+      "birthday": 2000,
+      "region": "Калининградская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 14,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Шабалина Людмила",
+      "birthday": 1991,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 15,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Александровская Анна",
+      "birthday": 1994,
+      "region": "Мурманская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 16,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Бороденкова Екатерина",
+      "birthday": 1989,
+      "region": "Калининградская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 13,
+      "last_year": 2023,
+      "years": {
+        "2023": 270
+      },
+      "total": 270
+    },
+    {
+      "name": "Ходырева Ольга",
+      "birthday": 1986,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 9,
+      "last_year": 2022,
+      "years": {
+        "2022": 243
+      },
+      "total": 243
+    },
+    {
+      "name": "Зикратова Ёла",
+      "birthday": 1984,
+      "region": "Камчатский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 12,
+      "last_year": 2022,
+      "years": {
+        "2022": 243
+      },
+      "total": 243
+    },
+    {
+      "name": "Кутьина Анна",
+      "birthday": 1995,
+      "region": "Москва",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 10,
+      "last_year": 2021,
+      "years": {
+        "2021": 219
+      },
+      "total": 219
+    },
+    {
+      "name": "Дударева Наталья",
+      "birthday": 1990,
+      "region": "Алтайский край",
+      "rank": "",
+      "category": "женщины",
+      "best_place": 11,
+      "last_year": 2021,
+      "years": {
+        "2021": 219
+      },
+      "total": 219
+    },
+    {
+      "name": "Ковалева Анастасия",
+      "birthday": 1983,
+      "region": "Приморский край",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 18,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Ясинская Анна",
+      "birthday": 1990,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 19,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Герасимова Екатерина",
+      "birthday": 1986,
+      "region": "Калининградская область",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 20,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Горба Мария",
+      "birthday": 1990,
+      "region": "Санкт-Петербург",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 21,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Филинова Галина",
+      "birthday": 1984,
+      "region": "Приморский край",
+      "rank": "2 разряд",
+      "category": "женщины",
+      "best_place": 22,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Якубовская Нина",
+      "birthday": 1989,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 23,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Коровина Виктория",
+      "birthday": 1987,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 24,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Петрова Анна",
+      "birthday": 1982,
+      "region": "Приморский край",
+      "rank": "3 разряд",
+      "category": "женщины",
+      "best_place": 26,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    }
+  ]
+}

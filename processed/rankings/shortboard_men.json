@@ -1,0 +1,1364 @@
+{
+  "headers": [
+    "Rank",
+    "Name",
+    "Birthday",
+    "Region",
+    "Category",
+    "Best Place",
+    "2017",
+    "2018",
+    "2019",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "Total Points"
+  ],
+  "athletes": [
+    {
+      "name": "Авдеев Никита",
+      "birthday": 2000,
+      "region": "Камчатский край",
+      "rank": "МС",
+      "category": "мужчины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2018": 531,
+        "2022": 810,
+        "2021": 656,
+        "2024": 1000,
+        "2019": 590
+      },
+      "total": 3587
+    },
+    {
+      "name": "Исаков Евгений",
+      "birthday": 1983,
+      "region": "Калининградская область",
+      "rank": "МС",
+      "category": "мужчины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2018": 266,
+        "2022": 648,
+        "2021": 219,
+        "2024": 300,
+        "2017": 430,
+        "2023": 810
+      },
+      "total": 2673
+    },
+    {
+      "name": "Волков Егор",
+      "birthday": 2000,
+      "region": "Санкт-Петербург",
+      "rank": "КМС",
+      "category": "мужчины",
+      "best_place": 1,
+      "last_year": 2022,
+      "years": {
+        "2018": 372,
+        "2022": 729,
+        "2021": 729,
+        "2019": 531
+      },
+      "total": 2361
+    },
+    {
+      "name": "Зылев Даниил",
+      "birthday": 1982,
+      "region": "Москва",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 3,
+      "last_year": 2024,
+      "years": {
+        "2022": 405,
+        "2021": 219,
+        "2024": 500,
+        "2019": 472,
+        "2023": 720
+      },
+      "total": 2316
+    },
+    {
+      "name": "Расшиваев Сергей",
+      "birthday": 1984,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2018": 478,
+        "2022": 405,
+        "2021": 219,
+        "2024": 300,
+        "2019": 413,
+        "2017": 478
+      },
+      "total": 2293
+    },
+    {
+      "name": "Павликов Константин",
+      "birthday": 1984,
+      "region": "Санкт-Петербург",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 4,
+      "last_year": 2024,
+      "years": {
+        "2022": 243,
+        "2021": 219,
+        "2024": 500,
+        "2019": 177,
+        "2017": 239,
+        "2023": 630
+      },
+      "total": 2008
+    },
+    {
+      "name": "Какурин Эльдар",
+      "birthday": 1983,
+      "region": "Москва",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 1,
+      "last_year": 2024,
+      "years": {
+        "2022": 243,
+        "2024": 500,
+        "2017": 239,
+        "2023": 900
+      },
+      "total": 1882
+    },
+    {
+      "name": "Старков Андрей",
+      "birthday": 1985,
+      "region": "Москва",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 6,
+      "last_year": 2024,
+      "years": {
+        "2022": 405,
+        "2021": 365,
+        "2024": 0,
+        "2023": 450
+      },
+      "total": 1220
+    },
+    {
+      "name": "Николаев Алексей",
+      "birthday": 1988,
+      "region": "Московская область",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 3,
+      "last_year": 2022,
+      "years": {
+        "2022": 567,
+        "2021": 583
+      },
+      "total": 1150
+    },
+    {
+      "name": "Мысовский Сергей",
+      "birthday": 1986,
+      "region": "Санкт-Петербург",
+      "rank": "КМС",
+      "category": "мужчины",
+      "best_place": 3,
+      "last_year": 2019,
+      "years": {
+        "2018": 425,
+        "2019": 295,
+        "2017": 335
+      },
+      "total": 1055
+    },
+    {
+      "name": "Вечканов Игорь",
+      "birthday": 1986,
+      "region": "Удмуртская Республика",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 5,
+      "last_year": 2021,
+      "years": {
+        "2018": 159,
+        "2021": 219,
+        "2019": 295,
+        "2017": 239
+      },
+      "total": 912
+    },
+    {
+      "name": "Суворов Алексей",
+      "birthday": 1986,
+      "region": "Приморский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 6,
+      "last_year": 2024,
+      "years": {
+        "2022": 81,
+        "2021": 73,
+        "2024": 300,
+        "2023": 450
+      },
+      "total": 904
+    },
+    {
+      "name": "Яковлев Денис",
+      "birthday": 1979,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 2,
+      "last_year": 2024,
+      "years": {
+        "2024": 900
+      },
+      "total": 900
+    },
+    {
+      "name": "Феликиди Георгий",
+      "birthday": 1983,
+      "region": "Московская область",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 3,
+      "last_year": 2021,
+      "years": {
+        "2021": 510,
+        "2017": 383
+      },
+      "total": 893
+    },
+    {
+      "name": "Багдасарян Максим",
+      "birthday": 2008,
+      "region": "Калининградская область",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 3,
+      "last_year": 2024,
+      "years": {
+        "2024": 800
+      },
+      "total": 800
+    },
+    {
+      "name": "Порицкий Сергей",
+      "birthday": 1990,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 5,
+      "last_year": 2024,
+      "years": {
+        "2024": 300,
+        "2023": 450
+      },
+      "total": 750
+    },
+    {
+      "name": "Морозов Антон",
+      "birthday": 1982,
+      "region": "Камчатский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 10,
+      "last_year": 2024,
+      "years": {
+        "2022": 243,
+        "2021": 219,
+        "2024": 0,
+        "2023": 270
+      },
+      "total": 732
+    },
+    {
+      "name": "Новиков Илья",
+      "birthday": 2009,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 4,
+      "last_year": 2024,
+      "years": {
+        "2024": 700
+      },
+      "total": 700
+    },
+    {
+      "name": "Догадов Денис",
+      "birthday": 1984,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 15,
+      "last_year": 2024,
+      "years": {
+        "2018": 159,
+        "2024": 300,
+        "2019": 177
+      },
+      "total": 636
+    },
+    {
+      "name": "Иванов Никита",
+      "birthday": 1986,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 8,
+      "last_year": 2019,
+      "years": {
+        "2018": 266,
+        "2019": 177,
+        "2017": 143
+      },
+      "total": 586
+    },
+    {
+      "name": "Теук Константин",
+      "birthday": 1985,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 5,
+      "last_year": 2019,
+      "years": {
+        "2018": 159,
+        "2019": 177,
+        "2017": 239
+      },
+      "total": 575
+    },
+    {
+      "name": "Петров Владимир",
+      "birthday": 1990,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 6,
+      "last_year": 2019,
+      "years": {
+        "2018": 266,
+        "2019": 295
+      },
+      "total": 561
+    },
+    {
+      "name": "Чумаков Андрей",
+      "birthday": 1997,
+      "region": "Краснодарский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 5,
+      "last_year": 2024,
+      "years": {
+        "2024": 500
+      },
+      "total": 500
+    },
+    {
+      "name": "Филинов Даниил",
+      "birthday": 1985,
+      "region": "Приморский край",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 7,
+      "last_year": 2022,
+      "years": {
+        "2018": 53,
+        "2022": 405
+      },
+      "total": 458
+    },
+    {
+      "name": "Синица Петр",
+      "birthday": 1995,
+      "region": "Калининградская область",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 7,
+      "last_year": 2024,
+      "years": {
+        "2024": 0,
+        "2023": 450
+      },
+      "total": 450
+    },
+    {
+      "name": "Чемодуров Юрий",
+      "birthday": 1990,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 13,
+      "last_year": 2024,
+      "years": {
+        "2021": 73,
+        "2024": 100,
+        "2023": 270
+      },
+      "total": 443
+    },
+    {
+      "name": "Марченко Иван",
+      "birthday": 1984,
+      "region": "Приморский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 14,
+      "last_year": 2023,
+      "years": {
+        "2022": 81,
+        "2021": 73,
+        "2023": 270
+      },
+      "total": 424
+    },
+    {
+      "name": "Илясов Дмитрий",
+      "birthday": 1989,
+      "region": "Санкт-Петербург",
+      "rank": "КМС",
+      "category": "мужчины",
+      "best_place": 9,
+      "last_year": 2022,
+      "years": {
+        "2022": 243,
+        "2017": 143
+      },
+      "total": 386
+    },
+    {
+      "name": "Матвеев Арсений",
+      "birthday": 1997,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 5,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Давыдов Артем",
+      "birthday": 1980,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 7,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Любошкин Виктор",
+      "birthday": 1990,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 8,
+      "last_year": 2021,
+      "years": {
+        "2021": 365
+      },
+      "total": 365
+    },
+    {
+      "name": "Богданов Даниил",
+      "birthday": 2001,
+      "region": "Калининградская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2023,
+      "years": {
+        "2022": 81,
+        "2023": 270
+      },
+      "total": 351
+    },
+    {
+      "name": "Ременников Константин",
+      "birthday": 1984,
+      "region": "Приморский край",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2023,
+      "years": {
+        "2022": 243,
+        "2023": 90
+      },
+      "total": 333
+    },
+    {
+      "name": "Рогинский Константин",
+      "birthday": 1995,
+      "region": "Республика Крым",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 9,
+      "last_year": 2018,
+      "years": {
+        "2018": 159,
+        "2017": 143
+      },
+      "total": 302
+    },
+    {
+      "name": "Забула Дмитрий",
+      "birthday": 1982,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 11,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Крылов Тимофей",
+      "birthday": 2001,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 14,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Скуридин Дмитрий",
+      "birthday": 1986,
+      "region": "Севастополь",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2024,
+      "years": {
+        "2024": 300
+      },
+      "total": 300
+    },
+    {
+      "name": "Ишмухаметов Булат",
+      "birthday": 1985,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 8,
+      "last_year": 2019,
+      "years": {
+        "2019": 295
+      },
+      "total": 295
+    },
+    {
+      "name": "Каптелов Петр",
+      "birthday": 1990,
+      "region": "Калининградская область",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 9,
+      "last_year": 2024,
+      "years": {
+        "2024": 0,
+        "2023": 270
+      },
+      "total": 270
+    },
+    {
+      "name": "Барсуков Сергей",
+      "birthday": 2005,
+      "region": "Приморский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 10,
+      "last_year": 2023,
+      "years": {
+        "2023": 270
+      },
+      "total": 270
+    },
+    {
+      "name": "Рада Николай",
+      "birthday": 1985,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 12,
+      "last_year": 2023,
+      "years": {
+        "2023": 270
+      },
+      "total": 270
+    },
+    {
+      "name": "Попсуев Сергей",
+      "birthday": 1989,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 15,
+      "last_year": 2023,
+      "years": {
+        "2023": 270
+      },
+      "total": 270
+    },
+    {
+      "name": "Коротких Владимир",
+      "birthday": 2002,
+      "region": "Липецк",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 7,
+      "last_year": 2018,
+      "years": {
+        "2018": 266
+      },
+      "total": 266
+    },
+    {
+      "name": "Мустафин Андрей",
+      "birthday": 1987,
+      "region": "Красноярский край",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 12,
+      "last_year": 2021,
+      "years": {
+        "2021": 73,
+        "2019": 177
+      },
+      "total": 250
+    },
+    {
+      "name": "Федосеенко Александр",
+      "birthday": 1992,
+      "region": "Приморский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 11,
+      "last_year": 2022,
+      "years": {
+        "2022": 243
+      },
+      "total": 243
+    },
+    {
+      "name": "Чугаров Юрий",
+      "birthday": 1985,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 12,
+      "last_year": 2022,
+      "years": {
+        "2022": 243
+      },
+      "total": 243
+    },
+    {
+      "name": "Синцов Никита",
+      "birthday": 1992,
+      "region": "Москва",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 15,
+      "last_year": 2022,
+      "years": {
+        "2022": 243
+      },
+      "total": 243
+    },
+    {
+      "name": "Волосков Михаил",
+      "birthday": 1985,
+      "region": "Кировская область",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 13,
+      "last_year": 2021,
+      "years": {
+        "2021": 219
+      },
+      "total": 219
+    },
+    {
+      "name": "Гуров Максим",
+      "birthday": 1985,
+      "region": "Камчатский край",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2021,
+      "years": {
+        "2021": 219
+      },
+      "total": 219
+    },
+    {
+      "name": "Устинов Виктор",
+      "birthday": 1982,
+      "region": "Республика Татарстан",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 22,
+      "last_year": 2024,
+      "years": {
+        "2024": 100,
+        "2023": 90
+      },
+      "total": 190
+    },
+    {
+      "name": "Шуев Николай",
+      "birthday": 1988,
+      "region": "Чебоксары",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 13,
+      "last_year": 2019,
+      "years": {
+        "2019": 177
+      },
+      "total": 177
+    },
+    {
+      "name": "Мосин Андрей",
+      "birthday": 1990,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 14,
+      "last_year": 2019,
+      "years": {
+        "2019": 177
+      },
+      "total": 177
+    },
+    {
+      "name": "Демин Феликс",
+      "birthday": 1991,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2019,
+      "years": {
+        "2019": 177
+      },
+      "total": 177
+    },
+    {
+      "name": "Бобровский Антон",
+      "birthday": 1987,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 19,
+      "last_year": 2023,
+      "years": {
+        "2022": 81,
+        "2023": 90
+      },
+      "total": 171
+    },
+    {
+      "name": "Невский Дмитрий",
+      "birthday": 1990,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 9,
+      "last_year": 2018,
+      "years": {
+        "2018": 159
+      },
+      "total": 159
+    },
+    {
+      "name": "Смелов Илья",
+      "birthday": 1986,
+      "region": "Калининградская область",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 11,
+      "last_year": 2018,
+      "years": {
+        "2018": 159
+      },
+      "total": 159
+    },
+    {
+      "name": "Ржанников Роман",
+      "birthday": 1986,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 13,
+      "last_year": 2018,
+      "years": {
+        "2018": 159
+      },
+      "total": 159
+    },
+    {
+      "name": "Белоусов Борис",
+      "birthday": 1989,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 15,
+      "last_year": 2018,
+      "years": {
+        "2018": 159
+      },
+      "total": 159
+    },
+    {
+      "name": "Ильин Александр",
+      "birthday": 1982,
+      "region": "Краснодарский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 17,
+      "last_year": 2024,
+      "years": {
+        "2024": 100,
+        "2019": 59
+      },
+      "total": 159
+    },
+    {
+      "name": "Ковалевский Василий",
+      "birthday": 1989,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 19,
+      "last_year": 2022,
+      "years": {
+        "2022": 81,
+        "2021": 73
+      },
+      "total": 154
+    },
+    {
+      "name": "Титов Сергей",
+      "birthday": 1987,
+      "region": "Санкт-Петербург",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 12,
+      "last_year": 2017,
+      "years": {
+        "2017": 143
+      },
+      "total": 143
+    },
+    {
+      "name": "Можаев",
+      "birthday": 1986,
+      "region": "Пермь",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 13,
+      "last_year": 2017,
+      "years": {
+        "2017": 143
+      },
+      "total": 143
+    },
+    {
+      "name": "Камышников Александр",
+      "birthday": 1982,
+      "region": "Тула",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 14,
+      "last_year": 2017,
+      "years": {
+        "2017": 143
+      },
+      "total": 143
+    },
+    {
+      "name": "Нужный Антон",
+      "birthday": 1986,
+      "region": "Сочи",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 15,
+      "last_year": 2017,
+      "years": {
+        "2017": 143
+      },
+      "total": 143
+    },
+    {
+      "name": "Чепленко Юрий",
+      "birthday": 1984,
+      "region": "Крым",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 16,
+      "last_year": 2017,
+      "years": {
+        "2017": 143
+      },
+      "total": 143
+    },
+    {
+      "name": "Автансев Никита",
+      "birthday": 1995,
+      "region": "Московская область",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 18,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Черепенников Антон",
+      "birthday": 1987,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 20,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Булгаков Игорь",
+      "birthday": 1991,
+      "region": "Калининградская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 21,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Василенко Денис",
+      "birthday": 1983,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 22,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Сивый Алексей",
+      "birthday": 1985,
+      "region": "Севастополь",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 23,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Блискунов Дмитрий",
+      "birthday": 1995,
+      "region": "Калининградская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 24,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Носов Антон",
+      "birthday": 1991,
+      "region": "Республика Татарстан",
+      "rank": "1",
+      "category": "мужчины",
+      "best_place": 26,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Михеев Павел",
+      "birthday": 1985,
+      "region": "Краснодарский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 27,
+      "last_year": 2024,
+      "years": {
+        "2024": 100
+      },
+      "total": 100
+    },
+    {
+      "name": "Пачесов Павел",
+      "birthday": 1986,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 17,
+      "last_year": 2023,
+      "years": {
+        "2023": 90
+      },
+      "total": 90
+    },
+    {
+      "name": "Шушаков Роман",
+      "birthday": 1995,
+      "region": "Калининградская область",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 18,
+      "last_year": 2024,
+      "years": {
+        "2024": 0,
+        "2023": 90
+      },
+      "total": 90
+    },
+    {
+      "name": "Корытко Константин",
+      "birthday": 1988,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 20,
+      "last_year": 2023,
+      "years": {
+        "2023": 90
+      },
+      "total": 90
+    },
+    {
+      "name": "Эгле Вячеслав",
+      "birthday": 1994,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 21,
+      "last_year": 2023,
+      "years": {
+        "2023": 90
+      },
+      "total": 90
+    },
+    {
+      "name": "Цветков Михаил",
+      "birthday": 1987,
+      "region": "Сахалинская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 22,
+      "last_year": 2023,
+      "years": {
+        "2023": 90
+      },
+      "total": 90
+    },
+    {
+      "name": "Суннагатулин Марсель",
+      "birthday": 1994,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 18,
+      "last_year": 2022,
+      "years": {
+        "2022": 81
+      },
+      "total": 81
+    },
+    {
+      "name": "Лещев Алексей",
+      "birthday": 1991,
+      "region": "Камчатский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 20,
+      "last_year": 2022,
+      "years": {
+        "2022": 81
+      },
+      "total": 81
+    },
+    {
+      "name": "Соловьев Андрей",
+      "birthday": 1985,
+      "region": "Приморский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 21,
+      "last_year": 2022,
+      "years": {
+        "2022": 81
+      },
+      "total": 81
+    },
+    {
+      "name": "Шеин Николай",
+      "birthday": 1986,
+      "region": "Приморский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 22,
+      "last_year": 2022,
+      "years": {
+        "2022": 81
+      },
+      "total": 81
+    },
+    {
+      "name": "Костин Евгений",
+      "birthday": 1990,
+      "region": "Приморский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 23,
+      "last_year": 2022,
+      "years": {
+        "2022": 81
+      },
+      "total": 81
+    },
+    {
+      "name": "Шенн Николай",
+      "birthday": 1986,
+      "region": "Магаданская область",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 18,
+      "last_year": 2021,
+      "years": {
+        "2021": 73
+      },
+      "total": 73
+    },
+    {
+      "name": "Степаненко Ким",
+      "birthday": 1994,
+      "region": "Приморский край",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 22,
+      "last_year": 2021,
+      "years": {
+        "2021": 73
+      },
+      "total": 73
+    },
+    {
+      "name": "Гришин Евгений",
+      "birthday": 1988,
+      "region": "Санкт-Петербург",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 24,
+      "last_year": 2021,
+      "years": {
+        "2021": 73
+      },
+      "total": 73
+    },
+    {
+      "name": "Горячев Ярослав",
+      "birthday": 1997,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 25,
+      "last_year": 2021,
+      "years": {
+        "2021": 73
+      },
+      "total": 73
+    },
+    {
+      "name": "Александров Антон",
+      "birthday": 2004,
+      "region": "Краснодарский край",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 17,
+      "last_year": 2019,
+      "years": {
+        "2019": 59
+      },
+      "total": 59
+    },
+    {
+      "name": "Тыртышников Роман",
+      "birthday": 1982,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 19,
+      "last_year": 2019,
+      "years": {
+        "2019": 59
+      },
+      "total": 59
+    },
+    {
+      "name": "Саркисов Станислав",
+      "birthday": 1983,
+      "region": "Московская область",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 20,
+      "last_year": 2019,
+      "years": {
+        "2019": 59
+      },
+      "total": 59
+    },
+    {
+      "name": "Захаров Сергей",
+      "birthday": 1987,
+      "region": "Краснодарский край",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 21,
+      "last_year": 2019,
+      "years": {
+        "2019": 59
+      },
+      "total": 59
+    },
+    {
+      "name": "Табачник Константин",
+      "birthday": 1988,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 17,
+      "last_year": 2018,
+      "years": {
+        "2018": 53
+      },
+      "total": 53
+    },
+    {
+      "name": "Кармалов Кирилл",
+      "birthday": 1982,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 19,
+      "last_year": 2018,
+      "years": {
+        "2018": 53
+      },
+      "total": 53
+    },
+    {
+      "name": "Огерь Виктор",
+      "birthday": 1978,
+      "region": "Москва",
+      "rank": "",
+      "category": "мужчины",
+      "best_place": 20,
+      "last_year": 2018,
+      "years": {
+        "2018": 53
+      },
+      "total": 53
+    },
+    {
+      "name": "Коновалов Александр",
+      "birthday": 1981,
+      "region": "Мурманская область",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 9999,
+      "last_year": 2024,
+      "years": {
+        "2024": 0
+      },
+      "total": 0
+    },
+    {
+      "name": "Трофимов Владимир",
+      "birthday": 1985,
+      "region": "Краснодарский край",
+      "rank": "2",
+      "category": "мужчины",
+      "best_place": 9999,
+      "last_year": 2024,
+      "years": {
+        "2024": 0
+      },
+      "total": 0
+    },
+    {
+      "name": "Зиповски Алексей",
+      "birthday": 1983,
+      "region": "Краснодарский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 9999,
+      "last_year": 2024,
+      "years": {
+        "2024": 0
+      },
+      "total": 0
+    },
+    {
+      "name": "Гаянов Артур",
+      "birthday": 1992,
+      "region": "Краснодарский край",
+      "rank": "3",
+      "category": "мужчины",
+      "best_place": 9999,
+      "last_year": 2024,
+      "years": {
+        "2024": 0
+      },
+      "total": 0
+    }
+  ]
+}
